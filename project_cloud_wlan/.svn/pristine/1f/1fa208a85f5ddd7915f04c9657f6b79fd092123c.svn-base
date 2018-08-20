@@ -1,0 +1,9 @@
+collect_act_dir = ./
+collect_table_dir = ./
+collect_service = 10.9.100.66
+collect_table_name = t_collect
+user_name = root
+password = 
+mysql_db = ipipe2
+interval = 2
+debug_log = 0

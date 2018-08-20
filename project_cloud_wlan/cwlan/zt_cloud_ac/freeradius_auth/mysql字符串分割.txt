@@ -1,0 +1,26 @@
+DELIMITER $$
+
+USE `cloudac_release`$$
+
+DROP FUNCTION IF EXISTS `f_sqlit`$$
+
+CREATE DEFINER=`cloudac`@`%` FUNCTION `f_sqlit`(f_string VARCHAR(1000),f_delimiter VARCHAR(5), number INT(10)) RETURNS VARCHAR(64)
+
+BEGIN
+	DECLARE temp VARCHAR(64);
+	
+	IF (number < 1 || number >3) THEN
+		RETURN NULL;
+	END IF;
+	IF (number = 1) THEN
+		RETURN SUBSTRING_INDEX(f_string,f_delimiter,1);
+	END IF;
+	IF (number = 3) THEN
+		RETURN SUBSTRING_INDEX(f_string,f_delimiter,-1); 
+	END IF;
+	
+	SET temp = SUBSTRING_INDEX(f_string,f_delimiter,-2); 
+	RETURN SUBSTRING_INDEX(temp,f_delimiter,1); 
+END$$
+
+DELIMITER ;

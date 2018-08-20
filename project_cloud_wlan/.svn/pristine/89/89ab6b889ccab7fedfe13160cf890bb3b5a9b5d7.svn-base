@@ -1,0 +1,94 @@
+#[root@cloudac-test mysql]# vi dialup.conf 
+
+# -*- text -*-
+##
+## dialup.conf -- MySQL configuration for default schema (schema.sql)
+##
+##      $Id$
+
+        # Safe characters list for sql queries. Everything else is replaced
+        # with their mime-encoded equivalents.
+        # The default list should be ok
+        #safe-characters = "@abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_: /"
+
+        #######################################################################
+        #  Query config:  Username
+        #######################################################################
+        # This is the username that will get substituted, escaped, and added
+        # as attribute 'SQL-User-Name'.  '%{SQL-User-Name}' should be used below
+        # everywhere a username substitution is needed so you you can be sure
+        # the username passed from the client is escaped properly.
+        #
+        #  Uncomment the next line, if you want the sql_user_name to mean:
+        #
+        #    Use Stripped-User-Name, if it's there.
+        #    Else use User-Name, if it's there,
+        #    Else use hard-coded string "DEFAULT" as the user name.
+        #sql_user_name = "%{%{Stripped-User-Name}:-%{%{User-Name}:-DEFAULT}}"
+        #
+        sql_user_name = "%{User-Name}"
+
+        #######################################################################
+        #  Default profile
+        #######################################################################
+        # This is the default profile. It is found in SQL by group membership.
+        # That means that this profile must be a member of at least one group
+        # which will contain the corresponding check and reply items.
+        # This profile will be queried in the authorize section for every user.
+        # The point is to assign all users a default profile without having to
+        # manually add each one to a group that will contain the profile.
+        # The SQL module will also honor the User-Profile attribute. This
+        # attribute can be set anywhere in the authorize section (ie the users
+        # file). It is found exactly as the default profile is found.
+        # If it is set then it will *overwrite* the default profile setting.
+        # The idea is to select profiles based on checks on the incoming packets,
+        # not on user group membership. For example:
+        # -- users file --
+        # DEFAULT       Service-Type == Outbound-User, User-Profile := "outbound"
+        # DEFAULT       Service-Type == Framed-User, User-Profile := "framed"
+        #
+        # By default the default_user_profile is not set
+        #
+        #default_user_profile = "DEFAULT"
+
+        #######################################################################
+        #  NAS Query
+        #######################################################################
+        #  This query retrieves the radius clients
+        #
+        #  0. Row ID (currently unused)
+        #  1. Name (or IP address)
+        #  2. Shortname
+        #  3. Type
+        #  4. Secret
+        #  5. Server
+        #######################################################################
+
+#       nas_query = "select id, server, server, type, secret, null from ${nas_table}"
+
+        #######################################################################
+        #  Authorization Queries
+        #######################################################################
+        #  These queries compare the check items for the user
+        #  in ent_user and setup the reply items in
+        #  ${authreply_table}.  You can use any query/tables
+        #  you want, but the return data for each row MUST
+        #  be in the  following order:
+        #
+        #  0. Row ID (currently unused)
+        #  1. UserName/GroupName
+        #  2. Item Attr Name
+        #  3. Item Attr Value
+        #  4. Item Attr Operation
+        #######################################################################
+
+        authorize_check_query = "SELECT 1, login_name, 'Cleartext-Password', login_pass, ':=' \
+                FROM t_client_user WHERE login_name = BINARY '%{SQL-User-Name}' \
+                union select 1,uid,'Cleartext-Password', aaa_type,':=' from t_client_user_temp where uid = BINARY '%{SQL-User-Name}' \
+                union select 1,code,'Cleartext-Password', aaa_type,':=' from t_access_code where code = BINARY '%{SQL-User-Name}' \
+                and ((last_use_expired_time is null and now()< first_expired_time) or (last_use_expired_time is not null and now()<last_use_expired_time)) "
+
+        authorize_reply_query = "select 1, code, 'Session-Timeout', timestampdiff(SECOND,  now(), last_use_expired_time),':=' \
+                from t_access_code where code = BINARY '%{SQL-User-Name}' and last_use_expired_time is not null and last_use_expired_time > now() \
+                union select 1, code, 'Session-Timeout', use_time_len*60 ,  ':=' from t_access_code \
+                where code = BINARY '%{SQL-User-Name}' and last_use_expired_time is null and now()< first_expired_time "

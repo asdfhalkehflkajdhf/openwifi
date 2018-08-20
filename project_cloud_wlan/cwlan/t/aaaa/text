@@ -1,0 +1,39 @@
+if [ ! -f /config/ipipe.ini ]
+then
+	cp /usr/config/ipipe.ini /config/ipipe.ini -rf
+fi
+
+if [ ! -f /config/clients ]
+then
+	cp /usr/config/clients /config/clients -rf
+fi
+
+if [ ! -d /config/ipipe_xml_interface ] 
+then
+	mkdir -p /config/ipipe_xml_interface/issue/
+	mkdir -p /config/ipipe_xml_interface/result/
+else
+	if [ ! -d /config/ipipe_xml_interface/result ] 
+	then
+		mkdir -p /config/ipipe_xml_interface/result/
+	fi
+	
+	if [ ! -d /config/ipipe_xml_interface/issue ] 
+	then
+		mkdir -p /config/ipipe_xml_interface/issue/
+	fi
+fi
+
+if [ ! -d /config/db ] 
+then
+	cp -rf /usr/config/db /config/
+else
+	for sqlname in `ls /usr/config/db`
+	do
+		if [ ! -f "/config/db/$sqlname" ] 
+		then
+			cp -rf /usr/config/db/$sqlname /config/db/$sqlname
+		fi
+	done
+
+fi

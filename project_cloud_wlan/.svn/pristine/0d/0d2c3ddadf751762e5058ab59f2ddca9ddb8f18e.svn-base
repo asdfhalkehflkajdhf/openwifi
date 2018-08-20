@@ -1,0 +1,1192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Netgear WNDR3800    - OpenWrt Wiki</title>
+
+  <meta name="generator" content="DokuWiki Release 2009-02-14b" />
+<meta name="robots" content="index,follow" />
+<meta name="date" content="2014-08-08T15:03:06+0200" />
+<meta name="keywords" content="GigabitEthernet,5Port,2PHY,USB,1USB,JTAG,802.11bgn,ath9k,802.11abgn_simultan,128RAM,16Flash,MIPS,MIPS32,24Kc" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://wiki.openwrt.org/lib/exe/opensearch.php" title="- OpenWrt Wiki" />
+<link rel="start" href="http://wiki.openwrt.org/" />
+<link rel="contents" href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=index" title="Index" />
+<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://wiki.openwrt.org/feed.php" />
+<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://wiki.openwrt.org/feed.php?mode=list&amp;ns=toh:netgear" />
+<link rel="alternate" type="text/html" title="Plain HTML" href="http://wiki.openwrt.org/_export/xhtml/toh/netgear/wndr3800" />
+<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://wiki.openwrt.org/_export/raw/toh/netgear/wndr3800" />
+<link rel="stylesheet" media="all" type="text/css" href="http://wiki.openwrt.org/lib/exe/css.php?s=all&amp;t=ameoto" />
+<link rel="stylesheet" media="screen" type="text/css" href="http://wiki.openwrt.org/lib/exe/css.php?t=ameoto" />
+<link rel="stylesheet" media="print" type="text/css" href="http://wiki.openwrt.org/lib/exe/css.php?s=print&amp;t=ameoto" />
+<script type="text/javascript" charset="utf-8" src="http://wiki.openwrt.org/lib/exe/js.php?edit=0&amp;write=0" ></script>
+<script type="text/javascript" charset="utf-8" ><!--//--><![CDATA[//><!--
+addInitEvent(function(){
+	for ( i=0; i < document.forms.length; i++ ) {
+		if (document.forms[i].method == 'post') {
+			var myElement = document.createElement('input');
+			myElement.setAttribute('type', 'hidden');
+			myElement.name = 'bb2_screener_';
+			myElement.value = '1412156962 114.243.131.15';
+			document.forms[i].appendChild(myElement);
+		}
+	}
+});
+//--><!]]></script>
+
+  <link rel="shortcut icon" href="http://wiki.openwrt.org/lib/tpl/ameoto/images/favicon.ico" />
+  <!--[if IE 6]><link rel="stylesheet" href="/lib/tpl/ameoto/ie6.css" type="text/css" media="all" /><![endif]-->
+  <!--[if IE 7]><link rel="stylesheet" href="/lib/tpl/ameoto/ie7.css" type="text/css" media="all" /><![endif]-->
+
+  </head>
+
+<body>
+<div class="container">
+	<h1 class="bannerhl"><a id="banner" name="dokuwiki__top" href="http://openwrt.org/">OpenWrt</a></h1>
+	<div class="whoami">
+			</div>
+	<ul id="navigation">
+		<li><a href="https://dev.openwrt.org/">Development</a></li>
+		<li><a href="/doc/start">Documentation</a></li>
+		<li><a href="http://downloads.openwrt.org/">Downloads</a></li>
+		<li><a href="http://wiki.openwrt.org/">Wiki</a></li>
+		<li><a href="http://forum.openwrt.org/">Forum</a></li>
+	</ul>
+	<div id="feedback"></div>
+	<div class="sidebar">
+
+		<div>
+			<h3>Wiki Search</h3>
+			<form action="http://wiki.openwrt.org/" accept-charset="utf-8" class="search" id="dw__search"><div class="no"><input type="hidden" name="do" value="search" /><input type="text" id="qsearch__in" accesskey="f" name="id" class="edit" title="[F]" /><input type="submit" value="Search" class="button" title="Search" /><div id="qsearch__out" class="ajax_qsearch JSpopup"></div></div></form>		</div>
+
+		<div>
+			<h3>Actions</h3>
+			<ul class="actions">
+				<li><a href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=edit&amp;rev="  class="action source" accesskey="v" rel="nofollow">Show pagesource</a></li>
+				<li><a href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=revisions"  class="action revisions" accesskey="o" rel="nofollow">Old revisions</a></li>
+				<li class="separate"><a href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=index"  class="action index" accesskey="x" rel="nofollow">Index</a></li>
+				<li><a href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=recent"  class="action recent" accesskey="r" rel="nofollow">Recent changes</a></li>
+				<li class="separate"></li>
+				<li></li>
+				<li><a href="http://wiki.openwrt.org/toh/netgear/wndr3800?do=login&amp;sectok=9ef13b643aa093c1a271c28c143f39dd"  class="action login" rel="nofollow">Login</a></li>
+			</ul>
+		</div>
+
+		<div>
+			<h3>Donate</h3>
+			<a href="http://flattr.com/thing/642631/OpenWrt" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
+		</div>
+
+		<div>
+			<h3>Translations</h3>
+			        <ul class="actions" style="padding-left:24px">
+<li style="list-style-image:url(/lib/plugins/multilingual/flags/en.gif)"><span class="curid"><a href="http://wiki.openwrt.org/toh/netgear/wndr3800" class="wikilink1" title="toh:netgear:wndr3800">Netgear WNDR3800</a></span></li>
+        </ul>
+		</div>
+
+	</div>
+	<div class="content">
+				<div class="breadcrumbs">
+			<span class="bchead">You are here: </span><a href="http://wiki.openwrt.org/start"  title="start">OpenWrt Wiki</a> &raquo; <a href="http://wiki.openwrt.org/toh/start"  title="toh:start">Table of Hardware</a> &raquo; <a href="http://wiki.openwrt.org/toh/netgear/start"  title="toh:netgear:start">Netgear</a> &raquo; <a href="http://wiki.openwrt.org/toh/netgear/wndr3800"  title="toh:netgear:wndr3800">Netgear WNDR3800</a>		</div>
+		
+		<!-- wikipage start -->
+		<!-- TOC START -->
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#supported.versions" class="toc">Supported Versions</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#hardware.highlights" class="toc">Hardware Highlights</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#installation" class="toc">Installation</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#flash.layout" class="toc">Flash Layout</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#oem.easy.installation" class="toc">OEM easy installation</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#oem.installation.using.the.tftp.method" class="toc">OEM installation using the TFTP method</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#upgrading.openwrt" class="toc">Upgrading OpenWrt</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#bootlogs" class="toc">Bootlogs</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#original.firmware.boot.log" class="toc">Original firmware Boot Log</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#openwrt.boot.log" class="toc">OpenWRT Boot Log</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#basic.configuration" class="toc">Basic configuration</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#specific.configuration" class="toc">Specific configuration</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#kernel.modules" class="toc">Kernel modules</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#ethernet.switch.configuration.vlan" class="toc">Ethernet switch configuration (VLAN)</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#hardware" class="toc">Hardware</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#info" class="toc">Info</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#photos" class="toc">Photos</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#opening.the.case" class="toc">Opening the case</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#serial" class="toc">Serial</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#jtag" class="toc">JTAG</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#recovery.flash.in.failsafe.mode" class="toc">Recovery flash in failsafe mode</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#notes" class="toc">Notes</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#gain.access.to.built-in.telnet.daemon.of.the.original.firmware" class="toc">Gain access to built-in telnet daemon of the original firmware.</a></span></div></li>
+</ul>
+</li>
+<li class="level1"><div class="li"><span class="li"><a href="#resources" class="toc">Resources</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#custom.openwrt.image.with.luci.integrated" class="toc">Custom OpenWrt image with LuCi integrated</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#tags" class="toc">Tags</a></span></div></li></ul>
+</div>
+</div>
+<!-- TOC END -->
+
+
+
+<h1><a name="netgear.wndr3800" id="netgear.wndr3800">Netgear WNDR3800</a></h1>
+<div class="level1">
+<table class="inline">
+<tr class="row0">
+	<td class="col0" colspan="1" rowspan="1"><img src="http://wiki.openwrt.org/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> Hardware specific sections according to the <a href="http://wiki.openwrt.org/meta/template_device" class="wikilink1" title="meta:template_device">Hardware Template</a> wanted!</td>
+</tr>
+</table>
+</div>
+
+<h2><a name="supported.versions" id="supported.versions">Supported Versions</a></h2>
+<div class="level2">
+<table class="inline">
+<tr class="row0">
+	<th class="col0" colspan="1" rowspan="1">Version/Model</th>
+	<th class="col1" colspan="1" rowspan="1">Launch Date</th>
+	<th class="col2" colspan="1" rowspan="1">S/N</th>
+	<th class="col3" colspan="1" rowspan="1">OpenWrt Version Supported</th>
+	<th class="col4" colspan="1" rowspan="1">Model Specific Notes</th>
+</tr>
+<tr class="row1">
+	<td class="col0 leftalign" colspan="1" rowspan="1">v1</td>
+	<td class="col1 centeralign" colspan="1" rowspan="1">2011-03</td>
+	<td class="col2" colspan="1" rowspan="1">-</td>
+	<td class="col3" colspan="1" rowspan="1"><a href="https://dev.openwrt.org/changeset/28597" class="urlextern" title="https://dev.openwrt.org/changeset/28597"  rel="nofollow">r28597</a></td>
+	<td class="col4" colspan="1" rowspan="1">successor to the <a href="http://wiki.openwrt.org/toh/netgear/wndr3700" class="wikilink1" title="toh:netgear:wndr3700">WNDR3700</a></td>
+</tr>
+</table><table class="inline">
+<tr class="row0">
+	<td class="col0" colspan="1" rowspan="1"><img src="http://wiki.openwrt.org/_media/meta/icons/tango/48px-emblem-important.svg.png" class="media" alt="" /></td>
+	<td class="col1" colspan="1" rowspan="1">In general, the advice and documentation regarding WNDR3700v1 and WNDR3700v2 is also valid for WNDR3800. The only differences are with amounts of RAM and flash memory. This WNDR3800 article is rather short, as most of the applicable information can already be found on the <a href="http://wiki.openwrt.org/toh/netgear/wndr3700" class="wikilink1" title="toh:netgear:wndr3700">WNDR3700 wiki page</a>.  There is also a WNDR3800-1CHNAS which will not respond to the normal WNDR3800 images.  Applying <a href="https://github.com/nakarotori/openwrt/commit/c1bb068f18e24f90b155520205b8b54688b98951" class="urlextern" title="https://github.com/nakarotori/openwrt/commit/c1bb068f18e24f90b155520205b8b54688b98951"  rel="nofollow">this patch</a> does create a usable image.</td>
+</tr>
+</table>
+</div>
+
+<h2><a name="hardware.highlights" id="hardware.highlights">Hardware Highlights</a></h2>
+<div class="level2">
+<table class="inline">
+<tr class="row0">
+	<th class="col0" colspan="1" rowspan="1">CPU</th>
+	<th class="col1" colspan="1" rowspan="1">Ram</th>
+	<th class="col2" colspan="1" rowspan="1">Flash</th>
+	<th class="col3" colspan="1" rowspan="1">Network</th>
+	<th class="col4" colspan="1" rowspan="1">USB</th>
+	<th class="col5" colspan="1" rowspan="1">Serial</th>
+	<th class="col6" colspan="1" rowspan="1">JTag</th>
+</tr>
+<tr class="row1">
+	<td class="col0" colspan="1" rowspan="1">Atheros AR7161 rev 2 680 <acronym title="Megahertz">MHz</acronym></td>
+	<td class="col1" colspan="1" rowspan="1">128MiB</td>
+	<td class="col2" colspan="1" rowspan="1">16MiB</td>
+	<td class="col3" colspan="1" rowspan="1">4 x 1</td>
+	<td class="col4" colspan="1" rowspan="1">Yes</td>
+	<td class="col5" colspan="1" rowspan="1">Yes</td>
+	<td class="col6" colspan="1" rowspan="1">Yes</td>
+</tr>
+</table>
+</div>
+
+<h2><a name="installation" id="installation">Installation</a></h2>
+<div class="level2">
+
+<p>
+1. First, it is need to select OpenWRT firmware, please consult ¡ú<a href="http://wiki.openwrt.org/doc/howto/obtain.firmware" class="wikilink1" title="doc:howto:obtain.firmware">obtain.firmware</a> 
+</p>
+
+<p>
+This device is supported in Backfire 10.03.1 and above. Manually building OpenWrt is not required. Quickest way is to download a precompiled <a href="http://downloads.openwrt.org/backfire/10.03.1/ar71xx/" class="urlextern" title="http://downloads.openwrt.org/backfire/10.03.1/ar71xx/"  rel="nofollow">stable image</a>, look for wndr3800 factory (SquashFS is recommended):
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://downloads.openwrt.org/backfire/10.03.1/ar71xx/openwrt-ar71xx-wndr3800-squashfs-factory.img" class="urlextern" title="http://downloads.openwrt.org/backfire/10.03.1/ar71xx/openwrt-ar71xx-wndr3800-squashfs-factory.img"  rel="nofollow">openwrt-ar71xx-wndr3800-squashfs-factory.img</a>       21-Dec-2011 01:03             3080325</div>
+</li>
+</ul>
+
+<p>
+You also may try last trunk image:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://downloads.openwrt.org/snapshots/trunk/ar71xx/openwrt-ar71xx-generic-wndr3800-squashfs-factory.img" class="urlextern" title="http://downloads.openwrt.org/snapshots/trunk/ar71xx/openwrt-ar71xx-generic-wndr3800-squashfs-factory.img"  rel="nofollow">openwrt-ar71xx-generic-wndr3800-squashfs-factory.img</a></div>
+</li>
+</ul>
+
+<p>
+
+2. Second, please consult ¡ú<a href="http://wiki.openwrt.org/doc/howto/generic.flashing" class="wikilink1" title="doc:howto:generic.flashing">Installing OpenWrt (generic)</a> and additionally the instructions on this page and/or the one for the <a href="http://wiki.openwrt.org/toh/netgear/wndr3700" class="wikilink1" title="toh:netgear:wndr3700">WNDR3700</a>.
+</p>
+
+<p>
+You can utilize the stock firmware&#039;s <em>Firmware Upgrade</em> page to install OpenWrt.
+</p>
+
+</div>
+
+<h3><a name="flash.layout" id="flash.layout">Flash Layout</a></h3>
+<div class="level3">
+
+<p>
+See the example ¡ú<a href="http://wiki.openwrt.org/doc/techref/flash.layout" class="wikilink1" title="doc:techref:flash.layout">Flash Layout</a> to understand OpenWrt better.
+</p>
+
+<p>
+<code>cat /proc/mtd 
+dev:    size   erasesize  name
+mtd0: 00050000 00010000 &quot;uboot&quot;
+mtd1: 00020000 00010000 &quot;env&quot;
+mtd2: 00e40000 00010000 &quot;rootfs&quot;
+mtd3: 00010000 00010000 &quot;config&quot;
+mtd4: 00010000 00010000 &quot;config_bak&quot;
+mtd5: 00010000 00010000 &quot;pot&quot;
+mtd6: 00010000 00010000 &quot;traffic_meter&quot;
+mtd7: 00100000 00010000 &quot;language&quot;
+mtd8: 00010000 00010000 &quot;caldata&quot;
+mtd9: 00e3ffc0 00010000 &quot;mount_fs&quot;</code>
+</p>
+<table class="inline">
+<tr class="row0">
+	<th class="col0 centeralign" colspan="11" rowspan="1">Netgear WNDR3800  Flash Layout</th>
+</tr>
+<tr class="row1">
+	<th class="col0 leftalign" colspan="1" rowspan="1">Layer0</th>
+	<td class="col1 centeralign" colspan="10" rowspan="1">16384KiB</td>
+</tr>
+<tr class="row2">
+	<th class="col0 leftalign" colspan="1" rowspan="1">Size in KiB</th>
+	<td class="col1" colspan="1" rowspan="1">320KiB</td>
+	<td class="col2" colspan="1" rowspan="1">128KiB</td>
+	<td class="col3" colspan="1" rowspan="1">14592KiB</td>
+	<td class="col4" colspan="1" rowspan="1">64KiB</td>
+	<td class="col5" colspan="1" rowspan="1">64KiB</td>
+	<td class="col6" colspan="1" rowspan="1">64KiB</td>
+	<td class="col7" colspan="1" rowspan="1">64KiB</td>
+	<td class="col8" colspan="1" rowspan="1">1024KiB</td>
+	<td class="col9" colspan="1" rowspan="1">64KiB</td>
+	<td class="col10" colspan="1" rowspan="1">14591,9375KiB</td>
+</tr>
+<tr class="row3">
+	<th class="col0 leftalign" colspan="1" rowspan="1">Name</th>
+	<td class="col1" colspan="1" rowspan="1"><strong><em>uboot</em></strong></td>
+	<td class="col2" colspan="1" rowspan="1"><strong><em>env</em></strong></td>
+	<td class="col3" colspan="1" rowspan="1"><strong><em>rootfs</em></strong></td>
+	<td class="col4" colspan="1" rowspan="1"><strong><em>config</em></strong></td>
+	<td class="col5" colspan="1" rowspan="1"><strong><em>config_bak</em></strong></td>
+	<td class="col6" colspan="1" rowspan="1"><strong><em>pot</em></strong></td>
+	<td class="col7" colspan="1" rowspan="1"><strong><em>traffic_meter</em></strong></td>
+	<td class="col8" colspan="1" rowspan="1"><strong><em>language</em></strong></td>
+	<td class="col9" colspan="1" rowspan="1"><strong><em>caldata</em></strong></td>
+	<td class="col10" colspan="1" rowspan="1"><strong><em>mount_fs</em></strong></td>
+</tr>
+<tr class="row4">
+	<th class="col0 leftalign" colspan="1" rowspan="1">mountpoint</th>
+	<td class="col1 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col2 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col3 centeralign" colspan="1" rowspan="1">/?</td>
+	<td class="col4 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col5 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col6 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col7 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col8 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col9 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col10 rightalign" colspan="1" rowspan="1"></td>
+</tr>
+<tr class="row5">
+	<th class="col0 leftalign" colspan="1" rowspan="1">filesystem</th>
+	<td class="col1 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col2 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col3 centeralign" colspan="1" rowspan="1">SquashFS?</td>
+	<td class="col4 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col5 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col6 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col7 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col8 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col9 rightalign" colspan="1" rowspan="1"></td>
+	<td class="col10 rightalign" colspan="1" rowspan="1"></td>
+</tr>
+</table>
+</div>
+
+<h3><a name="oem.easy.installation" id="oem.easy.installation">OEM easy installation</a></h3>
+<div class="level3">
+
+<p>
+
+You may install OpenWRT using upgrade firmware of web interface of original firmware.
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Download a squashfs-factory image file of OpenWRT.</div>
+</li>
+<li class="level1"><div class="li"> Set IP from pool 192.168.1.2-192.168.1.254 on your computer and next open <a href="http://192.168.1.1" class="urlextern" title="http://192.168.1.1"  rel="nofollow">http://192.168.1.1</a> in the web brouser.</div>
+</li>
+<li class="level1"><div class="li"> Select an <em>Administration</em> page, use firmware file selection button and firmware upgrade button to start firmware upgrade process.</div>
+</li>
+<li class="level1"><div class="li"> Confirm firmwware upgrade to OpenWRT.</div>
+</li>
+<li class="level1"><div class="li"> Wait upload process, firmware upgrade process, additional wait up to 10 minutes. You wiil be able to notice this moment when browser won&#039;t be load <a href="http://192.168.1.1/index.htm" class="urlextern" title="http://192.168.1.1/index.htm"  rel="nofollow">http://192.168.1.1/index.htm</a> at its next updating.</div>
+</li>
+<li class="level1"><div class="li"> Telnet to 192.168.1.1. You in the <a href="http://wiki.openwrt.org/doc/uci" class="wikilink1" title="doc:uci">OpenWRT console</a>. Now you may install <a href="http://wiki.openwrt.org/doc/luci" class="wikilink2" title="doc:luci" rel="nofollow">LuCI</a> if needed.</div>
+</li>
+<li class="level1"><div class="li"> If you can&#039;t connect via telnet, simple switch off and turn on router, wait several tens of seconds for router booting, and again try connect.</div>
+</li>
+</ol>
+
+</div>
+
+<h3><a name="oem.installation.using.the.tftp.method" id="oem.installation.using.the.tftp.method">OEM installation using the TFTP method</a></h3>
+<div class="level3">
+
+<p>
+Doing as described in the ¡ú<a href="http://wiki.openwrt.org/toh/netgear/wndr3700" class="wikilink1" title="toh:netgear:wndr3700">WNDR3700</a>.
+</p>
+
+</div>
+
+<h3><a name="upgrading.openwrt" id="upgrading.openwrt">Upgrading OpenWrt</a></h3>
+<div class="level3">
+
+<p>
+
+You should use a standard upgrade procedure. Please consult with ¡ú<a href="http://wiki.openwrt.org/doc/howto/generic.sysupgrade" class="wikilink1" title="doc:howto:generic.sysupgrade">generic.sysupgrade</a>.
+</p>
+
+<p>
+Here are the stages of upgrading the WNDR3800 to a newer OpenWRT version: 
+</p>
+<ol>
+<li class="level1"><div class="li"> download firmware - <a href="http://downloads.openwrt.org/snapshots/trunk/ar71xx/openwrt-ar71xx-generic-wndr3800-squashfs-sysupgrade.bin" class="urlextern" title="http://downloads.openwrt.org/snapshots/trunk/ar71xx/openwrt-ar71xx-generic-wndr3800-squashfs-sysupgrade.bin"  rel="nofollow">openwrt-ar71xx-generic-wndr3800-squashfs-sysupgrade.bin</a>.</div>
+</li>
+<li class="level1"><div class="li"> backup (it is recommended to generate a config backup archive).</div>
+</li>
+<li class="level1"><div class="li"> flash FW (check keep settings option if you want to save your settings).</div>
+</li>
+<li class="level1"><div class="li"> when router comes up connect through <acronym title="Secure Shell">SSH</acronym>.</div>
+</li>
+<li class="level1"><div class="li"> opkg update</div>
+</li>
+<li class="level1"><div class="li"> opkg install luci</div>
+</li>
+<li class="level1"><div class="li"> opkg install luci-ssl (now you are able to connect through the web UI too)./</div>
+</li>
+<li class="level1"><div class="li"> /etc/init.d/uhttpd enable</div>
+</li>
+<li class="level1"><div class="li"> reboot and connect in order to see that everything works (sanity check).</div>
+</li>
+</ol>
+
+</div>
+
+<h2><a name="bootlogs" id="bootlogs">Bootlogs</a></h2>
+<div class="level2">
+
+</div>
+
+<h3><a name="original.firmware.boot.log" id="original.firmware.boot.log">Original firmware Boot Log</a></h3>
+<div class="level3">
+
+<p>
+serial console log of original firmware (modified OpenWRT Kamikaze):
+<pre class="code">Linux version 2.6.15 (josn@dnisw3) (gcc version 3.4.4 (OpenWrt-2.0)) #1 Wed Sep 28 10:41:57 CST 2011
+flash_size passed from bootloader = 16
+CPU revision is: 00019374
+Determined physical RAM map:
+ memory: 08000000 @ 00000000 (usable)
+Built 1 zonelists
+Kernel command line: console=ttyS0,115200 root=31:09 rootfstype=squashfs init=/etc/preinit mtdparts=ar7100-nor0:)
+Primary instruction cache 64kB, physically tagged, 4-way, linesize 32 bytes.
+Primary data cache 32kB, 4-way, linesize 32 bytes.
+Synthesized TLB refill handler (20 instructions).
+Synthesized TLB load handler fastpath (32 instructions).
+Synthesized TLB store handler fastpath (32 instructions).
+Synthesized TLB modify handler fastpath (31 instructions).
+Cache parity protection disabled
+PID hash table entries: 1024 (order: 10, 16384 bytes)
+Using 340.000 MHz high precision timer.
+Console: colour dummy device 80x25
+Dentry cache hash table entries: 32768 (order: 5, 131072 bytes)
+Inode-cache hash table entries: 16384 (order: 4, 65536 bytes)
+Memory: 126592k/131072k available (2332k kernel code, 4380k reserved, 519k data, 140k init, 0k highmem)
+Mount-cache hash table entries: 512
+Checking for &#039;wait&#039; instruction...  available.
+NET: Registered protocol family 16
+SCSI subsystem initialized
+usbcore: registered new driver usbfs
+usbcore: registered new driver hub
+AR7100 GPIOC major 0
+Initializing usb led semaphore
+squashfs: version 3.0 (2006/03/15) Phillip Lougher
+Initializing Cryptographic API
+io scheduler noop registered
+io scheduler deadline registered
+Serial: 8250/16550 driver $Revision: #1 $ 4 ports, IRQ sharing disabled
+serial8250.0: ttyS0 at MMIO 0x0 (irq = 19) is a 16550A
+RAMDISK driver initialized: 1 RAM disks of 8192K size 1024 blocksize
+tun: Universal TUN/TAP device driver, 1.6
+tun: (C) 1999-2004 Max Krasnyansky &lt;maxk@qualcomm.com&gt;
+10 cmdlinepart partitions found on MTD device ar7100-nor0
+Creating 10 MTD partitions on &quot;ar7100-nor0&quot;:
+0x00000000-0x00050000 : &quot;uboot&quot;
+0x00050000-0x00070000 : &quot;env&quot;
+0x00070000-0x00eb0000 : &quot;rootfs&quot;
+0x00eb0000-0x00ec0000 : &quot;config&quot;
+0x00ec0000-0x00ed0000 : &quot;config_bak&quot;
+0x00ed0000-0x00ee0000 : &quot;pot&quot;
+0x00ee0000-0x00ef0000 : &quot;traffic_meter&quot;
+0x00ef0000-0x00ff0000 : &quot;language&quot;
+0x00ff0000-0x01000000 : &quot;caldata&quot;
+0x00070040-0x00eb0000 : &quot;mount_fs&quot;
+mtd: partition &quot;mount_fs&quot; doesn&#039;t start on an erase block boundary -- force read-only
+10 Dec 2004 USB 2.0 &#039;Enhanced&#039; Host Controller (EHCI) Driver (AR7100_EHCI)
+In ar7100_ehci_drv_probe
+probing ehci...
+hcd-&gt;regs is 0xbb000000
+ehci-&gt;caps is 0xbb000000
+ehci-&gt;caps-&gt;hc_base is 0x1000010
+ar7100-ehci ar7100-ehci.0: AR7100 EHCI
+ar7100-ehci ar7100-ehci.0: new USB bus registered, assigned bus number 1
+ar7100-ehci ar7100-ehci.0: irq 3, io mem 0x1b000000
+hcc_params addr 0xbb000008 val 0xa020 hcs_params addr 0xbb000004 val 0x1212
+ar7100-ehci ar7100-ehci.0: USB 0.0 started, EHCI 1.00, driver 10 Dec 2004
+hub 1-0:1.0: USB hub found
+hub 1-0:1.0: 2 ports detected
+...probing done
+2005 April 22 USB 1.1 &#039;Open&#039; Host Controller (OHCI) Driver (ar7100_ohci)block sizes: ed 64 td 64
+In ohci_hcd_ar7100_drv_probeprobing...
+ar7100-ohci ar7100-ohci.0: new USB bus registered, assigned bus number 2
+ar7100-ohci ar7100-ohci.0: irq 22, io mem 0x1c000000
+hub 2-0:1.0: USB hub found
+hub 2-0:1.0: 2 ports detected
+probing done
+Initializing USB Mass Storage driver...
+usb 2-2: new full speed USB device using ar7100-ohci and address 2
+ehci-9130: hub_port_reset 
+usb 2-2: device descriptor read/64, error -145
+ehci-9130: hub_port_reset 
+usb 2-2: device descriptor read/64, error -145
+usb 2-2: new full speed USB device using ar7100-ohci and address 3
+ehci-9130: hub_port_reset 
+usb 2-2: device descriptor read/64, error -145
+ehci-9130: hub_port_reset 
+usb 2-2: device descriptor read/64, error -145
+usb 2-2: new full speed USB device using ar7100-ohci and address 4
+usb 2-2: device not accepting address 4, error -145
+usb 2-2: new full speed USB device using ar7100-ohci and address 5
+usb 2-2: device not accepting address 5, error -145
+usbcore: registered new driver usb-storage
+USB Mass Storage support registered.
+usbcore: registered new driver usbserial
+drivers/usb/serial/usb-serial.c: USB Serial support registered for generic
+usbcore: registered new driver usbserial_generic
+drivers/usb/serial/usb-serial.c: USB Serial Driver core
+u32 classifier
+    Perfomance counters on
+nf_conntrack version 0.4.1 (1024 buckets, 8192 max)
+NET: Registered protocol family 2
+IP route cache hash table entries: 2048 (order: 1, 8192 bytes)
+TCP established hash table entries: 8192 (order: 3, 32768 bytes)
+TCP bind hash table entries: 8192 (order: 3, 32768 bytes)
+TCP: Hash tables configured (established 8192 bind 8192)
+TCP reno registered
+ip_conntrack version 2.4 (1024 buckets, 8192 max) - 272 bytes per conntrack
+ip_tables: (C) 2000-2002 Netfilter core team
+IPP2P v0.8.2 loading
+DNIFILTER loading
+TCP bic registered
+NET: Registered protocol family 1
+NET: Registered protocol family 10
+IPv6 over IPv4 tunneling driver
+ip6_tables: (C) 2000-2002 Netfilter core team
+NET: Registered protocol family 17
+Ebtables v2.0 registered
+ar7100wdt_init: Registering WDT success
+VFS: Mounted root (squashfs filesystem) readonly.
+Freeing unused kernel memory: 140k freed
+Warning: unable to open an initial console.
+Algorithmics/MIPS FPU Emulator v1.5
+init started:  BusyBox v1.4.2 (2011-09-28 09:38:46 CST) multi-call binary
+Loading data from /dev/mtd/3 ...
+The data configuration is Valid
+The data center is Running ...
+/etc/net6conf/6proc: /etc/net6conf/6proc: 31: cannot create /proc/sys/net/ipv6/conf/br1/accept_dad: Directory not
+/etc/net6conf/6proc: /etc/net6conf/6proc: 31: cannot create /proc/sys/net/ipv6/neigh/br1/not_send_neighbor_solict
+ipt_CONENAT: module license &#039;unspecified&#039; taints kernel.
+ip_conntrack_proto_esp loaded
+ip_nat_proto_esp loaded
+ip_conntrack_rtsp v0.6.21 loading
+ip_nat_rtsp v0.6.21 loading
+ip_conntrack_pptp version 3.1 loaded
+ip_nat_pptp version 3.0 loaded
+Generating Rules...
+Done!
+fuse init (API version 7.8)
+fuse distribution version: 2.7.4
+POT is Running...
+POT is Finished!!!
+The POT-(Get/Set) Demo is Running ...
+sn:2M93235C00263
+SN: 2M93235C00263
+hw_id:29763654+16+128
+model_id:WNDR3800
+The region number is: 0x0002
+REGION: WW
+dni-qos module init at dev:eth1, real_dev:eth1
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #346:switch_it
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #351:switch_it
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #355:switch_it
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #381:switch_it
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #383:switch_it
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/rtl8366s/switch-core.c #390:switch_is
+AG7100: Length per segment 512
+AG7100: Max segments per packet 4
+AG7100: Max tx descriptor count    400
+AG7100: Max rx descriptor count    252
+AG7100: fifo cfg 3 018001ff
+AG7100CHH: Mac address for unit 0
+AG7100CHH: 2c:b0:5d:93:b0:aa 
+AG7100CHH: Mac address for unit 1
+AG7100CHH: 2c:b0:5d:93:b0:ab 
+init the qos
+NET-LAN: Default WAN MAC is : 2c:b0:5d:93:b0:ab
+AG7100: unsupported ioctl
+device eth0 entered promiscuous mode
+NET-LAN: Default LAN MAC is : 2C:B0:5D:93:B0:AA
+ag7100_ring_alloc Allocated 6400 at 0x878d0000
+ag7100_ring_alloc Allocated 4032 at 0x879ba000
+CHH:mac:verify: 0 if: 00000002
+AG7100: cfg1 0xf cfg2 0x7014
+AG7100: unit 0 phy is up...RGMii 1000Mbps full duplex
+AG7100#1245:ag7100_set_mac_from_link
+AG7100: pll reg 0x18050010: 0x11110000  
+AG7100: cfg_1: 0x1ff0000
+AG7100: cfg_2: 0x3ff
+AG7100: cfg_3: 0x18001ff
+AG7100: cfg_4: 0xffff
+AG7100: cfg_5: 0xfffef
+AG7100: done cfg2 0x7215 ifctl 0x0 miictrl 0x22 
+Writing 4
+/home2/josn/WNDR3800-buildroot/wndr3800-iptv/build_mips/linux-2.6-wndr3700u/kmod-ar7100-watchdog/watchdog.c #25:d
+br0: port 1(eth0) entering learning state
+br0: topology change detected, propagating
+br0: port 1(eth0) entering forwarding state
+br0: port 1(eth0) entering disabled state
+br0: port 1(eth0) entering learning state
+br0: topology change detected, propagating
+br0: port 1(eth0) entering forwarding state
+</pre>
+
+</p>
+
+</div>
+
+<h3><a name="openwrt.boot.log" id="openwrt.boot.log">OpenWRT Boot Log</a></h3>
+<div class="level3">
+
+<p>
+<code>dmesg</code> for the trunk OpenWRT at Nov 23, 2012:
+<pre class="code">[    0.000000] Linux version 3.3.8 (openwrt@snapon) (gcc version 4.6.4 20121106 (prerelease) (Linaro GCC 4.6-2012.11) )
+ #1 Fri Nov 23 04:16:29 PST 2012
+[    0.000000] MyLoader: sysp=aaaa5554, boardp=aaaa5554, parts=aaaa5554
+[    0.000000] bootconsole [early0] enabled
+[    0.000000] CPU revision is: 00019374 (MIPS 24Kc)
+[    0.000000] SoC: Atheros AR7161 rev 2
+[    0.000000] Clocks: CPU:680.000MHz, DDR:340.000MHz, AHB:170.000MHz, Ref:40.000MHz
+[    0.000000] Determined physical RAM map:
+[    0.000000]  memory: 08000000 @ 00000000 (usable)
+[    0.000000] Initrd not found or empty - disabling initrd
+[    0.000000] Zone PFN ranges:
+[    0.000000]   Normal   0x00000000 -&gt; 0x00008000
+[    0.000000] Movable zone start PFN for each node
+[    0.000000] Early memory PFN ranges
+[    0.000000]     0: 0x00000000 -&gt; 0x00008000
+[    0.000000] On node 0 totalpages: 32768
+[    0.000000] free_area_init_node: node 0, pgdat 8031d0d0, node_mem_map 81000000
+[    0.000000]   Normal zone: 256 pages used for memmap
+[    0.000000]   Normal zone: 0 pages reserved
+[    0.000000]   Normal zone: 32512 pages, LIFO batch:7
+[    0.000000] pcpu-alloc: s0 r0 d32768 u32768 alloc=1*32768
+[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 32512
+[    0.000000] Kernel command line:  board=WNDR3700 console=ttyS0,115200 mtdparts=spi0.0:320k(u-boot)ro,128k(u-boot-env
+)ro,1024k(kernel),14848k(rootfs),64k(art)ro,15872k@0x70000(firmware) rootfstype=squashfs,jffs2 noinitrd
+[    0.000000] PID hash table entries: 512 (order: -1, 2048 bytes)
+[    0.000000] Dentry cache hash table entries: 16384 (order: 4, 65536 bytes)
+[    0.000000] Inode-cache hash table entries: 8192 (order: 3, 32768 bytes)
+[    0.000000] Primary instruction cache 64kB, VIPT, 4-way, linesize 32 bytes.
+[    0.000000] Primary data cache 32kB, 4-way, VIPT, cache aliases, linesize 32 bytes
+[    0.000000] Writing ErrCtl register=00000000
+[    0.000000] Readback ErrCtl register=00000000
+[    0.000000] Memory: 126288k/131072k available (2219k kernel code, 4784k reserved, 586k data, 212k init, 0k highmem)
+[    0.000000] SLUB: Genslabs=9, HWalign=32, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] NR_IRQS:51
+[    0.000000] Calibrating delay loop... 452.19 BogoMIPS (lpj=2260992)
+[    0.060000] pid_max: default: 32768 minimum: 301
+[    0.060000] Mount-cache hash table entries: 512
+[    0.070000] NET: Registered protocol family 16
+[    0.070000] gpiochip_add: registered GPIOs 0 to 15 on device: ath79
+[    0.080000] MIPS: machine is NETGEAR WNDR3700/WNDR3800/WNDRMAC
+[    2.680000] registering PCI controller with io_map_base unset
+[    2.690000] bio: create slab &lt;bio-0&gt; at 0
+[    2.700000] PCI host bridge to bus 0000:00
+[    2.700000] pci_bus 0000:00: root bus resource [mem 0x10000000-0x16ffffff]
+[    2.710000] pci_bus 0000:00: root bus resource [io  0x0000]
+[    2.710000] pci 0000:00:11.0: [168c:ff1d] type 0 class 0x000200
+[    2.710000] pci 0000:00:11.0: fixup device configuration
+[    2.720000] pci 0000:00:11.0: reg 10: [mem 0x00000000-0x0000ffff]
+[    2.720000] pci 0000:00:11.0: PME# supported from D0 D3hot
+[    2.720000] pci 0000:00:12.0: [168c:ff1d] type 0 class 0x000200
+[    2.720000] pci 0000:00:12.0: fixup device configuration
+[    2.720000] pci 0000:00:12.0: reg 10: [mem 0x00000000-0x0000ffff]
+[    2.720000] pci 0000:00:12.0: PME# supported from D0 D3hot
+[    2.720000] pci 0000:00:11.0: BAR 0: assigned [mem 0x10000000-0x1000ffff]
+[    2.730000] pci 0000:00:12.0: BAR 0: assigned [mem 0x10010000-0x1001ffff]
+[    2.730000] pci 0000:00:11.0: using irq 40 for pin 1
+[    2.740000] pci 0000:00:12.0: using irq 41 for pin 1
+[    2.740000] Switching to clocksource MIPS
+[    2.750000] NET: Registered protocol family 2
+[    2.750000] IP route cache hash table entries: 1024 (order: 0, 4096 bytes)
+[    2.750000] TCP established hash table entries: 4096 (order: 3, 32768 bytes)
+[    2.760000] TCP bind hash table entries: 4096 (order: 2, 16384 bytes)
+[    2.760000] TCP: Hash tables configured (established 4096 bind 4096)
+[    2.770000] TCP reno registered
+[    2.770000] UDP hash table entries: 256 (order: 0, 4096 bytes)
+[    2.780000] UDP-Lite hash table entries: 256 (order: 0, 4096 bytes)
+[    2.780000] NET: Registered protocol family 1
+[    2.790000] PCI: CLS 0 bytes, default 32
+[    2.800000] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    2.810000] JFFS2 version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[    2.820000] msgmni has been set to 246
+[    2.820000] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 254)
+[    2.830000] io scheduler noop registered
+[    2.830000] io scheduler deadline registered (default)
+[    2.840000] Serial: 8250/16550 driver, 16 ports, IRQ sharing enabled
+[    2.870000] serial8250.0: ttyS0 at MMIO 0x18020000 (irq = 11) is a 16550A
+[    2.870000] console [ttyS0] enabled, bootconsole disabled
+[    2.890000] m25p80 spi0.0: found mx25l12805d, expected m25p80
+[    2.890000] m25p80 spi0.0: mx25l12805d (16384 Kbytes)
+[    2.900000] 6 cmdlinepart partitions found on MTD device spi0.0
+[    2.900000] Creating 6 MTD partitions on &quot;spi0.0&quot;:
+[    2.910000] 0x000000000000-0x000000050000 : &quot;u-boot&quot;
+[    2.910000] 0x000000050000-0x000000070000 : &quot;u-boot-env&quot;
+[    2.920000] 0x000000070000-0x000000170000 : &quot;kernel&quot;
+[    2.930000] 0x000000170000-0x000000ff0000 : &quot;rootfs&quot;
+[    2.930000] mtd: partition &quot;rootfs&quot; set to be root filesystem
+[    2.940000] mtd: partition &quot;rootfs_data&quot; created automatically, ofs=2F0000, len=D00000 
+[    2.950000] 0x0000002f0000-0x000000ff0000 : &quot;rootfs_data&quot;
+[    2.950000] 0x000000ff0000-0x000001000000 : &quot;art&quot;
+[    2.960000] 0x000000070000-0x000000ff0000 : &quot;firmware&quot;
+[    2.970000] Realtek RTL8366S ethernet switch driver version 0.2.2
+[    2.970000] rtl8366s rtl8366s: using GPIO pins 5 (SDA) and 7 (SCK)
+[    2.980000] rtl8366s rtl8366s: RTL8366 ver. 1 chip found
+[    3.020000] rtl8366s: probed
+[    3.020000] eth0: Atheros AG71xx at 0xb9000000, irq 4
+[    3.330000] eth1: Atheros AG71xx at 0xba000000, irq 5
+[    3.640000] ag71xx ag71xx.1: eth1: connected to PHY at rtl8366s:04 [uid=001cc960, driver=Generic PHY]
+[    3.640000] TCP cubic registered
+[    3.650000] NET: Registered protocol family 17
+[    3.650000] Bridge firewalling registered
+[    3.660000] 8021q: 802.1Q VLAN Support v1.8
+[    3.670000] VFS: Mounted root (squashfs filesystem) readonly on device 31:3.
+[    3.670000] Freeing unused kernel memory: 212k freed
+[    5.120000] ar71xx: pll_reg 0xb8050010: 0x11110000
+[    5.120000] eth0: link up (1000Mbps/Full duplex)
+[    5.140000] Registered led device: wndr3700:green:power
+[    5.150000] Registered led device: wndr3700:orange:power
+[    5.150000] Registered led device: wndr3700:green:wps
+[    5.150000] Registered led device: wndr3700:orange:wps
+[    5.150000] Registered led device: wndr3700:green:wan
+[    8.380000] JFFS2 notice: (473) jffs2_build_xattr_subsystem: complete building xattr subsystem, 1 of xdatum (0 unche
+cked, 0 orphan) and 10 of xref (0 dead, 2 orphan) found.
+[    8.510000] eth0: link down
+[    9.030000] Compat-drivers backport release: compat-drivers-2012-09-04-2-gddac993
+[    9.030000] Backport based on wireless-testing.git master-2012-09-07
+[    9.040000] compat.git: wireless-testing.git
+[    9.060000] cfg80211: Calling CRDA to update world regulatory domain
+[    9.070000] cfg80211: World regulatory domain updated:
+[    9.070000] cfg80211:   (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[    9.080000] cfg80211:   (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.090000] cfg80211:   (2457000 KHz - 2482000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[    9.100000] cfg80211:   (2474000 KHz - 2494000 KHz @ 20000 KHz), (300 mBi, 2000 mBm)
+[    9.100000] cfg80211:   (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.110000] cfg80211:   (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.330000] usbcore: registered new interface driver usbfs
+[    9.340000] usbcore: registered new interface driver hub
+[    9.340000] usbcore: registered new device driver usb
+[    9.720000] PCI: Enabling device 0000:00:11.0 (0000 -&gt; 0002)
+[    9.730000] ath: phy0: eeprom contains invalid mac address: ff:ff:ff:ff:ff:ff
+[    9.740000] ath: phy0: random mac address will be used: 06:b7:bc:d8:89:39
+[    9.750000] ath: EEPROM regdomain: 0x60
+[    9.750000] ath: EEPROM indicates we should expect a direct regpair map
+[    9.750000] ath: Country alpha2 being used: 00
+[    9.750000] ath: Regpair used: 0x60
+[    9.750000] ieee80211 phy0: Selected rate control algorithm &#039;minstrel_ht&#039;
+[    9.750000] Registered led device: ath9k-phy0
+[    9.750000] ieee80211 phy0: Atheros AR9280 Rev:2 mem=0xb0000000, irq=40
+[    9.760000] PCI: Enabling device 0000:00:12.0 (0000 -&gt; 0002)
+[    9.770000] ath: EEPROM regdomain: 0x0
+[    9.770000] ath: EEPROM indicates default country code should be used
+[    9.770000] ath: doing EEPROM country-&gt;regdmn map search
+[    9.770000] ath: country maps to regdmn code: 0x3a
+[    9.770000] ath: Country alpha2 being used: US
+[    9.770000] ath: Regpair used: 0x3a
+[    9.780000] ieee80211 phy1: Selected rate control algorithm &#039;minstrel_ht&#039;
+[    9.780000] Registered led device: ath9k-phy1
+[    9.780000] ieee80211 phy1: Atheros AR9280 Rev:2 mem=0xb0010000, irq=41
+[    9.790000] cfg80211: Calling CRDA for country: US
+[    9.790000] cfg80211: Regulatory domain changed to country: US
+[    9.800000] cfg80211:   (start_freq - end_freq @ bandwidth), (max_antenna_gain, max_eirp)
+[    9.810000] cfg80211:   (2402000 KHz - 2472000 KHz @ 40000 KHz), (300 mBi, 2700 mBm)
+[    9.810000] cfg80211:   (5170000 KHz - 5250000 KHz @ 40000 KHz), (300 mBi, 1700 mBm)
+[    9.820000] cfg80211:   (5250000 KHz - 5330000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.830000] cfg80211:   (5490000 KHz - 5600000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.840000] cfg80211:   (5650000 KHz - 5710000 KHz @ 40000 KHz), (300 mBi, 2000 mBm)
+[    9.840000] cfg80211:   (5735000 KHz - 5835000 KHz @ 40000 KHz), (300 mBi, 3000 mBm)
+[    9.870000] PPP generic driver version 2.4.2
+[   10.030000] ip_tables: (C) 2000-2006 Netfilter Core Team
+[   10.160000] NET: Registered protocol family 24
+[   10.180000] ehci_hcd: USB 2.0 &#039;Enhanced&#039; Host Controller (EHCI) Driver
+[   10.180000] ehci-platform ehci-platform: Generic Platform EHCI Controller
+[   10.190000] ehci-platform ehci-platform: new USB bus registered, assigned bus number 1
+[   10.230000] ehci-platform ehci-platform: irq 3, io mem 0x1b000000
+[   10.250000] ehci-platform ehci-platform: USB 2.0 started, EHCI 1.00
+[   10.250000] hub 1-0:1.0: USB hub found
+[   10.260000] hub 1-0:1.0: 2 ports detected
+[   10.270000] nf_conntrack version 0.5.0 (1976 buckets, 7904 max)
+[   10.420000] ohci_hcd: USB 1.1 &#039;Open&#039; Host Controller (OHCI) Driver
+[   10.420000] ohci-platform ohci-platform: Generic Platform OHCI Controller
+[   10.430000] ohci-platform ohci-platform: new USB bus registered, assigned bus number 2
+[   10.440000] ohci-platform ohci-platform: irq 14, io mem 0x1c000000
+[   10.500000] hub 2-0:1.0: USB hub found
+[   10.500000] hub 2-0:1.0: 2 ports detected
+[   12.650000] ar71xx: pll_reg 0xb8050010: 0x11110000
+[   12.650000] eth0: link up (1000Mbps/Full duplex)
+[   12.650000] device eth0.1 entered promiscuous mode
+[   12.660000] device eth0 entered promiscuous mode
+[   12.660000] br-lan: port 1(eth0.1) entered forwarding state
+[   12.660000] br-lan: port 1(eth0.1) entered forwarding state
+[   12.670000] br-lan: port 1(eth0.1) entered forwarding state
+[   14.670000] br-lan: port 1(eth0.1) entered forwarding state
+</pre>
+
+</p>
+
+</div>
+
+<h2><a name="basic.configuration" id="basic.configuration">Basic configuration</a></h2>
+<div class="level2">
+
+<p>
+Make basic configuration as described in the ¡ú<a href="http://wiki.openwrt.org/doc/howto/basic.config" class="wikilink1" title="doc:howto:basic.config">basic.config</a>
+</p>
+
+</div>
+
+<h2><a name="specific.configuration" id="specific.configuration">Specific configuration</a></h2>
+<div class="level2">
+
+</div>
+
+<h3><a name="kernel.modules" id="kernel.modules">Kernel modules</a></h3>
+<div class="level3">
+
+<p>
+
+May be need to install WiFi support packages to use WiFi in the Netgerar WRDN3800. Built-in kernel modules of Backfire don&#039;t work with WiFi hardware of WNDR3800. If WiFi can&#039;t work, you may try following command of <a href="http://wiki.openwrt.org/doc/uci" class="wikilink1" title="doc:uci">uci</a>:
+<pre class="code bash"><span class="co0"># opkg update</span>
+<span class="co0"># opkg install kmod-ath9k wpad-mini</span></pre>
+</p>
+
+</div>
+
+<h3><a name="ethernet.switch.configuration.vlan" id="ethernet.switch.configuration.vlan">Ethernet switch configuration (VLAN)</a></h3>
+<div class="level3">
+
+<p>
+If you want set up some ports to another 802.1Q VLAN, you should known about ethernet port numbers:
+</p>
+<table class="inline">
+<tr class="row0">
+	<th class="col0" colspan="1" rowspan="1">Port number in the switch configuation</th>
+	<td class="col1" colspan="1" rowspan="1">Port 0</td>
+	<td class="col2" colspan="1" rowspan="1">Port 1</td>
+	<td class="col3" colspan="1" rowspan="1">Port 2</td>
+	<td class="col4" colspan="1" rowspan="1">Port 3</td>
+	<td class="col5" colspan="1" rowspan="1">Port 4</td>
+	<td class="col6" colspan="1" rowspan="1">Port 5</td>
+</tr>
+<tr class="row1">
+	<th class="col0" colspan="1" rowspan="1">Port marked in the case</th>
+	<td class="col1" colspan="1" rowspan="1">&quot;4&quot;</td>
+	<td class="col2" colspan="1" rowspan="1">&quot;3&quot;</td>
+	<td class="col3" colspan="1" rowspan="1">&quot;2&quot;</td>
+	<td class="col4" colspan="1" rowspan="1">&quot;1&quot;</td>
+	<td class="col5" colspan="1" rowspan="1">&quot;<acronym title="Wide Area Network">WAN</acronym>&quot;</td>
+	<td class="col6" colspan="1" rowspan="1">CPU port (trunk)</td>
+</tr>
+</table>
+<p>
+&quot;Port 4&quot; are connected to CPU&#039;s eth1 and usually it should not be used in your configuration.
+</p>
+
+<p>
+<strong>Please remember</strong>: Port 5 in tagged mode should be included into each VLAN. Otherwise such VLAN can&#039;t be routed (will isolated from router).
+</p>
+
+</div>
+
+<h2><a name="hardware" id="hardware">Hardware</a></h2>
+<div class="level2">
+
+</div>
+
+<h3><a name="info" id="info">Info</a></h3>
+<div class="level3">
+<table class="inline">
+<tr class="row0">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong><a href="http://en.wikipedia.org/wiki/Instruction set" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Instruction set">Architecture</a>:</strong></td>
+	<td class="col1" colspan="1" rowspan="1"><a href="http://en.wikipedia.org/wiki/MIPS architecture" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/MIPS architecture">MIPS</a></td>
+</tr>
+<tr class="row1">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Vendor:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1"><a href="http://en.wikipedia.org/wiki/Qualcomm Atheros" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Qualcomm Atheros">Qualcomm Atheros</a></td>
+</tr>
+<tr class="row2">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong><a href="http://wiki.openwrt.org/doc/techref/bootloader" class="wikilink1" title="doc:techref:bootloader">Bootloader</a>:</strong></td>
+	<td class="col1" colspan="1" rowspan="1"><a href="http://wiki.openwrt.org/doc/techref/bootloader/uboot" class="wikilink1" title="doc:techref:bootloader:uboot">U-Boot</a>?</td>
+</tr>
+<tr class="row3">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong><a href="http://wiki.openwrt.org/doc/hardware/soc" class="wikilink1" title="doc:hardware:soc">System-On-Chip</a>:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">AR7161 rev 2</td>
+</tr>
+<tr class="row4">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong><a href="http://wiki.openwrt.org/doc/hardware/cpu" class="wikilink1" title="doc:hardware:cpu">CPU</a>/Speed</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">24Kc V7.4 680 <acronym title="Megahertz">MHz</acronym></td>
+</tr>
+<tr class="row5">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Flash-Chip:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1"><a href="http://www.macronix.com/QuickPlace/hq/PageLibrary4825740B00298A3B.nsf/$defaultview/3F21BAC2E121E17848257639003A3146/$File/MX25L12845E%2C%203V%2C%20128Mb%2C%20v1.7.pdf" class="urlextern" title="http://www.macronix.com/QuickPlace/hq/PageLibrary4825740B00298A3B.nsf/$defaultview/3F21BAC2E121E17848257639003A3146/$File/MX25L12845E%2C%203V%2C%20128Mb%2C%20v1.7.pdf"  rel="nofollow">Macronix MX25L12845EWI-10G</a></td>
+</tr>
+<tr class="row6">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Flash size:</strong></td>
+	<td class="col1" colspan="1" rowspan="1">16384 KiB</td>
+</tr>
+<tr class="row7">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>RAM-Chip:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">2 x <a href="http://www.hynix.com/inc/pdfDownload.jsp?path=/datasheet/pdf/dram/Consumer_H5DU516(8)2ETR-xxx(Rev1.1).pdf" class="urlextern" title="http://www.hynix.com/inc/pdfDownload.jsp?path=/datasheet/pdf/dram/Consumer_H5DU516(8)2ETR-xxx(Rev1.1).pdf"  rel="nofollow">Hynix H5DU5162ETR-E3C</a></td>
+</tr>
+<tr class="row8">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>RAM:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">128 MiB</td>
+</tr>
+<tr class="row9">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Wireless:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">?</td>
+</tr>
+<tr class="row10">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Ethernet:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1"><a href="http://realtek.info/pdf/rtl8366_8369_datasheet_1-1.pdf" class="urlextern" title="http://realtek.info/pdf/rtl8366_8369_datasheet_1-1.pdf"  rel="nofollow">Realtek RTL8366SR</a></td>
+</tr>
+<tr class="row11">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>USB:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1">Yes 1x2.0 (ar71xx built-in EHCI controller)</td>
+</tr>
+<tr class="row12">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>Serial:</strong></td>
+	<td class="col1" colspan="1" rowspan="1"><a href="#serial" title="toh:netgear:wndr3800 &crarr;" class="wikilink1">Yes</a></td>
+</tr>
+<tr class="row13">
+	<td class="col0 leftalign" colspan="1" rowspan="1"><strong>JTAG:</strong></td>
+	<td class="col1 leftalign" colspan="1" rowspan="1"><a href="#jtag" title="toh:netgear:wndr3800 &crarr;" class="wikilink1">Yes</a></td>
+</tr>
+</table>
+</div>
+
+<h3><a name="photos" id="photos">Photos</a></h3>
+<div class="level3">
+
+<p>
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3800/back.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3800:back.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3800/back.jpg?w=250" class="media" alt="" width="250" /></a>
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3800/openback.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3800:openback.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3800/openback.jpg?w=250" class="media" alt="" width="250" /></a>
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3800/openfront.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3800:openfront.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3800/openfront.jpg?w=250" class="media" alt="" width="250" /></a>
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3800/antenna.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3800:antenna.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3800/antenna.jpg?w=250" class="media" alt="" width="250" /></a>
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3800/ram.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3800:ram.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3800/ram.jpg?w=250" class="media" alt="" width="250" /></a>
+</p>
+
+</div>
+
+<h3><a name="opening.the.case" id="opening.the.case">Opening the case</a></h3>
+<div class="level3">
+
+<p>
+<strong>Note:</strong> This will void your warranty!
+
+</p>
+<ul>
+<li class="level1"><div class="li">To remove the cover use a Torx (T8) screwdriver.</div>
+</li>
+<li class="level1"><div class="li">There are two screws easily visible on the bottom of the case.</div>
+</li>
+<li class="level1"><div class="li">There are four more screws under the rubber feet. The feet are not glued to the plastic and can easily be removed and pushed back into place once reassembled. The feet have rubber tethers, but you can slide them out gently without damaging them, and later you can reinsert them just as easily. Don&#039;t forget to put them in a plastic baggie so you don&#039;t lose them!</div>
+</li>
+</ul>
+
+</div>
+
+<h3><a name="serial" id="serial">Serial</a></h3>
+<div class="level3">
+
+<p>
+Internal J1 4-pin connector
+
+</p>
+<table class="inline">
+<tr class="row0">
+	<th class="col0" colspan="1" rowspan="1">Pin Out</th>
+	<th class="col1" colspan="1" rowspan="1">Description</th>
+</tr>
+<tr class="row1">
+	<td class="col0" colspan="1" rowspan="1">Pin1</td>
+	<td class="col1" colspan="1" rowspan="1">3.3V</td>
+</tr>
+<tr class="row2">
+	<td class="col0" colspan="1" rowspan="1">Pin2</td>
+	<td class="col1" colspan="1" rowspan="1">TX</td>
+</tr>
+<tr class="row3">
+	<td class="col0" colspan="1" rowspan="1">Pin3</td>
+	<td class="col1" colspan="1" rowspan="1">RX</td>
+</tr>
+<tr class="row4">
+	<td class="col0" colspan="1" rowspan="1">Pin4</td>
+	<td class="col1" colspan="1" rowspan="1">GND</td>
+</tr>
+</table>
+<p>
+
+<a href="http://wiki.openwrt.org/_detail/toh/netgear/wndr3700-serial.jpg?id=toh%3Anetgear%3Awndr3800" class="media" title="toh:netgear:wndr3700-serial.jpg"><img src="http://wiki.openwrt.org/_media/toh/netgear/wndr3700-serial.jpg" class="media" title="WNDR3700 serial pin connector" alt="WNDR3700 serial pin connector" /></a>
+</p>
+
+<p>
+3.3V serial port voltage !!! Is it need to use 3.3V serial adapter, for example, with PL2303 chip. (You may modify usb cable for mobile phone.)
+</p>
+
+<p>
+COM port settings: Speed:115200, Data bits:8, Stop bits:1, Parity:none, Flow control:none
+</p>
+
+</div>
+
+<h3><a name="jtag" id="jtag">JTAG</a></h3>
+<div class="level3">
+
+<p>
+Internal J3 connector with the key pin in the left-top corner at the photo, even pins in top line, odd pins in bottom line.
+</p>
+
+<p>
+14 Pin header
+</p>
+<table class="inline">
+<tr class="row0">
+	<th class="col0" colspan="1" rowspan="1">Pin Out</th>
+</tr>
+<tr class="row1">
+	<th class="col0" colspan="1" rowspan="1">pin</th>
+	<th class="col1" colspan="1" rowspan="1">value</th>
+	<th class="col2" colspan="1" rowspan="1">pin</th>
+	<th class="col3" colspan="1" rowspan="1">value</th>
+</tr>
+<tr class="row2">
+	<td class="col0" colspan="1" rowspan="1">Pin1</td>
+	<td class="col1" colspan="1" rowspan="1">TRST</td>
+	<td class="col2" colspan="1" rowspan="1">Pin2</td>
+	<td class="col3" colspan="1" rowspan="1">GND</td>
+</tr>
+<tr class="row3">
+	<td class="col0" colspan="1" rowspan="1">Pin3</td>
+	<td class="col1" colspan="1" rowspan="1">TDI</td>
+	<td class="col2" colspan="1" rowspan="1">Pin4</td>
+	<td class="col3" colspan="1" rowspan="1">GND</td>
+</tr>
+<tr class="row4">
+	<td class="col0" colspan="1" rowspan="1">Pin5</td>
+	<td class="col1" colspan="1" rowspan="1">TDO</td>
+	<td class="col2" colspan="1" rowspan="1">Pin6</td>
+	<td class="col3" colspan="1" rowspan="1">GND</td>
+</tr>
+<tr class="row5">
+	<td class="col0" colspan="1" rowspan="1">Pin7</td>
+	<td class="col1" colspan="1" rowspan="1">TMS</td>
+	<td class="col2" colspan="1" rowspan="1">Pin8</td>
+	<td class="col3" colspan="1" rowspan="1">GND</td>
+</tr>
+<tr class="row6">
+	<td class="col0" colspan="1" rowspan="1">Pin9</td>
+	<td class="col1" colspan="1" rowspan="1">TCK</td>
+	<td class="col2" colspan="1" rowspan="1">Pin10</td>
+	<td class="col3" colspan="1" rowspan="1">GND</td>
+</tr>
+<tr class="row7">
+	<td class="col0" colspan="1" rowspan="1">Pin11</td>
+	<td class="col1" colspan="1" rowspan="1">RST</td>
+	<td class="col2" colspan="1" rowspan="1">Pin12</td>
+	<td class="col3" colspan="1" rowspan="1">NC</td>
+</tr>
+<tr class="row8">
+	<td class="col0" colspan="1" rowspan="1">Pin13</td>
+	<td class="col1" colspan="1" rowspan="1">NC</td>
+	<td class="col2" colspan="1" rowspan="1">Pin14</td>
+	<td class="col3" colspan="1" rowspan="1">3.3VDC</td>
+</tr>
+</table>
+<p>
+
+See <a href="http://wiki.openwrt.org/doc/hardware/port.jtag" class="wikilink1" title="doc:hardware:port.jtag">port.jtag</a> for more JTAG details.
+</p>
+
+</div>
+
+<h2><a name="recovery.flash.in.failsafe.mode" id="recovery.flash.in.failsafe.mode">Recovery flash in failsafe mode</a></h2>
+<div class="level2">
+
+<p>
+
+If you happen to brick your router, do not fear. You can use TFTP file transfer to flash the router with a new firmware.
+</p>
+
+<p>
+You need:
+</p>
+<ul>
+<li class="level1"><div class="li"> A TFTP client for your computer. There are both command-line tools and <acronym title="Graphical User Interface">GUI</acronym> versions available.</div>
+</li>
+<li class="level1"><div class="li"> Your computer must have an IP address from the 192.168.1.x network, as the router failsafe mode defaults to 192.168.1.1.</div>
+</li>
+<li class="level1"><div class="li"> A new firmware to flash in. Either an original Netgear firmware or an Openwrt &quot;factory.img&quot; firmware. &quot;Sysupgrade&quot; version will not work.</div>
+</li>
+<li class="level1"><div class="li"> Access to router&#039;s reset button</div>
+</li>
+</ul>
+<ol>
+<li class="level1"><div class="li"> Configure your ethernet connection (on the client machine you&#039;re using to configure the WNDR3800) using a static IP as 192.168.1.2, netmask 255.255.255.0. (The WNDR3800 in factory reset mode is going to come up as 192.168.1.1.)</div>
+</li>
+<li class="level1"><div class="li"> Connect your computer to one of the LAN (not <acronym title="Wide Area Network">WAN</acronym>) ports on the router.</div>
+</li>
+<li class="level1"><div class="li"> Start a continuous ping from your client computer to 192.168.1.1 (Linux and Mac <acronym title="Operating System">OS</acronym> ping will continue until stopped by default; Windows ping by default sends 4 pings and then stops, so use &quot;ping -t&quot; under Windows); probably nothing will answer these pings yet, but you can use the output to tell you when the router is ready in the next couple steps.</div>
+</li>
+<li class="level1"><div class="li"> Power the router off.</div>
+</li>
+<li class="level1"><div class="li"> Hold down the factory reset button on the bottom of the case. Now turn the router back on while continuing to hold the factory reset button¡­</div>
+</li>
+<li class="level1"><div class="li"> Wait until the router is listening on 192.168.1.1 (this takes 45-60 seconds; to confirm, you can ping 192.168.1.1, and see if it responds; it&#039;s best to start a sequence of ping requests above, before your hands get busy with the factory reset button).</div>
+</li>
+<li class="level1"><div class="li"> Release the factory reset button. (If you happen to have a serial cable connected, you&#039;ll see that the system is in firmware recovery mode and that it will be waiting for you to upload firmware. But you don&#039;t need the serial cable at all.)</div>
+</li>
+<li class="level1"><div class="li"> Run a tftp CLIENT on your computer (enter no hostname on the command line), set trasfer mode to binary and retransmit timeout to one second (optional), next put firmware image to router.</div>
+</li>
+</ol>
+
+<p>
+For the linux tftp client enter the following (note &quot;rexmt 1&quot;! Some people do not see &quot;1&quot; and enter &quot;binary&quot; as the value for rexmt, thus they do not switch to the binary mode, and upload doesn&#039;t start):<pre class="code bash">verbose
+trace
+rexmt <span class="nu0">1</span>
+binary
+connect 192.168.1.1
+put WNDR3800-V1.0.0.40.img <span class="br0">&#40;</span>or whatever the filename is that you are trying to flash<span class="br0">&#41;</span></pre>
+If successful, you will see upload progress info for a couple of seconds, then the router will flash itself and reboot automatically. This may take several minutes. Be patient, don&#039;t reset or switch off a router!
+</p>
+
+</div>
+
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+</div>
+
+<h3><a name="gain.access.to.built-in.telnet.daemon.of.the.original.firmware" id="gain.access.to.built-in.telnet.daemon.of.the.original.firmware">Gain access to built-in telnet daemon of the original firmware.</a></h3>
+<div class="level3">
+
+<p>
+Many Netgear routers have telnet support built-in, but gaining access to it requires an extra step of sending a specially formatted payload to the <code>telnet daemon</code> before it will allow users to log in. Netgear provides the executable called <code>telnetenable.exe</code> for doing just this. It is only available for the &quot;other <acronym title="Operating System">OS</acronym>&quot;. However, people not employed by Netgear wrote two alternative Programs that do run under Unix. One is written in C and is under the GPLv2 and the other written in Python and is under the <acronym title="Massachusetts Institute of Technology">MIT</acronym> License.
+</p>
+<ul>
+<li class="level1"><div class="li"> please follow ? <a href="http://wiki.openwrt.org/toh/netgear/telnet.console" class="wikilink1" title="toh:netgear:telnet.console">Unlocking the Netgear Telnet Console</a></div>
+</li>
+</ul>
+
+</div>
+
+<h2><a name="resources" id="resources">Resources</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> OEM source code and toolchain: <a href="ftp://downloads.netgear.com/files/GPL/" class="urlextern" title="ftp://downloads.netgear.com/files/GPL/"  rel="nofollow">ftp://downloads.netgear.com/files/GPL/</a></div>
+</li>
+</ol>
+
+</div>
+
+<h2><a name="custom.openwrt.image.with.luci.integrated" id="custom.openwrt.image.with.luci.integrated">Custom OpenWrt image with LuCi integrated</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://www.superwrt.eu/en/firmware/netgear-wndr3800/" class="urlextern" title="http://www.superwrt.eu/en/firmware/netgear-wndr3800/"  rel="nofollow">http://www.superwrt.eu/en/firmware/netgear-wndr3800/</a>
+</p>
+
+</div>
+
+<h2><a name="tags" id="tags">Tags</a></h2>
+<div class="level2">
+<div class="tags"><span>
+	<a href="http://wiki.openwrt.org/tag/gigabitethernet?do=showtag&amp;tag=GigabitEthernet" class="wikilink1" title="tag:gigabitethernet" rel="tag">GigabitEthernet</a>,
+	<a href="http://wiki.openwrt.org/tag/5port?do=showtag&amp;tag=5Port" class="wikilink1" title="tag:5port" rel="tag">5Port</a>,
+	<a href="http://wiki.openwrt.org/tag/2phy?do=showtag&amp;tag=2PHY" class="wikilink1" title="tag:2phy" rel="tag">2PHY</a>,
+	<a href="http://wiki.openwrt.org/tag/usb?do=showtag&amp;tag=USB" class="wikilink1" title="tag:usb" rel="tag">USB</a>,
+	<a href="http://wiki.openwrt.org/tag/1usb?do=showtag&amp;tag=1USB" class="wikilink1" title="tag:1usb" rel="tag">1USB</a>,
+	<a href="http://wiki.openwrt.org/tag/jtag?do=showtag&amp;tag=JTAG" class="wikilink1" title="tag:jtag" rel="tag">JTAG</a>,
+	<a href="http://wiki.openwrt.org/tag/802.11bgn?do=showtag&amp;tag=802.11bgn" class="wikilink1" title="tag:802.11bgn" rel="tag">802.11bgn</a>,
+	<a href="http://wiki.openwrt.org/tag/ath9k?do=showtag&amp;tag=ath9k" class="wikilink1" title="tag:ath9k" rel="tag">ath9k</a>,
+	<a href="http://wiki.openwrt.org/tag/802.11abgn_simultan?do=showtag&amp;tag=802.11abgn_simultan" class="wikilink1" title="tag:802.11abgn_simultan" rel="tag">802.11abgn simultan</a>,
+	<a href="http://wiki.openwrt.org/tag/128ram?do=showtag&amp;tag=128RAM" class="wikilink1" title="tag:128ram" rel="tag">128RAM</a>,
+	<a href="http://wiki.openwrt.org/tag/16flash?do=showtag&amp;tag=16Flash" class="wikilink1" title="tag:16flash" rel="tag">16Flash</a>,
+	<a href="http://wiki.openwrt.org/tag/mips?do=showtag&amp;tag=MIPS" class="wikilink1" title="tag:mips" rel="tag">MIPS</a>,
+	<a href="http://wiki.openwrt.org/tag/mips32?do=showtag&amp;tag=MIPS32" class="wikilink1" title="tag:mips32" rel="tag">MIPS32</a>,
+	<a href="http://wiki.openwrt.org/tag/24kc?do=showtag&amp;tag=24Kc" class="wikilink1" title="tag:24kc" rel="tag">24Kc</a>
+</span></div>
+
+</div>
+
+		<!-- wikipage stop -->
+
+		<p class="top"><a href="#dokuwiki__top" class="action top" accesskey="x">Back to top</a></p>
+		<p class="pageinfo">toh/netgear/wndr3800.txt &middot; Last modified: 2014/08/08 15:03 by aind</p>
+		<div class="license">
+		        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
+		        This text is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+		</p>
+	</div>
+
+	<!--<div id="tpl_simple_navi" align="right"></div>-->
+
+	
+        
+		</div>
+<div class="hidden"><img src="http://wiki.openwrt.org/lib/exe/indexer.php?id=toh%3Anetgear%3Awndr3800&amp;1412156962" width="1" height="1" alt=""  /></div>
+
+<div class="footer"><img src="http://wiki.openwrt.org/lib/exe/indexer.php?id=toh%3Anetgear%3Awndr3800&amp;1412156962" width="1" height="1" alt=""  /></div>
+</body>
+</html>

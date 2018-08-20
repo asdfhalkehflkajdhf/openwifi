@@ -1,0 +1,18 @@
+.:netgear:WNDR3800?		 10.03.1	 ar71xx	 Atheros AR7161	 680	 16	 128	 Atheros AR9223 bgn / Atheros AR9220 an (integrated)	 11a/b/g/n	 5 gigE	 Yes	 1x v2.0	 Yes	 Yes
+
+
+
+
+In Windows XP, Click Start Button - All Programs - Accessories - 
+   Communication - HyperTerminal
+Enter a name for the connection, Click ok
+Choose com port you adapter is plugged into, Click ok
+Set:
+ Bits per second = 115200
+ Data Bits = 8
+ Parity = none
+ Stop bits = 1
+ Flow control = none
+Click ok
+Click File - Save As, and select a place to save it to so you 
+             don't have to enter the settings again.

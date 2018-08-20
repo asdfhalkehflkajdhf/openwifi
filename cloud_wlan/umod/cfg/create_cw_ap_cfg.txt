@@ -1,0 +1,44 @@
+CREATE TABLE t_config_base(
+usage_model integer  NOT NULL,
+cwlan_sw int NOT NULL,
+time_online integer  NOT NULL,
+interval_timer integer NOT NULL,
+wan_eth_name text
+);
+
+INSERT INTO t_config_base (usage_model, cwlan_sw, time_online, interval_timer, wan_eth_name ) VALUES(0, 0, 30*60, 3,'eth1');
+
+CREATE TABLE t_online_socket(
+server_addr text,
+server_port int,
+);
+
+INSERT INTO t_online_socket (server_addr, server_port ) VALUES('182.92.68.58' , 22222);
+
+
+CREATE TABLE t_user_white_list(
+mac text,
+portal_id int, 
+time_online int
+);
+
+CREATE TABLE t_url_white_list(
+id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1,
+url text
+);
+insert into t_url_white_list( url)values(  'www.baidu.com');
+
+CREATE TABLE t_portal_list(
+id INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1,
+url text
+);
+insert into t_portal_list( url)values(  'www.baidu.com');
+
+
+CREATE TABLE t_log(
+ulog_sw int NOT NULL,
+klog_sw int NOT NULL,
+log_mode int NOT NULL, 
+);
+insert into t_log( ulog_sw, klog_sw , log_mode)values(  0, 0, 0);
+

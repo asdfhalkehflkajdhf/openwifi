@@ -1,0 +1,16 @@
+
+/wbss/fradius/etc/raddb/sql/mysql/dialup.conf 认证配置文件中
+
+authorize_check_query ="sql语句修改成以下内容"
+
+SELECT 1,login_name,'Cleartext-Password', login_pass, ':=' \
+FROM t_client_user WHERE login_name = BINARY '%{SQL-User-Name}' AND (( 0 IN \
+	(SELECT COUNT(1) FROM t_client_user_attr WHERE client_user_login_name='%{SQL-User-Name}' AND attr_template_id=14 ))\
+	OR ('%{Calling-Station-Id}' IN \
+	(SELECT `value` FROM t_client_user_attr WHERE client_user_login_name='%{SQL-User-Name}' AND attr_template_id=14))) \
+UNION SELECT 1,uid,'Cleartext-Password', aaa_type,':=' FROM t_client_user_temp WHERE uid = BINARY '%{SQL-User-Name}' \
+UNION SELECT 1,CODE,'Cleartext-Password', aaa_type,':=' FROM t_access_code WHERE CODE = BINARY '%{SQL-User-Name}' \
+	AND ((last_use_expired_time IS NULL AND NOW()< first_expired_time) OR \
+	(last_use_expired_time IS NOT NULL AND NOW()<last_use_expired_time)) 
+
+	

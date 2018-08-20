@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS %s%04d%02d 
+(
+	consume_id int unsigned not null auto_increment,
+	framed_ip_address varchar(15),
+	acct_session_id varchar(30),
+	nas_port int unsigned,
+	nas_port_type varchar(64),
+	calling_station_id varchar(64),
+	acct_delay_time int unsigned,
+	action_request_time DATETIME,
+	acct_status_type varchar(10),
+	acct_session_time int unsigned,
+	acct_input_octets int unsigned,
+	acct_input_gigawords int unsigned,
+	acct_output_octets int unsigned,
+	acct_output_gigawords int unsigned,
+	acct_input_packets int unsigned,
+	acct_output_packets int unsigned,
+	proxy_state int unsigned,
+	user_name varchar(64),
+	nas_ip_address varchar(15),
+	acct_unique_session_id varchar(64),
+	timestamp int unsigned,
+	user_type int(11) unsigned,
+	company_id BIGINT(20) unsigned,
+	primary key(consume_id)
+);

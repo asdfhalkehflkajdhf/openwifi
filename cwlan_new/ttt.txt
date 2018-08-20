@@ -1,0 +1,41 @@
+HOSTNAME="localhost"                                           #数据库Server信息
+PORT="3306"
+USERNAME="root"
+PASSWORD="lzc123"
+
+ 
+
+DBNAME="test_db_name"                                              #要创建的数据库的库名称
+TABLENAME="test_table_name"                                  #要创建的数据库的表的名称
+
+ 
+
+MYSQL_CMD="mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD}"
+#echo ${MYSQL_CMD}
+
+mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD}<< EOF 2>/dev/null
+
+create database IF NOT EXISTS $DBNAME;
+quit
+EOF
+exit 1
+create_db_sql="create database IF NOT EXISTS ${DBNAME}"
+echo ${create_db_sql}  | ${MYSQL_CMD}                         #创建数据库                   
+if [ $? -ne 0 ]                                                                                #判断是否创建成功
+then
+ echo "create databases ${DBNAME} failed ..."
+ exit 1
+fi
+
+
+echo "create table ${TABLENAME}"
+
+create_table_sql="create table ${TABLENAME}(
+name char(6) NOT NULL,
+id int default 0
+)ENGINE=MyISAM DEFAULT CHARSET=latin1"
+echo ${create_table_sql} | ${MYSQL_CMD} ${DBNAME}              #在给定的DB上，创建表
+if [ $? -ne 0 ]                                                                                                #判断是否创建成功
+then
+ echo "create  table ${DBNAME}.${TABLENAME}  fail ..."
+fi

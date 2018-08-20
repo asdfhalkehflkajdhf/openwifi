@@ -1,0 +1,1969 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0068)http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/ -->
+<HTML lang=zh xml:lang="zh" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=7.0000" http-equiv="X-UA-Compatible">
+<TITLE>线程下变量-原子操作 __sync_fetch_and_add等等 - 蓝色雪狐的日志 - 网易博客</TITLE>
+<META content=IE=7 http-equiv=X-UA-Compatible>
+<META content=text/html;charset=gbk http-equiv=content-type>
+<META content=text/css http-equiv=content-style-type>
+<META content=text/javascript http-equiv=content-script-type>
+<META name=version content=neblog-1.0>
+<SCRIPT type=text/javascript>
+      
+      
+      document.uniqueID!=document.uniqueID&&!!location.hash&&(location.hash=location.hash); 
+      document.domain = location.hostname.replace(/^.*\.([\w]+\.[\w]+)$/,'$1');
+      window.focus();
+      window.getMusicTimeStamp=function(){return '2f0cdb548f9a0f20c20f6226b948fb82';};
+    </SCRIPT>
+
+<META name=author content=hbu_lijian,蓝色雪狐>
+<META name=keywords 
+content="线程下变量-原子操作 __sync_fetch_and_add等等,日志,蓝色雪狐,平安，幸福美满！,网易博客,网易,blog">
+<META name=description 
+content="线程下变量-原子操作 __sync_fetch_and_add等等,蓝色雪狐的网易博客,为自己创业做准备！,">
+<SCRIPT type=text/javascript>
+    (function(){
+     var R=24,C=11,a=[];
+     for(var i=0;i<C;i++)for(var j=0;j<R;a.push('.icn0-'+i+j+'{background-position:'+(i>0?('-'+i*40+'px'):'0')+' '+(j>0?('-'+j*20+'px'):'0')+';}'),j++);
+          document.write('<style type="text/css">'+a.join('')+'</st'+'yle>');
+    })();
+  </SCRIPT>
+<LINK rel=stylesheet type=text/css 
+href="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/c.css"><LINK 
+id=blog-163-com-theme rel=stylesheet type=text/css 
+href="http://os.blog.163.com/style/css/diy/99908482/126129153/-1342154745801/b.css?v=1"><!--[if lte IE 6]>
+  <style type="text/css">
+    html,body,#blog-163-com-ie6body{height:100%;width:100%;overflow:hidden;}
+    #blog-163-com-ie6body{overflow:auto;overflow-y:scroll;}
+    #blog-163-com{background:none;}
+  </style>
+  <![endif]-->
+<STYLE type=text/css>.m-3 .nbw-ryt .left .mcnt {
+	PADDING-LEFT: 10px
+}
+.m-3 .nbw-ryt .right .acts {
+	POSITION: relative; MARGIN: 0px 0px 12px; LINE-HEIGHT: 20px
+}
+.m-3 .nbw-ryt .right .more {
+	HEIGHT: 24px; MARGIN-TOP: -15px; LINE-HEIGHT: 24px
+}
+#blog-163-com .m-3 .phide {
+	DISPLAY: none
+}
+.m-3 .nbw-ryt .left .nbw-bitm {
+	POSITION: relative; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 10px; MARGIN: 0px; PADDING-RIGHT: 10px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .title {
+	MARGIN: 30px 0px 20px; LINE-HEIGHT: 32px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .title .tcnt {
+	FONT-SIZE: 26px; FONT-FAMILY: "Hiragino Sans GB W3","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,Helvetica,simsun,"宋体"; FONT-WEIGHT: bold
+}
+.m-3 .nbw-ryt .left .nbw-bitm .tdep {
+	MARGIN-BOTTOM: 20px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .tbar {
+	PADDING-BOTTOM: 10px; TEXT-ALIGN: right; PADDING-TOP: 10px; PADDING-LEFT: 0px; MARGIN: 5px 0px; LINE-HEIGHT: 20px; PADDING-RIGHT: 0px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .bct {
+	FONT-SIZE: 16px; PADDING-LEFT: 0px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .muava {
+	BORDER-LEFT-WIDTH: 0px; HEIGHT: 40px; BORDER-RIGHT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 0px; FLOAT: left; MARGIN: 5px 7px 0px 0px; BORDER-TOP-WIDTH: 0px
+}
+.m-3 .nbw-ryt .left .snl .pnb DIV {
+	TEXT-ALIGN: left; LINE-HEIGHT: 20px
+}
+.m-3 .nbw-ryt .cite {
+	TEXT-ALIGN: left; MARGIN: 20px 0px 0px 50px; LINE-HEIGHT: 24px
+}
+.m-3 .nbw-ryt .cite .close {
+	FLOAT: right; TEXT-ALIGN: right; MARGIN: 0px
+}
+.m-3 .nbw-ryt .cite SPAN {
+	CURSOR: pointer
+}
+.m-3 .nbw-ryt .cite .nbw-act {
+	TEXT-ALIGN: center
+}
+.m-3 .nbw-ryt .cite .ads {
+	MARGIN-LEFT: 20px; WIDTH: 400px
+}
+.m-3 .nbw-ryt .cite .tbac {
+	BORDER-LEFT-WIDTH: 0px; LIST-STYLE-TYPE: none; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN-LEFT: 60px; LINE-HEIGHT: 24px; PADDING-RIGHT: 0px; BORDER-TOP-WIDTH: 0px
+}
+.m-3 .nbw-ryt .cite .tbl {
+	OVERFLOW: hidden; WIDTH: 150px
+}
+.m-3 .nbw-ryt .cite .tbr {
+	OVERFLOW: hidden; MARGIN-LEFT: 20px
+}
+.m-3 .nbw-act-share {
+	POSITION: relative
+}
+.m-3 .nbw-act-share .nas-wrap {
+	VISIBILITY: hidden
+}
+.m-3 .nbw-act-share:hover .nas-wrap {
+	VISIBILITY: visible
+}
+.m-3 .js-share-hover .nas-wrap {
+	VISIBILITY: visible
+}
+.m-3 .nas-wrap {
+	BACKGROUND: url(/newpage/images/blog/icn-share.png?0011) no-repeat 9999px 9999px
+}
+.nas-itm {
+	BACKGROUND: url(/newpage/images/blog/icn-share.png?0011) no-repeat 9999px 9999px
+}
+.nas-wb {
+	BACKGROUND: url(/newpage/images/blog/icn-share.png?0011) no-repeat 9999px 9999px
+}
+.m-3 .nas-wrap {
+	MARGIN-TOP: 5px
+}
+.nas-itm {
+	TEXT-DECORATION: none
+}
+.nas-wb {
+	TEXT-DECORATION: none
+}
+.nas-itm {
+	TEXT-DECORATION: underline
+}
+.nas-wb:hover {
+	TEXT-DECORATION: underline
+}
+.m-3 .nas-itm {
+	OVERFLOW: hidden; CURSOR: pointer; HEIGHT: 16px; FLOAT: left; MARGIN: 0px 1px 0px 6px; WIDTH: 16px
+}
+.m-3 .nas-itm0 {
+	BACKGROUND-POSITION: 0px -173px
+}
+.m-3 .nas-itm1 {
+	BACKGROUND-POSITION: 0px -56px
+}
+.m-3 .nas-itm2 {
+	BACKGROUND-POSITION: 0px -85px
+}
+.m-3 .nas-itm3 {
+	BACKGROUND-POSITION: 0px -227px
+}
+.m-3 .nas-itm4 {
+	BACKGROUND-POSITION: 0px -143px
+}
+.m-3 .nas-itm5 {
+	BACKGROUND-POSITION: 0px -201px
+}
+.m-3 .nas-itm6 {
+	BACKGROUND-POSITION: 0px -249px
+}
+.m-3 .nas-itm7 {
+	BACKGROUND-POSITION: 0px -283px
+}
+.m-3 .nas-itm8 {
+	BACKGROUND-POSITION: 0px -313px
+}
+.m-3 .nas-itm9 {
+	BACKGROUND-POSITION: 0px -342px
+}
+.nas-wb {
+	CURSOR: pointer; BACKGROUND-POSITION: 0px -173px; PADDING-LEFT: 20px; LINE-HEIGHT: normal
+}
+.nas-icn0fix {
+	MARGIN-TOP: 4px
+}
+.nas-tofix {
+	MARGIN-TOP: 2px; LINE-HEIGHT: 25px
+}
+.m-3 .ptc {
+	CURSOR: pointer; POSITION: absolute
+}
+.m-3 .ptc .ptcp .bcmimg {
+	HEIGHT: 22px; BACKGROUND-IMAGE: url(http://b.bst.126.net/newpage/images/blogcmtimg.png); BACKGROUND-REPEAT: no-repeat; BACKGROUND-POSITION: 0px 0px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; LINE-HEIGHT: 22px; PADDING-RIGHT: 6px; WIDTH: 22px
+}
+.m-3 .ptc .ptcp {
+	CURSOR: pointer; POSITION: absolute; CLEAR: both; LEFT: 5px; WIDTH: 94px; BOTTOM: 5px
+}
+.m-3 .ptc .ptcp .ptcmi {
+	HEIGHT: 16px; FLOAT: left; PADDING-BOTTOM: 3px; PADDING-TOP: 3px; PADDING-LEFT: 5px; MARGIN: 0px; PADDING-RIGHT: 6px; WIDTH: 16px; _padding: 2px 6px 0 3px
+}
+.m-3 .ptc .ptcp .ptcmt {
+	OVERFLOW: hidden; HEIGHT: 22px; BACKGROUND-POSITION: -418px -50px; FLOAT: left; COLOR: #444444; TEXT-ALIGN: left; MARGIN: 0px 0px 0px -3px; LINE-HEIGHT: 23px; WIDTH: 67px
+}
+.m-3 .ptc .ptcp .ptcmt-2 {
+	BACKGROUND-POSITION: -424px -50px; PADDING-LEFT: 6px; WIDTH: 61px
+}
+.m-3 .relateblog {
+	TEXT-ALIGN: left
+}
+.m-3 .relateblog H4 {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 10px; MARGIN: 0px; LINE-HEIGHT: 30px; PADDING-RIGHT: 0px
+}
+.m-3 .relateblog .cnt {
+	PADDING-LEFT: 8px; MARGIN: 10px 0px
+}
+.m-3 .relateblog .cnt UL {
+	LIST-STYLE-TYPE: none; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .relateblog .cnt UL LI {
+	HEIGHT: 24px; LINE-HEIGHT: 24px; MARGIN-RIGHT: 20px
+}
+.m-3 .relateblog .cnt UL LI SPAN {
+	MARGIN: 0px 8px
+}
+.m-3 .author {
+	TEXT-ALIGN: left
+}
+.m-3 .comment {
+	TEXT-ALIGN: left
+}
+.m-3 .author .nlogif {
+	MARGIN-LEFT: 5px; LINE-HEIGHT: 20px; WIDTH: 150px; _margin-left: 3px
+}
+.m-3 .author .nlogif .nbw-fce {
+	MARGIN: 0px 3px 0px 10px; _margin-left: 5px
+}
+.m-3 .author .nlogif .pright {
+	PADDING-BOTTOM: 5px; PADDING-TOP: 5px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px; WIDTH: 85px; _padding-top: 10px
+}
+.m-3 .nbw-ryt .right H4 {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 30px; PADDING-RIGHT: 0px
+}
+.m-3 .author H4 {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 10px; MARGIN: 0px; LINE-HEIGHT: 30px; PADDING-RIGHT: 0px
+}
+.m-3 .comment H4 {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 10px; MARGIN: 0px; LINE-HEIGHT: 30px; PADDING-RIGHT: 0px
+}
+.m-3 .author .cwd {
+	BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; TEXT-ALIGN: left; BORDER-TOP-WIDTH: 0px
+}
+.m-3 .author .vname {
+	TEXT-ALIGN: center; WIDTH: 50px
+}
+.m-3 .author .cnt {
+	MARGIN: 10px 0px 10px -5px
+}
+.m-3 .author .nbw-fce {
+	MARGIN: 0px 11px
+}
+.m-3 .author .nbw-f50 {
+	WIDTH: 50px
+}
+.m-3 .nbw-ryt .left .top {
+	POSITION: relative; PADDING-BOTTOM: 5px; LINE-HEIGHT: 20px
+}
+.m-3 .nbw-ryt .left .top .ilft {
+	POSITION: absolute; LEFT: 0px; TOP: 0px
+}
+.m-3 .nbw-ryt .left .top .irgt {
+	RIGHT: -10px; POSITION: absolute; TOP: 0px
+}
+.m-3 .nbw-ryt .left .top .pleft {
+	OVERFLOW: hidden; HEIGHT: 20px; TEXT-ALIGN: left; MARGIN-LEFT: 20px; WIDTH: 40%; _margin-left: 10px
+}
+.m-3 .nbw-ryt .left .top .pright {
+	OVERFLOW: hidden; HEIGHT: 20px; TEXT-ALIGN: right; WIDTH: 40%; MARGIN-RIGHT: 10px; _margin-right: 5px
+}
+.m-3 .nbw-ryt .left .snl .top {
+	POSITION: relative; PADDING-BOTTOM: 15px; PADDING-TOP: 5px; PADDING-LEFT: 0px; LINE-HEIGHT: 20px; PADDING-RIGHT: 0px
+}
+.m-3 .nbw-ryt .left .snl .top .ilft {
+	POSITION: absolute; LEFT: -10px; TOP: 5px
+}
+.m-3 .nbw-ryt .left .snl .top .irgt {
+	RIGHT: -10px; POSITION: absolute; TOP: 5px
+}
+.m-3 .nbw-ryt .left .snl .top .pleft {
+	OVERFLOW: hidden; HEIGHT: 20px; TEXT-ALIGN: left; MARGIN-LEFT: 10px; WIDTH: 40%; _margin-left: 5px
+}
+.m-3 .nbw-ryt .left .snl .top .pright {
+	OVERFLOW: hidden; HEIGHT: 20px; TEXT-ALIGN: right; WIDTH: 40%; MARGIN-RIGHT: 10px; _margin-left: 5px
+}
+.m-3 .nbw-ryt .left .snl .pnb {
+	OVERFLOW: hidden; PADDING-BOTTOM: 10px; PADDING-TOP: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; _width: 100%
+}
+.m-3 .comment H4 {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 0px
+}
+.m-3 .comment .publish {
+	PADDING-BOTTOM: 10px; TEXT-ALIGN: left; PADDING-TOP: 0px; PADDING-LEFT: 5px; MARGIN: 10px 0px; PADDING-RIGHT: 0px
+}
+.m-3 .comment .publish .nbw-fce {
+	PADDING-TOP: 0px
+}
+.m-3 .comment .publish .nbw-fce .cwd {
+	BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-TOP-WIDTH: 0px
+}
+.m-3 .comment .publish .redt {
+	MARGIN-LEFT: 65px
+}
+.m-3 .comment .nolog {
+	BORDER-TOP: #000 1px solid; HEIGHT: 40px; BORDER-RIGHT: #000 1px solid; BORDER-BOTTOM: #000 1px solid; PADDING-BOTTOM: 0px; TEXT-ALIGN: center; PADDING-TOP: 0px; PADDING-LEFT: 0px; BORDER-LEFT: #000 1px solid; LINE-HEIGHT: 40px; PADDING-RIGHT: 0px; BACKGROUND-COLOR: #ffffe1; _height: 20px; _padding: 10px 0
+}
+.m-3 .comment .case {
+	PADDING-BOTTOM: 10px; PADDING-LEFT: 5px
+}
+.m-3 .comment .vgl {
+	TEXT-ALIGN: center; MARGIN: 8px; WIDTH: 75%
+}
+#blog-163-com .m-3 .comment .nbw-cmt .cnt {
+	WIDTH: 488px
+}
+#blog-163-com .m-3 .comment .nbw-cmt .nbw-cmt .cnt {
+	WIDTH: 444px
+}
+.m-3 .edt-cmt {
+	WIDTH: 444px
+}
+.m-3 .comment .publish .edt-cmt {
+	WIDTH: 488px
+}
+.m-3 .comment .publish .edt-cmt .zbcc {
+	DISPLAY: none
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs0 {
+	FONT-SIZE: 150%
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs1 {
+	FONT-SIZE: 20px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs1 * {
+	FONT-SIZE: 20px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs2 {
+	
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs3 {
+	FONT-SIZE: 12px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .js-fs3 * {
+	FONT-SIZE: 12px
+}
+.m-3 .js-fcurrent {
+	FONT-WEIGHT: bold; TEXT-DECORATION: none; font-color: #000
+}
+.m-3 .nbw-bitm .dream {
+	CLEAR: both; MARGIN-TOP: -10px
+}
+.m-3 .nbw-bitm .cited {
+	MARGIN-TOP: -15px
+}
+.m-3 .nbw-bitm .rdif {
+	HEIGHT: 24px; LINE-HEIGHT: 24px
+}
+.m-3 .nbw-bitm .rdif .pnt {
+	HEIGHT: 24px; LINE-HEIGHT: 24px; MARGIN-RIGHT: 10px
+}
+.m-3 .nbw-bitm .rdif .pclass {
+	HEIGHT: 22px; VERTICAL-ALIGN: middle; WIDTH: 57px
+}
+.m-3 .nbw-bitm .rdif .rdct {
+	DISPLAY: inline-block
+}
+.m-3 .snl .rdcnt {
+	PADDING-BOTTOM: 5px; TEXT-ALIGN: left; PADDING-TOP: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px
+}
+.m-3 .snl .rdcnt .nbw-fce {
+	MARGIN: 0px 5px
+}
+.m-3 .snl .rdcnt P {
+	MARGIN: 10px 0px
+}
+.m-3 .snl .rdcnt .rrb {
+	LIST-STYLE-TYPE: none; HEIGHT: 22px; LINE-HEIGHT: 22px
+}
+.m-3 .acts .iblock {
+	WIDTH: 18px
+}
+.m-3 .ns {
+	MARGIN: 0px 0px 0px 2px
+}
+.m-3 .cancel {
+	DISPLAY: none
+}
+.m-3 .js-hover .cancel {
+	DISPLAY: inline
+}
+.m-3 .follow:hover .cancel {
+	DISPLAY: inline
+}
+.m-3 .frd:hover .cancel {
+	DISPLAY: inline
+}
+.m-3 .follow {
+	MARGIN-LEFT: 2px
+}
+.m-3 .flw {
+	BORDER-TOP: #b7b7b7 1px solid; BORDER-RIGHT: #b7b7b7 1px solid; BACKGROUND: #fefce4; BORDER-BOTTOM: #b7b7b7 1px solid; COLOR: #000; PADDING-BOTTOM: 7px; PADDING-TOP: 7px; PADDING-LEFT: 8px; BORDER-LEFT: #b7b7b7 1px solid; PADDING-RIGHT: 8px
+}
+.m-3 .acts .flw .iblock {
+	WIDTH: 20px
+}
+.m-3 .sntesctf {
+	MARGIN-LEFT: 3px; WIDTH: 15px
+}
+.dr-warm {
+	BORDER-TOP: #aaa 1px solid; BORDER-RIGHT: #aaa 1px solid; BACKGROUND: #ffffdc; BORDER-BOTTOM: #aaa 1px solid; COLOR: #666; PADDING-BOTTOM: 12px; PADDING-TOP: 12px; PADDING-LEFT: 18px; MARGIN: 18px 0px; BORDER-LEFT: #aaa 1px solid; LINE-HEIGHT: 20px; PADDING-RIGHT: 18px; WIDTH: 420px
+}
+.dr-warm A {
+	COLOR: #02a; TEXT-DECORATION: underline
+}
+.dr-warm A:hover {
+	COLOR: #02a; TEXT-DECORATION: underline
+}
+.dr-warm .codeinput {
+	TEXT-ALIGN: center; WIDTH: 70px
+}
+.dr-warm .codediv {
+	MARGIN: 10px 0px 0px
+}
+.dr-warm .ml {
+	VERTICAL-ALIGN: middle; MARGIN: 0px 10px
+}
+.dr-warm .button {
+	CURSOR: pointer; BORDER-TOP: 0px; HEIGHT: 20px; BORDER-RIGHT: 0px; BORDER-BOTTOM: 0px; COLOR: #fff; BORDER-LEFT: 0px; WIDTH: 42px; BACKGROUND-COLOR: #77716f
+}
+.m-3 .commentcntwrap {
+	POSITION: relative; ZOOM: 1
+}
+.m-3 .cmtMultiUserRole {
+	POSITION: absolute; LEFT: 62px; WIDTH: 300px; BOTTOM: 5px
+}
+.m-3 .cmtMultiUserRole .selectRole {
+	BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none; FLOAT: right; PADDING-BOTTOM: 0px; PADDING-TOP: 1px; BORDER-RIGHT-STYLE: none; PADDING-LEFT: 1px; PADDING-RIGHT: 1px
+}
+.m-3 .cmtMultiUserRole .selectRole .ztxt {
+	OVERFLOW: hidden; FLOAT: left; WIDTH: auto
+}
+.m-3 .cmtMultiUserRole .selectRole .zdwn {
+	BACKGROUND: url(/newpage/images/icon.png) no-repeat -240px -420px; FLOAT: left; TEXT-INDENT: -9999px
+}
+.m-3 .cmtMultiUserRole .selectRole .zlst .zitm {
+	
+}
+.m-3 .cmtMultiUserRole .selectRole .zlst .zitm:hover {
+	COLOR: #333; BACKGROUND-COLOR: #ececec
+}
+.m-3 .cmtMultiUserRole .selectRole .slst .js-zhvr-910.item {
+	COLOR: #333; BACKGROUND-COLOR: #ececec
+}
+.m-3 .nbw-cmt {
+	POSITION: static
+}
+.m-3 .nbw-cmt .thde {
+	POSITION: relative; ZOOM: 1
+}
+.m-3 .publish .redt {
+	POSITION: relative; ZOOM: 1
+}
+.m-3 .publish .redt .cmtMultiUserRole {
+	LEFT: 135px; _left: 132px
+}
+.m-3 .cmtMultiUserRole .js-showlist {
+	BORDER-TOP: #aaa 1px solid; BORDER-RIGHT: #aaa 1px solid; BORDER-BOTTOM: #aaa 0px solid; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; BORDER-LEFT: #aaa 1px solid; PADDING-RIGHT: 0px
+}
+.m-3 .cmtMultiUserRole .js-showlist .zlst {
+	BORDER-TOP: #aaa 0px solid; BORDER-RIGHT: #aaa 1px solid; BORDER-BOTTOM: #aaa 1px solid; BORDER-LEFT: #aaa 1px solid
+}
+.m-3 .multiuserItem {
+	
+}
+.m-3 .multiuserItem .author {
+	MARGIN-RIGHT: -50px
+}
+.m-3 .multiuserItem .multicntwrap {
+	PADDING-BOTTOM: 20px; PADDING-TOP: 30px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .multiuserItem .multicnt {
+	MARGIN-LEFT: 50px; _padding-top: 2px
+}
+.m-3 .nbw-ryt .left .multiuserItem .multicnt .title {
+	MARGIN-BOTTOM: 0px; MARGIN-TOP: 0px; WIDTH: 95%
+}
+.m-3 .nbw-ryt .left .multiuserItem .multicnt .tdep {
+	MARGIN-BOTTOM: 0px
+}
+.m-3 .attachment {
+	MARGIN-BOTTOM: 20px
+}
+.m-3 .awidth {
+	WIDTH: 40px
+}
+.m-3 .view {
+	MARGIN-RIGHT: 10px
+}
+.m-3 .nbw-cmt .op {
+	HEIGHT: 18px; LINE-HEIGHT: 18px
+}
+.m-3 .suggestedreading {
+	OVERFLOW: hidden; POSITION: relative; ZOOM: 1
+}
+.m-3 .suggestedreading .m-list {
+	OVERFLOW: hidden; FONT-SIZE: 14px; PADDING-LEFT: 15px; MARGIN-LEFT: 0px
+}
+.m-3 .suggestedreading .m-list .gap {
+	COLOR: #adadad; MARGIN-LEFT: 8px
+}
+.m-3 .suggestedreading .m-list LI {
+	HEIGHT: 20px; VERTICAL-ALIGN: middle; PADDING-BOTTOM: 2px; PADDING-TOP: 3px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .suggestedreading .wrap LI {
+	HEIGHT: 146px; FLOAT: left; WIDTH: 118px
+}
+.m-3 .suggestedreading .suggesteditem1 {
+	FONT-SIZE: 12px; MARGIN: 5px 10px 5px 0px; LINE-HEIGHT: 24px
+}
+.m-3 .suggestedreading .suggesteditem2 {
+	FONT-SIZE: 12px; MARGIN: 5px 0px
+}
+.m-3 .suggestedreading .suggesteditem2 .imgwrap1 {
+	OVERFLOW: hidden; HEIGHT: 90px; POSITION: relative; ZOOM: 1; WIDTH: 90px
+}
+.m-3 .suggestedreading .suggesteditem2 .imgwrap2 {
+	POSITION: absolute; LEFT: 0px; Z-INDEX: 2; TOP: 0px
+}
+.m-3 .suggestedreading .suggesteditem2 .btitle {
+	OVERFLOW: hidden; HEIGHT: 148px; TEXT-DECORATION: none; WIDTH: 96px
+}
+.m-3 .suggestedreading .suggesteditem2 .sep {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 5px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px
+}
+.m-3 .suggestedreading .suggesteditem2 A {
+	CURSOR: pointer
+}
+.m-3 .suggestedreading .suggesteditem2 A:hover {
+	TEXT-DECORATION: none
+}
+.m-3 .suggestedreading .suggesteditem2 IMG {
+	BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-TOP-WIDTH: 0px
+}
+.m-3 .suggestedreading .color1 {
+	BACKGROUND-COLOR: #b3786b
+}
+.m-3 .suggestedreading .color2 {
+	BACKGROUND-COLOR: #d2c1a8
+}
+.m-3 .suggestedreading .color3 {
+	BACKGROUND-COLOR: #d46646
+}
+.m-3 .suggestedreading .color4 {
+	BACKGROUND-COLOR: #d28fa8
+}
+.m-3 .suggestedreading .color5 {
+	BACKGROUND-COLOR: #c84f54
+}
+.m-3 .suggestedreading .white {
+	COLOR: white
+}
+.m-3 .suggestedreading .imgtip {
+	FONT-SIZE: 13px; FONT-WEIGHT: bold; COLOR: white; MARGIN: 2px
+}
+.m-3 .suggestedreading .borderwrap {
+	PADDING-BOTTOM: 2px; PADDING-TOP: 2px; PADDING-LEFT: 2px; PADDING-RIGHT: 2px; BACKGROUND-COLOR: #fff
+}
+.m-3 .suggestedreading .time {
+	RIGHT: 0px; POSITION: absolute; BOTTOM: 0px
+}
+.m-3 .suggestedreading .hidsep {
+	MARGIN-LEFT: -1px
+}
+.m-3 .suggestedreading .srtitle {
+	MARGIN-BOTTOM: 10px; FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+.m-3 #yodaoad {
+	PADDING-LEFT: 5px
+}
+.m-3 #yodaoad_3 {
+	PADDING-BOTTOM: 25px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .relategroup {
+	WIDTH: 45%
+}
+.m-3 .blogvote {
+	POSITION: relative; ZOOM: 1; PADDING-LEFT: 35px
+}
+.m-3 .blogvote .sep {
+	MARGIN: 0px 5px
+}
+.m-3 .blogvote .vtitle {
+	MARGIN: 15px 0px 15px -30px
+}
+.m-3 .blogvote .vtitle SPAN {
+	PADDING-RIGHT: 8px
+}
+.m-3 .blogvote .vtitle .close {
+	HEIGHT: 24px; VERTICAL-ALIGN: middle; WIDTH: 60px
+}
+.m-3 .blogvote .roleview {
+	PADDING-RIGHT: 10px
+}
+.m-3 .blogvote .roleview .iblock {
+	WIDTH: 10px
+}
+.m-3 .blogvote .options {
+	CLEAR: both; MARGIN-RIGHT: 10px
+}
+.m-3 .blogvote .options UL {
+	LIST-STYLE-TYPE: none; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .blogvote .options UL LI {
+	PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 0px; LINE-HEIGHT: 16px; PADDING-RIGHT: 0px
+}
+.m-3 .blogvote .options .role {
+	MARGIN-BOTTOM: 15px
+}
+.m-3 .blogvote .options .acts {
+	MARGIN-BOTTOM: 15px; HEIGHT: 24px; LINE-HEIGHT: 26px
+}
+.m-3 .blogvote .options .acts .leftpt {
+	HEIGHT: 24px; LINE-HEIGHT: 26px
+}
+.m-3 .blogvote .options .acts .leftpt BUTTON {
+	HEIGHT: 24px; LINE-HEIGHT: 18px
+}
+.m-3 .blogvote .options .acts .leftpt SPAN {
+	
+}
+.m-3 .blogvote .options .acts .view {
+	MARGIN-LEFT: 5px
+}
+.m-3 .blogvote .fvote {
+	PADDING-TOP: 10px
+}
+.m-3 .blogvote .fvote UL {
+	LIST-STYLE-TYPE: none; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 10px 0px; PADDING-RIGHT: 0px
+}
+.m-3 .blogvote .fvote UL LI {
+	MARGIN: 5px 0px; LINE-HEIGHT: 20px
+}
+.m-3 .blogvote .options UL .col0 {
+	MARGIN-TOP: -3px; LINE-HEIGHT: 20px; WIDTH: 230px; MARGIN-RIGHT: 10px; _margin-top: -5px
+}
+.m-3 .blogvote .options UL .col0 INPUT {
+	_position: relative; _top: 3px
+}
+.m-3 .blogvote .options UL .col0 LABEL {
+	WIDTH: 200px; _position: relative; _top: 4px
+}
+.m-3 .blogvote .options UL .col1 {
+	HEIGHT: 14px; BACKGROUND: #eaeaea 0px 0px; LINE-HEIGHT: 14px; WIDTH: 190px
+}
+.m-3 .blogvote .options UL .col1 .iblock {
+	HEIGHT: 16px; VERTICAL-ALIGN: middle; WIDTH: 100%
+}
+.qing001 {
+	BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; MARGIN: 0px
+}
+.qing001 .nb-mc {
+	BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.qing001 .nb-mc .cc {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px auto; PADDING-RIGHT: 0px; WIDTH: 942px
+}
+.qing001 .nb-mc .cl {
+	DISPLAY: none
+}
+.qing001 .nb-mc .cr {
+	DISPLAY: none
+}
+.qing001 .bh {
+	DISPLAY: none
+}
+.qing001 .nbw-ryt {
+	BACKGROUND: url(/newpage/images/qingtheme/qing001/blogdetail_cntbg.png) repeat-y 0px 0px
+}
+.qing001 .nbw-ryt .left {
+	BACKGROUND: url(/newpage/images/qingtheme/qing001/blogdetail_ftbg.png) no-repeat left bottom
+}
+.qing001 .nbw-ryt .left .lcnt {
+	BACKGROUND: url(/newpage/images/qingtheme/qing001/blogdetail_ttlbg.png) no-repeat 0px 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; PADDING-RIGHT: 0px; WIDTH: 100%
+}
+.qing001 .nbw-ryt .left .mcnt {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 30px; PADDING-RIGHT: 30px
+}
+.qing001 .nbw-ryt .left .nbw-bitm {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.qing001 .nb-mt {
+	DISPLAY: none
+}
+.qing001 .nbw-ryt .left .top {
+	DISPLAY: none
+}
+.qing001 .nbw-ryt .left .nbw-bitm .title {
+	HEIGHT: 31px; PADDING-BOTTOM: 46px; PADDING-TOP: 30px; PADDING-LEFT: 3px; MARGIN: 0px; PADDING-RIGHT: 0px
+}
+.qing001 .nbw-ryt .left .nbw-bitm .title .tcnt {
+	FONT-SIZE: 24px; COLOR: #fffadc
+}
+.qing001 .nbw-ryt .left .nbw-bitm .tdep {
+	PADDING-TOP: 6px
+}
+.qing001 .comment .case {
+	PADDING-BOTTOM: 40px
+}
+.m-3 .article .douban {
+	FONT-SIZE: 12px; FLOAT: left; MARGIN: 0px 10px 10px 0px; WIDTH: 200px
+}
+.m-3 .article .douban .field {
+	PADDING-TOP: 5px
+}
+.m-3 .article .douban .field .dbyinyue {
+	BORDER-LEFT-WIDTH: 0px; HEIGHT: 8px; BORDER-RIGHT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; WIDTH: 10px
+}
+.m-3 .article .douban IMG {
+	MAX-WIDTH: 100%; BORDER-TOP: #e9e9e9 1px solid; BORDER-RIGHT: #e9e9e9 1px solid; BORDER-BOTTOM: #e9e9e9 1px solid; BORDER-LEFT: #e9e9e9 1px solid; DISPLAY: inline-block; WIDTH: 100%
+}
+.m-3 .article-1 .douban {
+	FLOAT: right; MARGIN: 0px 3px 10px 10px; WIDTH: 200px
+}
+.m-3 .article-2 .douban {
+	FLOAT: left; MARGIN: 0px -250px 0px 0px; WIDTH: 250px
+}
+.m-3 .article-2 .blog {
+	MARGIN-LEFT: 270px
+}
+.m-3 .article-2 .blogc {
+	OVERFLOW: hidden; WIDTH: 99%
+}
+.m-3 .article-3 .douban {
+	FLOAT: right; MARGIN: 0px 3px 0px -250px; WIDTH: 250px
+}
+.m-3 .article-3 .blog {
+	MARGIN-RIGHT: 270px
+}
+.m-3 .article-3 .blogc {
+	OVERFLOW: hidden; WIDTH: 99%
+}
+.m-3 .vote_star {
+	OVERFLOW: visible
+}
+.m-3 .rateword {
+	POSITION: absolute; LEFT: 88px; DISPLAY: none; LINE-HEIGHT: 23px; TOP: -2px; WIDTH: 37px
+}
+.m-3 .star_d0 .rateword0 {
+	DISPLAY: inline
+}
+.m-3 .star_d1 .rateword1 {
+	DISPLAY: inline
+}
+.m-3 .star_d2 .rateword2 {
+	DISPLAY: inline
+}
+.m-3 .star_d3 .rateword3 {
+	DISPLAY: inline
+}
+.m-3 .star_d4 .rateword4 {
+	DISPLAY: inline
+}
+.m-3 .star_d5 .rateword5 {
+	DISPLAY: inline
+}
+.m-3 .nbw-act .blogsep {
+	MARGIN: 0px 2px
+}
+.m-3 .zihao {
+	CURSOR: default; POSITION: relative
+}
+.m-3 .zihaoshow {
+	POSITION: absolute; PADDING-BOTTOM: 3px; PADDING-TOP: 0px; PADDING-LEFT: 0px; LEFT: -3px; LINE-HEIGHT: 18px; TOP: -57px; PADDING-RIGHT: 0px; WIDTH: 26px
+}
+.m-3 .zihaoshow SPAN {
+	CURSOR: pointer; TEXT-ALIGN: center; DISPLAY: block
+}
+.m-3 .zihaoc {
+	BORDER-TOP: 1px solid; BORDER-RIGHT: 1px solid; BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid
+}
+.m-3 .mbga {
+	MARGIN-BOTTOM: 12px; POSITION: relative
+}
+.m-3 .mbga A {
+	MARGIN-LEFT: 20px
+}
+.m-3 .mbgai {
+	BACKGROUND: url(/newpage/images/microblog.png?1) no-repeat; POSITION: absolute; TOP: -1px; WIDTH: 17px; _background: none transparent; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://b2.bst.126.net/newpage/images/microblog.png'); _zoom: 1
+}
+.m-3 .mingxing {
+	BACKGROUND-POSITION: -43px -80px; WIDTH: 18px
+}
+.m-3 .xinxing {
+	BACKGROUND-POSITION: -81px -80px; WIDTH: 18px
+}
+.m-3 .darendesc {
+	VERTICAL-ALIGN: middle; BACKGROUND: #efeae7; PADDING-BOTTOM: 7px; PADDING-TOP: 7px; PADDING-LEFT: 15px; MARGIN-TOP: 10px; LINE-HEIGHT: 18px; PADDING-RIGHT: 15px
+}
+.m-3 .js-cmt-noavatar .nbw-cmt .nbw-fce {
+	DISPLAY: none
+}
+.m-3 .js-cmt-noavatar .nbw-cmt .thde {
+	PADDING-LEFT: 8px; MARGIN-LEFT: 0px
+}
+.m-3 .js-cmt-noavatar .nbw-cmt .reps .thde {
+	MARGIN-LEFT: 55px
+}
+.m-3 .toLofter {
+	CURSOR: pointer; HEIGHT: 22px; BACKGROUND: url(/newpage/images/publishtolofter/tolofter.png?v=20130909) no-repeat 0px 0px; POSITION: absolute; WIDTH: 112px; BOTTOM: 5px; TEXT-INDENT: -9999px
+}
+.m-3 .nbw-ryt .left .lcnt {
+	PADDING-RIGHT: 20px
+}
+.m-3 .edt-cmt {
+	WIDTH: auto
+}
+.m-3 .comment .publish .edt-cmt {
+	WIDTH: auto
+}
+#blog-163-com .m-3 .comment .nbw-cmt .cnt {
+	WIDTH: auto
+}
+#blog-163-com .m-3 .comment .nbw-cmt .nbw-cmt .cnt {
+	WIDTH: auto
+}
+.m-3 .nbw-cmt .nbw-cmt {
+	PADDING-BOTTOM: 1px; PADDING-TOP: 20px; PADDING-LEFT: 0px; PADDING-RIGHT: 5px
+}
+.m-3 .nbw-cmt .op {
+	MARGIN-BOTTOM: 18px; HEIGHT: 18px; LINE-HEIGHT: 18px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .title {
+	MARGIN: 34px 0px 10px; LINE-HEIGHT: normal
+}
+.m-3 .nbw-ryt .left .nbw-bitm .title .tcnt {
+	LINE-HEIGHT: 38px
+}
+.m-3 .nbw-ryt .left .nbw-bitm .tdep {
+	MARGIN-BOTTOM: 25px
+}
+.m-3 .comment .publish {
+	PADDING-BOTTOM: 10px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 20px 0px 0px; PADDING-RIGHT: 5px
+}
+.m-3 .nbw-sdt .miniBlogArea {
+	BOTTOM: 12px
+}
+.m-3 .nbw-sdt .edt .zbtn {
+	HEIGHT: 40px; LINE-HEIGHT: 40px
+}
+.m-3 .nbw-sdt .edt .zbtn .zfce {
+	TOP: 10px
+}
+.m-3 .nas-tofix {
+	LINE-HEIGHT: 24px
+}
+.m-3 .nas-wrap {
+	MARGIN-TOP: 4px
+}
+.m-3 .leftoperatebar {
+	HEIGHT: 24px; PADDING-BOTTOM: 8px; PADDING-TOP: 8px; PADDING-LEFT: 0px; LINE-HEIGHT: 24px; PADDING-RIGHT: 0px
+}
+.m-3 .nbw-bitm .rdif {
+	PADDING-BOTTOM: 8px; PADDING-TOP: 8px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.m-3 .leftoperatebar .sep-last {
+	MARGIN-RIGHT: 8px
+}
+.m-3 .rightoperatebar {
+	HEIGHT: 40px; MARGIN-LEFT: 0px; LINE-HEIGHT: 40px
+}
+.m-3 .reblogbtn {
+	FONT-SIZE: 14px; HEIGHT: 38px; COLOR: #fff; TEXT-ALIGN: left; PADDING-LEFT: 44px; MARGIN: 0px 0px 0px 5px; LINE-HEIGHT: 38px; WIDTH: 48px
+}
+.m-3 .recommendbtn {
+	FONT-SIZE: 14px; HEIGHT: 38px; COLOR: #fff; TEXT-ALIGN: left; PADDING-LEFT: 44px; MARGIN: 0px 0px 0px 5px; LINE-HEIGHT: 38px; WIDTH: 48px
+}
+.m-3 .likebtn {
+	FONT-SIZE: 14px; HEIGHT: 38px; COLOR: #fff; TEXT-ALIGN: left; PADDING-LEFT: 44px; MARGIN: 0px 0px 0px 5px; LINE-HEIGHT: 38px; WIDTH: 48px
+}
+.m-3 .reblogbtn {
+	BACKGROUND-POSITION: 1px -431px
+}
+.m-3 .recommendbtn {
+	BACKGROUND-POSITION: 1px -271px
+}
+.m-3 .js-recommended {
+	BACKGROUND-POSITION: 1px -351px
+}
+.m-3 .likebtn {
+	BACKGROUND-POSITION: 1px -111px
+}
+.m-3 .js-liked {
+	BACKGROUND-POSITION: 1px -191px
+}
+.m-3 .hotarea {
+	
+}
+.m-3 .hotarea .hotItem {
+	POSITION: relative; ZOOM: 1; FLOAT: left; DISPLAY: block
+}
+.m-3 .hotarea .hotItem .hottype {
+	HEIGHT: 20px; RIGHT: -5px; POSITION: absolute; TEXT-DECORATION: none; TOP: 29px; WIDTH: 20px
+}
+.m-3 .hotarea .hotItem .js-liketype {
+	BACKGROUND-POSITION: -4px -536px
+}
+.m-3 .hotarea .hotItem .js-reblogtype {
+	BACKGROUND-POSITION: -4px -648px
+}
+.m-3 .hotarea .hotItem .js-sharetype {
+	BACKGROUND-POSITION: -4px -592px
+}
+.m-3 .hotarea .expandHotItem {
+	
+}
+.m-3 .hotarea .expeadbg {
+	CURSOR: pointer; HEIGHT: 40px; BACKGROUND-POSITION: -2px -728px; MARGIN: 0px auto; WIDTH: 40px
+}
+.js-openlikewin .showhint .zcvr {
+	BACKGROUND: #000; FILTER: alpha(opacity=50); opacity: 0.5
+}
+.f-openlikeicon {
+	BACKGROUND: url(/newpage/images/liketolofter/openlike24.png) no-repeat -9999px -9999px; _background: url(/newpage/images/liketolofter/openlike8.png) -9999px -9999px no-repeat
+}
+#blog-163-com #blog-163-com-layer DIV.openlikewin {
+	BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none
+}
+.openlikewin .nbwinwrap .ztbr {
+	DISPLAY: none
+}
+.openlikewin .nbwinwrap .zcls {
+	DISPLAY: none
+}
+.openlikewin .nbwinwrap .zext {
+	DISPLAY: none
+}
+.openlikewin .nbwinwrap .zbtnbar {
+	DISPLAY: none
+}
+.openlikewin .nbwinwrap .zcnt {
+	PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px
+}
+.openlikewin .hdarea {
+	HEIGHT: 145px; BACKGROUND: #d6e6f1; POSITION: relative; ZOOM: 1; PADDING-TOP: 30px; WIDTH: 500px
+}
+.openlikewin .hdarea .tticon {
+	HEIGHT: 73px; BACKGROUND-POSITION: -8px -111px; MARGIN: 0px auto; WIDTH: 86px
+}
+.openlikewin .hdarea .ttcnt {
+	FONT-SIZE: 25px; HEIGHT: 60px; COLOR: #333; LINE-HEIGHT: 60px
+}
+.openlikewin .hdarea .close {
+	CURSOR: pointer; HEIGHT: 21px; RIGHT: 10px; POSITION: absolute; BACKGROUND-POSITION: -6px -720px; TOP: 10px; WIDTH: 21px
+}
+.openlikewin .bdarea {
+	PADDING-BOTTOM: 40px
+}
+.openlikewin .step {
+	PADDING-TOP: 30px
+}
+.openlikewin .step .stepicon {
+	HEIGHT: 64px; MARGIN: 0px auto; WIDTH: 60px
+}
+.openlikewin .step .stepcnt {
+	FONT-SIZE: 20px; HEIGHT: 32px; COLOR: #333; PADDING-TOP: 16px; LINE-HEIGHT: 32px; WIDTH: 500px
+}
+.openlikewin .stepone {
+	
+}
+.openlikewin .stepone .stepicon {
+	BACKGROUND-POSITION: -6px -247px
+}
+.openlikewin .stepone .stepcnt {
+	
+}
+.openlikewin .steptwo {
+	
+}
+.openlikewin .steptwo .stepicon {
+	BACKGROUND-POSITION: -6px -359px
+}
+.openlikewin .steptwo .stepcnt {
+	
+}
+.openlikewin .stepthree {
+	MARGIN-BOTTOM: 40px
+}
+.openlikewin .stepthree .stepicon {
+	BACKGROUND-POSITION: -6px -470px
+}
+.openlikewin .stepthree .stepcnt {
+	MARGIN-BOTTOM: 5px
+}
+.openlikewin .likeaddr {
+	HEIGHT: 40px; BACKGROUND-POSITION: -1px -600px; PADDING-BOTTOM: 6px; PADDING-TOP: 6px; PADDING-LEFT: 6px; MARGIN: 0px auto; LINE-HEIGHT: 40px; PADDING-RIGHT: 6px; WIDTH: 304px
+}
+.openlikewin .likeaddr .blogname {
+	FONT-FAMILY: "Hiragino Sans GB W3","Hiragino Sans GB",Arial,Helvetica,simsun,u5b8bu4f53
+}
+.openlikewin .likeaddr .blogname {
+	BORDER-TOP-STYLE: none; FONT-SIZE: 20px; BORDER-LEFT-STYLE: none; HEIGHT: 40px; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-BOTTOM-STYLE: none; FLOAT: left; COLOR: #666; PADDING-BOTTOM: 0px; TEXT-ALIGN: right; PADDING-TOP: 0px; BORDER-RIGHT-STYLE: none; OUTLINE-STYLE: none; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 40px; PADDING-RIGHT: 0px; WIDTH: 150px
+}
+.openlikewin .likeaddr .urlsuffix {
+	FONT-SIZE: 20px; HEIGHT: 40px; FLOAT: left; COLOR: #666; TEXT-ALIGN: left; LINE-HEIGHT: 40px; WIDTH: 120px
+}
+.openlikewin .openmylike {
+	CURSOR: pointer; HEIGHT: 54px; BACKGROUND-POSITION: 1px 1px; MARGIN: 0px auto; WIDTH: 316px
+}
+.outlinklayer {
+	BORDER-TOP: #cdcdcd 1px solid; BORDER-RIGHT: #cdcdcd 1px solid; BACKGROUND: #fff; BORDER-BOTTOM: #cdcdcd 1px solid; POSITION: absolute; TEXT-ALIGN: left; BORDER-LEFT: #cdcdcd 1px solid; WIDTH: 398px
+}
+.outlinklayer .hdarea {
+	HEIGHT: 25px
+}
+.outlinklayer .hdarea .close {
+	CURSOR: pointer; HEIGHT: 30px; BACKGROUND: url(/newpage/images/outlink/close.png) no-repeat 10px 8px; RIGHT: 0px; POSITION: absolute; TOP: 0px; WIDTH: 30px
+}
+.outlinklayer .bdarea {
+	HEIGHT: 108px; PADDING-BOTTOM: 25px; PADDING-TOP: 0px; PADDING-LEFT: 30px; PADDING-RIGHT: 0px
+}
+.outlinklayer .bdarea .ttl {
+	FONT-SIZE: 16px; HEIGHT: 26px; FONT-WEIGHT: bold; COLOR: #333; LINE-HEIGHT: 26px
+}
+.outlinklayer .bdarea .url {
+	FONT-SIZE: 14px; HEIGHT: 22px; FONT-WEIGHT: bold; COLOR: #666; LINE-HEIGHT: 22px; WIDTH: 340px
+}
+.outlinklayer .bdarea .prompt {
+	FONT-SIZE: 14px; HEIGHT: 22px; COLOR: #999; PADDING-TOP: 12px; LINE-HEIGHT: 22px
+}
+.outlinklayer .bdarea .goon {
+	FONT-SIZE: 16px; HEIGHT: 26px; COLOR: #536c86; TEXT-DECORATION: underline; LINE-HEIGHT: 26px
+}
+.outlinklayer .adarea {
+	BORDER-TOP: #e6e6e6 1px solid; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px
+}
+.outlinklayer .adarea .adlink {
+	
+}
+.outlinklayer .adarea .adpic {
+	BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 50px; BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; DISPLAY: block; WIDTH: 378px
+}
+.blogPublicAccount {
+	HEIGHT: 340px; BACKGROUND: #fff; PADDING-BOTTOM: 25px; PADDING-TOP: 25px; PADDING-LEFT: 25px; PADDING-RIGHT: 10px; WIDTH: 95px
+}
+.blogPublicAccount H3 {
+	FONT-SIZE: 18px; HEIGHT: 26px; BACKGROUND: url(/newpage/images/publicaccount/sinav.png) no-repeat 72px 8px; FONT-WEIGHT: normal; COLOR: #444; PADDING-BOTTOM: 0px; PADDING-TOP: 1px; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 26px; PADDING-RIGHT: 0px
+}
+.blogPublicAccount H3 {
+	_background-position: 72px 6px
+}
+.blogPublicAccount .wbttl {
+	FONT-SIZE: 12px; HEIGHT: 18px; FONT-WEIGHT: normal; COLOR: #444; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 18px; PADDING-RIGHT: 0px
+}
+.blogPublicAccount .yxttl {
+	FONT-SIZE: 12px; HEIGHT: 18px; FONT-WEIGHT: normal; COLOR: #444; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 18px; PADDING-RIGHT: 0px
+}
+.blogPublicAccount .wxttl {
+	FONT-SIZE: 12px; HEIGHT: 18px; FONT-WEIGHT: normal; COLOR: #444; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 0px; MARGIN: 0px; LINE-HEIGHT: 18px; PADDING-RIGHT: 0px
+}
+.blogPublicAccount .wbttl {
+	MARGIN-BOTTOM: 7px; COLOR: #999
+}
+.blogPublicAccount .yxttl {
+	MARGIN-BOTTOM: 4px
+}
+.blogPublicAccount .wxttl {
+	MARGIN-BOTTOM: 4px
+}
+.blogPublicAccount .wbiframe {
+	MARGIN-BOTTOM: 27px; HEIGHT: 24px
+}
+.blogPublicAccount .yx2d {
+	MARGIN-BOTTOM: 27px; HEIGHT: 80px; BACKGROUND: url(/newpage/images/publicaccount/yx2d.png) no-repeat 0px 0px; WIDTH: 80px
+}
+.blogPublicAccount .wx2d {
+	HEIGHT: 80px; BACKGROUND: url(/newpage/images/publicaccount/wx2d.jpg) no-repeat 0px 0px; WIDTH: 80px
+}
+</STYLE>
+<LINK rel=stylesheet type=text/css 
+href="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/prettify.css">
+<META name=GENERATOR content="MSHTML 10.00.9200.17028"></HEAD>
+<BODY id=blog-163-com class="nb-body nb-inr nb-prv" onload=prettyPrint()><!--[if lte IE 6]><div id="blog-163-com-ie6bodywrap" class=""><![endif]--><!--[if lte IE 6]><div id="blog-163-com-ie6body" class="nb-body"><![endif]-->
+<DIV id=blog-163-com-topbar class="nb-nbar clearfix">
+<DIV class="pl fl clearfix">
+<DIV class="nbw-im fl im im0"><A class="lbl bd ia noul " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.163.com/" 
+rel=nofollow target=_blank><SPAN class=tx>网易</SPAN><SPAN 
+class="iblock icn0 icn0-421">&nbsp;</SPAN></A>
+<DIV class="nbw-tcd box-shadow bd"><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://news.163.com/" 
+rel=nofollow target=_blank>新闻 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://t.163.com/" 
+rel=nofollow target=_blank>微博 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://email.163.com/" 
+rel=nofollow target=_blank>邮箱 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://photo.163.com/" 
+rel=nofollow target=_blank>相册 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://yuedu.163.com/" 
+rel=nofollow target=_blank>阅读 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://www.youdao.com/" 
+rel=nofollow target=_blank>有道 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://photo.163.com/pp/square/" 
+rel=nofollow target=_blank>摄影 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://qiye.163.com/" 
+rel=nofollow target=_blank>企业邮箱 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://quan.163.com/?from=blogdh" 
+rel=nofollow target=_blank>优惠券 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://note.youdao.com/?vendor=163blog" 
+rel=nofollow target=_blank>云笔记 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://fm.163.com/?fmblogzx0628" 
+rel=nofollow target=_blank>闪电邮 </A><A class="itm noul  " hideFocus 
+href="http://m.123.163.com/?frombkcp" rel=nofollow target=_blank>手机邮 </A><A 
+class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://yxp.163.com/" 
+rel=nofollow target=_blank>印像派 </A>
+<DIV class="sep bd space"></DIV><A class="itm noul  " hideFocus 
+href="http://blog.163.com/redirect.html?frompersonalbloghome&amp;url=http://sitemap.163.com/" 
+rel=nofollow target=_blank>更多 </A></DIV></DIV><SPAN 
+class="fl iblock space icn1 icn1-4" 
+style="MARGIN-LEFT: 0px; DISPLAY: none">&nbsp;</SPAN> 
+<DIV class="nbw-im fl im im10"><A class="lbl bd ia noul " hideFocus 
+href="http://blog.163.com/?frompersonalbloghome" target=_blank><SPAN 
+class=tx>博客</SPAN><SPAN class="iblock icn0 icn0-421">&nbsp;</SPAN></A>
+<DIV class="nbw-tcd box-shadow bd"><A class="itm noul  " hideFocus 
+href="http://blog.163.com/services/wapblog.html?frompersonalbloghome" 
+target=_blank>手机博客 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/clone/clone.html?frompersonalbloghome" 
+target=_blank>博客搬家 </A><A class="itm noul youcai " hideFocus 
+href="http://blog.163.com/vip.do?frompersonalbloghome" target=_blank>博客VIP服务 
+</A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/public/explore/?frompersonalbloghome" target=_blank>发现 
+</A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/g/?frompersonalbloghome" target=_blank>小组 </A><A 
+class="itm noul  " hideFocus 
+href="http://blog.163.com/public/theme/?frompersonalbloghome" target=_blank>风格 
+</A>
+<DIV class="sep bd space"></DIV><A class="itm noul  " hideFocus 
+href="http://blog.163.com/blog_admin/blog/static/721279201082863728829/?frompersonalbloghome" 
+target=_blank>LiveWriter写博 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/blog_admin/blog/static/721279201092713253500/?frompersonalbloghome" 
+target=_blank>word写博 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/services/mailblog.html?frompersonalbloghome" 
+target=_blank>邮件写博 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/services/emsblog.html?frompersonalbloghome" 
+target=_blank>短信写博 </A>
+<DIV class="sep bd space"></DIV><A class="itm noul  " hideFocus 
+href="http://blog.163.com/showMultiUser.do?frompersonalbloghome" 
+target=_blank>群博客 </A><A class="itm noul youcai " hideFocus 
+href="http://blog.163.com/BLOG_YOUCAI/" target=_blank>博客油菜地 </A><A 
+class="itm noul  " hideFocus href="http://blog.163.com/ht/?frompersonalbloghome" 
+target=_blank>博客话题 </A><A class="itm noul  " hideFocus 
+href="http://blog.163.com/hot/history/?frompersonalbloghome" target=_blank>博客热点 
+</A><A class="itm noul  " hideFocus 
+href="http://q.163.com/#home?frompersonalbloghome" target=_blank>博客圈子 </A><A 
+class="itm noul  " hideFocus 
+href="http://blog.163.com/findFriend.do?type=5?frompersonalbloghome" 
+target=_blank>找朋友 </A></DIV></DIV><SPAN class="fl iblock space icn1 icn1-4" 
+style="MARGIN-LEFT: 0px; DISPLAY: none">&nbsp;</SPAN> 
+<DIV class="nbw-im fl im im10"><A class="lbl bd ia noul " hideFocus 
+href="http://www.lofter.com/?act=qbboke_20140728_01" target=_blank><SPAN 
+class=tx>LOFTER</SPAN><SPAN class="iblock icn0 icn0-421">&nbsp;</SPAN></A>
+<DIV class="nbw-tcd box-shadow bd"><A class="itm noul  " hideFocus 
+href="http://www.lofter.com/app?act=qbboke_20140728_01" target=_blank>客户端 </A><A 
+class="itm noul  " hideFocus 
+href="http://www.lofter.com/wall?act=qbboke_20140728_01" target=_blank>标签 </A><A 
+class="itm noul  " hideFocus 
+href="http://www.lofter.com/activity?act=qbboke_20140728_01" target=_blank>活动 
+</A><A class="itm noul  " hideFocus 
+href="http://www.lofter.com/explore?act=qbboke_20140728_01" target=_blank>博客 
+</A><A class="itm noul  " hideFocus 
+href="http://www.lofter.com/themes?act=qbboke_20140728_01" target=_blank>模板 
+</A><A class="itm noul  " hideFocus 
+href="http://uapp.lofter.com/?act=qbboke_20140728_01" target=_blank>UAPP </A><A 
+class="itm noul  " hideFocus 
+href="http://www.lofter.com/art?act=qbboke_20140728_01" target=_blank>ART 
+</A></DIV></DIV>
+<DIV class="nbw-im fl im1 im seebyway"><A title=随便看看 class="lbl bd ima spy" 
+href="http://blog.163.com/randomUser.do" 
+rel=nofollow><SPAN></SPAN></A></DIV><SPAN class="fl iblock space icn1 icn1-4" 
+style="DISPLAY: none">&nbsp;</SPAN> 
+<DIV id=topbar_randShowArea class=fl>
+<DIV class="nbw-im fl im1 im randtag phide"><A class="bd ima moveblog randshow" 
+href="http://www.lofter.com/?act=qbbokedingbuhuang_20140702_01" 
+target=_blank>免费20张照片冲印券，等你来拿！&gt;</A></DIV>
+<DIV class="nbw-im fl im1 im randtag phide"><A class="bd ima moveblog randshow" 
+href="http://www.lofter.com/art?act=qbart_20140703_09&amp;s=bokedinglan" 
+target=_blank>独一无二的艺术商品，只在ART</A></DIV></DIV></DIV>
+<DIV class="fr pr clearfix">
+<DIV id=topbar_loginAndReg class=fr><A class="iblock fr ima" 
+style="COLOR: #ff7700; MARGIN-LEFT: 10px" 
+href="http://reg.163.com/reg/reg.jsp?product=blog&amp;url=http://blog.163.com/ntesRegBlank.html&amp;loginurl=http://blog.163.com/" 
+rel=nofollow target=_blank>创建博客</A> <A class="iblock fr ima ztag" 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/#" 
+rel=nofollow>登录</A> <SPAN class="fr iblock space icn1 icn1-4 spx">&nbsp;</SPAN> 
+<DIV id=topbar_followArea class="nbw-im fr"><SPAN 
+class="lbl bd ima followit fl ztag"><SPAN class="fl addicon">&nbsp;</SPAN><SPAN 
+class=fl>加关注</SPAN></SPAN></DIV></DIV></DIV></DIV>
+<SCRIPT type=text/javascript>
+  (function(){
+      var e = document.getElementById('blog-163-com-main');
+      if(!!e) e.parentNode.insertBefore(document.getElementById('blog-163-com-topbar'),e);
+      e = document.getElementById('blog-notice-email');
+      if(!!e) window.setTimeout(function(){e.style.display='';},50);
+  })()
+</SCRIPT>
+
+<DIV id=blog-163-com-toptips class="blogtoptips phide">
+<DIV class=blogtoptipswrap>
+<DIV id=newbulletinstip class="newbulletinstip phide"><A 
+class="lnknews fc03 m2a tiptag phide" 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/" 
+target=_blank></A><SPAN class="txtnews tiptag phide"></SPAN>&nbsp;&nbsp;&nbsp;<A 
+class="fc03 ul nextorprevnews tiptag phide" hideFocus 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/">显示下一条</A>&nbsp;&nbsp;|&nbsp;&nbsp;<A 
+class="fc03 ul close tiptag" hideFocus 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/">关闭</A> 
+</DIV></DIV>
+<DIV id=sinaoauthtip 
+class="sinaoauthtip phide"><SPAN>温馨提示！由于新浪微博认证机制调整，您的新浪微博帐号绑定已过期，请重新绑定！</SPAN><A 
+class="fc03 noul iblock" 
+href="http://blog.163.com/hbu_lijian/settings/?fromnewcenter#m=6" 
+rel=nofollow>立即重新绑定新浪微博》</A>&nbsp;&nbsp;|&nbsp;&nbsp;<A 
+class="fc03 iblock close" 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/">关闭</A> 
+</DIV>
+<DIV id=$_faxiantip class="faxiantip phide">
+<DIV><A class="m2a iblock" 
+href="http://blog.163.com/public/explore/?fromblogbanner" 
+target=_blank></A><SPAN class="faxiantag m2a"></SPAN></DIV></DIV>
+<DIV id=$_guanggaotip class="guanggaotip phide">
+<DIV><SPAN class="guanggaotag m2a"></SPAN></DIV></DIV>
+<DIV id=$_lofterInviteTip class="lofterInviteTip phide">
+<DIV><A class="m2a iblock" href="http://www.lofter.com/invite/163blog/?email=" 
+target=_blank></A><SPAN class="lofterInviteTag m2a"></SPAN></DIV></DIV></DIV>
+<DIV id=blog-163-com-main class="nb-wrap wsy">
+<DIV class="nb-are nb-top">
+<DIV id=blog-163-com-banner class="wkg h">
+<DIV class=t>
+<H1 class="n c"><SPAN class="ztag pre">平安，幸福美满！</SPAN></H1>
+<P class="d c"><SPAN class="ztag pre">为自己创业做准备！</SPAN></P></DIV>
+<DIV class="f h ztag"></DIV><A class=x hideFocus 
+href="http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/#" 
+target=_blank><SPAN class="xx ztag"></SPAN></A></DIV></DIV>
+<DIV class="nb-are nb-nav">
+<DIV class=wkg>
+<DIV class="c h">
+<H2>导航</H2>
+<UL class="noul clearfix">
+  <LI class="w w0"><A class="i i0 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/">首页</A> </LI>
+  <LI class="w w1 selected"><A class="i i1 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/blog/">日志</A> </LI>
+  <LI class="w w2"><A class="i i2 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/album/">相册</A> </LI>
+  <LI class="w w3"><A class="i i3 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/music/">音乐</A> </LI>
+  <LI class="w w4"><A class="i i4 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/collection/">收藏</A> </LI>
+  <LI class="w w5"><A class="i i5 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/friends/">博友</A> </LI>
+  <LI class="w w6"><A class="i i6 fc01 h" hideFocus 
+  href="http://blog.163.com/hbu_lijian/profile/">关于我</A> </LI></UL><!--
+ --></DIV>
+<DIV class="l h"></DIV>
+<DIV class="r h"></DIV></DIV></DIV>
+<DIV class="nb-are nb-smt">
+<DIV class="wkg h space">
+<DIV class="l h"></DIV>
+<DIV class="r h"></DIV>
+<DIV class="c h">&nbsp;</DIV></DIV></DIV>
+<DIV class="nb-are nb-cnt">
+<DIV class=wkg>
+<DIV id=blog-163-com-container class="c wc h clearfix ">
+<DIV id=-3 class="nb-mdl lcr m-3 ">
+<DIV class="nb-mt lcr th fc02">
+<DIV class="c tc th lcr">
+<H2 class="thide nb-jsc mdl_t_t">日志</H2></DIV>
+<DIV class="r tm th nb-jsc"></DIV>
+<DIV class="l tl th"></DIV>
+<DIV class="r tr th"></DIV></DIV>
+<DIV class="nb-mc lcr">
+<DIV class="c cc lcr nb-jsc">
+<SCRIPT>
+function g_onSuggestedReadingImgLoad(_img){
+    var image = new Image();
+    image.src = _img.src;
+    var _width = 90;
+    var _height = 90;
+    if(image.width > image.height){
+    	_img.style.marginLeft = -Math.floor((image.width*(_height/image.height)-_width)/2)+'px';
+    	_img.style.height = _height+'px';
+    }else {
+    	_img.style.width = _width+'px';
+    	_img.style.marginTop = -Math.floor((image.height*(_width/image.width)-_height)/2)+'px';
+    }
+    _img.style.display = 'block';
+}
+</SCRIPT>
+
+<DIV class="nbw-ryt ztag clearfix ">
+<DIV class="right bdwl bds0 bdc0">
+<DIV class="cnt ztag"></DIV></DIV>
+<DIV class=left>
+<DIV class="lcnt bdwr bds0 bdc0 ">
+<DIV id=$_newOldBlogLinkTopDiv class="top fc03 bdwb bdc0 bds2 clearfix"></DIV>
+<DIV class="mcnt ztag">
+<DIV class="nbw-bitm bdwb bds2 bdc0 ">
+<DIV class=multicntwrap>
+<DIV class=multicnt>
+<DIV>
+<H3 class="title pre fs1"><SPAN class=tcnt>线程下变量-原子操作 
+__sync_fetch_and_add等等</SPAN>&nbsp;&nbsp;<SPAN 
+class="bgc0 fc07 fw0 fs0"></SPAN></H3>
+<P class="tdep clearfix nbw-act fc06" style="LINE-HEIGHT: 20px"><SPAN 
+class=pleft><SPAN class=blogsep>2012-08-22 14:16:31</SPAN><SPAN 
+class=blogsep>|&nbsp;&nbsp;分类：</SPAN> <A title=C/C++ class="fc03 m2a" 
+href="http://blog.163.com/hbu_lijian/blog/#m=0&amp;t=1&amp;c=fks_087070083080085074086084082095085084087066086095087070087">C/C++</A> 
+<SPAN id=$_blogTagTitle class="blogsep phide">|&nbsp;&nbsp;标签：</SPAN><SPAN 
+id=$_blogTagInfo class="fc03 phide"></SPAN> </SPAN><SPAN 
+class="pright fc07 ztag"><SPAN class=blogsep>|</SPAN><SPAN id=$_spanReport 
+class="fc03 m2a">举报</SPAN></SPAN> <SPAN class="pright fc07 ztag"><SPAN 
+class=blogsep>|</SPAN><SPAN id=$_fontswitch class="zihao fc03">字号<SPAN 
+id=$_fontsTypes class="zihaoshow  phide"><SPAN class="zihaoc bdc0"><SPAN 
+class=stag></SPAN><SPAN class="fc04 stag">大</SPAN><SPAN 
+class="fc04 stag">中</SPAN><SPAN 
+class="fc04 stag">小</SPAN></SPAN></SPAN></SPAN></SPAN><SPAN id=$_blog_subscribe 
+class="pright pnt fc03"><SPAN class="iblock icn0 icn0-919">&nbsp;</SPAN><A 
+class=m2a>订阅</A></SPAN> </P></DIV></DIV></DIV>
+<DIV></DIV>
+<DIV class=nbw-blog-start></DIV>
+<DIV class="bct fc05 fc11 nbw-blog ztag">
+<DIV id=article_content>
+<P>转：http://blog.csdn.net/i_am_jojo/article/details/7591743<BR></P>
+<P>最近编码需要实现多线程环境下的计数器操作，统计相关事件的次数。下面是一些学习心得和体会。不敢妄称原创，基本是学习笔记。遇到相关的引用，我会致谢。<BR>&nbsp;&nbsp;&nbsp; 
+当然我们知道，count++这种操作不是原子的。一个自加操作，本质是分成三步的：<BR>&nbsp;&nbsp;&nbsp;&nbsp; 1 
+从缓存取到寄存器<BR>&nbsp;&nbsp;&nbsp;&nbsp; 2 在寄存器加1<BR>&nbsp;&nbsp;&nbsp;&nbsp; 3 
+存入缓存。<BR>&nbsp;&nbsp;&nbsp; 
+由于时序的因素，多个线程操作同一个全局变量，会出现问题。这也是并发编程的难点。在目前多核条件下，这种困境会越来越彰显出来。<BR>&nbsp;&nbsp;&nbsp; 
+最简单的处理办法就是加锁保护，这也是我最初的解决方案。看下面的代码：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+pthread_mutex_t count_lock = PTHREAD_MUTEX_INITIALIZER;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+pthread_mutex_lock(&amp;count_lock);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+global_int++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+pthread_mutex_unlock(&amp;count_lock);<BR>&nbsp;&nbsp;&nbsp; 
+后来在网上查找资料，找到了__sync_fetch_and_add系列的命令，发现这个系列命令讲的最好的一篇文章，英文好的同学可以直接去看原文。 
+Multithreaded simple data type access and atomic variables</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+__sync_fetch_and_add系列一共有十二个函数，有加/减/与/或/异或/等函数的原子性操作函 
+数,__sync_fetch_and_add,顾名思义，现fetch，然后自加，返回的是自加以前的值。以count = 
+4为例，调用__sync_fetch_and_add(&amp;count,1),之后，返回值是4，然后，count变成了5.<BR>&nbsp;&nbsp;&nbsp; 
+有__sync_fetch_and_add,自然也就有__sync_add_and_fetch，呵呵这个的意思就很清楚了，先自加，在返回。他们哥俩的关系与i++和++i的关系是一样的。被谭浩强他老人家收过保护费的都会清楚了。<BR>&nbsp;&nbsp;&nbsp; 
+有了这个宝贝函数，我们就有新的解决办法了。对于多线程对全局变量进行自加，我们就再也不用理线程锁了。下面这行代码，和上面被pthread_mutex保护的那行代码作用是一样的，而且也是线程安全的。</P>
+<P>__sync_fetch_and_add( &amp;global_int, 1 );<BR>&nbsp;&nbsp;&nbsp; 
+下面是这群函数的全家福，大家看名字就知道是这些函数是干啥的了。</P>
+<P><SPAN style="FONT-SIZE: 18px; COLOR: rgb(255,0,0)">在用gcc编译的时候要加上选项 
+-march=i686</SPAN><BR>type __sync_fetch_and_add (type *ptr, type value);<BR>type 
+__sync_fetch_and_sub (type *ptr, type value);<BR>type __sync_fetch_and_or (type 
+*ptr, type value);<BR>type __sync_fetch_and_and (type *ptr, type value);<BR>type 
+__sync_fetch_and_xor (type *ptr, type value);<BR>type __sync_fetch_and_nand 
+(type *ptr, type value);<BR>type __sync_add_and_fetch (type *ptr, type 
+value);<BR>type __sync_sub_and_fetch (type *ptr, type value);<BR>type 
+__sync_or_and_fetch (type *ptr, type value);<BR>type __sync_and_and_fetch (type 
+*ptr, type value);<BR>type __sync_xor_and_fetch (type *ptr, type value);<BR>type 
+__sync_nand_and_fetch (type *ptr, type value);<BR>&nbsp;&nbsp;&nbsp; 
+需要提及的是，这个type不能够瞎搞。下面看下__sync_fetch_and_add反汇编出来的指令，<BR>804889d: f0 83 05 50 a0 
+04 08 lock addl $0x1,0x804a050<BR>&nbsp;&nbsp;&nbsp; 
+我们看到了，addl前面有个lock，这行汇编指令码前面是f0开头，f0叫做指令前缀，Richard 
+Blum<BR>老爷子将指令前缀分成了四类，有兴趣的同学可以看下。其实我也没看懂，intel的指令集太厚了，没空看。总之老爷子解释了，lock前缀的意思是对内存区域的排他性访问。<BR>? 
+Lock and repeat prefixes<BR>? Segment override and branch hint prefixes<BR>? 
+Operand size override prefix<BR>? Address size override prefix</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 前文提到，lock是锁FSB，前端串行总线，front serial 
+bus,这个FSB是处理器和RAM之间的总线，锁住了它，就能阻止其他处理器或者core从RAM获取数据。当然这种操作是比较费的，只能操作小的内存 
+可以这样做，想想我们有memcpy 
+，如果操作一大片内存，锁内存，那么代价就太昂贵了。所以前文提到的_sync_fetch_add_add家族，type只能是int long&nbsp; 
+，long long（及对应unsigned类型）。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 下面提供了函数，是改造的Alexander 
+Sundler的原文，荣誉属于他，我只是学习他的代码，稍微改动了一点点。比较了两种方式的耗时情况。呵呵咱是菜鸟，不敢枉自剽窃大师作品。向大师致敬。<BR>#define 
+_GNU_SOURCE</P>
+<P>#include &lt;stdio.h&gt;<BR>#include &lt;pthread.h&gt;<BR>#include 
+&lt;unistd.h&gt;<BR>#include &lt;stdlib.h&gt;<BR>#include 
+&lt;sched.h&gt;<BR>#include &lt;linux/unistd.h&gt;<BR>#include 
+&lt;sys/syscall.h&gt;<BR>#include 
+&lt;errno.h&gt;<BR>#include&lt;linux/types.h&gt;<BR>#include&lt;time.h&gt;</P>
+<P>#define INC_TO 1000000 // one million...</P>
+<P>__u64 rdtsc()<BR>{<BR>&nbsp; __u32 lo,hi;</P>
+<P>&nbsp;&nbsp;&nbsp; __asm__ __volatile__<BR>&nbsp;&nbsp;&nbsp; 
+(<BR>&nbsp;&nbsp;&nbsp;&nbsp; "rdtsc":"=a"(lo),"=d"(hi)<BR>&nbsp;&nbsp;&nbsp; 
+);</P>
+<P>&nbsp;&nbsp;&nbsp; return (__u64)hi&lt;&lt;32|lo;<BR>}</P>
+<P>&nbsp;</P>
+<P>int global_int = 0;<BR>pthread_mutex_t count_lock = 
+PTHREAD_MUTEX_INITIALIZER;</P>
+<P><BR>pid_t gettid( void )<BR>{<BR>&nbsp;&nbsp;&nbsp; return syscall( 
+__NR_gettid );<BR>}</P>
+<P>void *thread_routine( void *arg )<BR>{<BR>&nbsp;&nbsp;&nbsp; int 
+i;<BR>&nbsp;&nbsp;&nbsp; int proc_num = (int)(long)arg;<BR>&nbsp;&nbsp;&nbsp; 
+__u64 begin, end;<BR>&nbsp;&nbsp;&nbsp; struct timeval 
+tv_begin,tv_end;<BR>&nbsp;&nbsp;&nbsp; __u64 timeinterval;<BR>&nbsp;&nbsp;&nbsp; 
+cpu_set_t set;</P>
+<P>&nbsp;&nbsp;&nbsp; CPU_ZERO( &amp;set );<BR>&nbsp;&nbsp;&nbsp; CPU_SET( 
+proc_num, &amp;set );</P>
+<P>&nbsp;&nbsp;&nbsp; if (sched_setaffinity( gettid(), sizeof( cpu_set_t ), 
+&amp;set ))<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; perror( "sched_setaffinity" 
+);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 
+NULL;<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; begin = rdtsc();<BR>&nbsp;&nbsp;&nbsp; 
+gettimeofday(&amp;tv_begin,NULL);<BR>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; 
+INC_TO; i++)<BR>&nbsp;&nbsp;&nbsp; {<BR>//&nbsp;&nbsp;&nbsp;&nbsp; 
+global_int++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+__sync_fetch_and_add( &amp;global_int, 1 );<BR>&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp; gettimeofday(&amp;tv_end,NULL);<BR>&nbsp;&nbsp;&nbsp; 
+end = rdtsc();<BR>&nbsp;&nbsp;&nbsp; timeinterval =(tv_end.tv_sec - 
+tv_begin.tv_sec)*1000000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
++(tv_end.tv_usec - tv_begin.tv_usec);<BR>&nbsp;&nbsp;&nbsp; 
+fprintf(stderr,"proc_num :%d,__sync_fetch_and_add 
+cost&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+%llu CPU cycle,cost %llu 
+us\n",&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+proc_num,end-begin,timeinterval);</P>
+<P>&nbsp;&nbsp;&nbsp; return NULL;<BR>}</P>
+<P><BR>void *thread_routine2( void *arg )<BR>{<BR>&nbsp;&nbsp;&nbsp; int 
+i;<BR>&nbsp;&nbsp;&nbsp; int proc_num = (int)(long)arg;<BR>&nbsp;&nbsp;&nbsp; 
+__u64 begin, end;</P>
+<P>&nbsp;&nbsp;&nbsp; struct timeval tv_begin,tv_end;<BR>&nbsp;&nbsp;&nbsp; 
+__u64 timeinterval;<BR>&nbsp;&nbsp;&nbsp; cpu_set_t set;</P>
+<P>&nbsp;&nbsp;&nbsp; CPU_ZERO( &amp;set );<BR>&nbsp;&nbsp;&nbsp; CPU_SET( 
+proc_num, &amp;set );</P>
+<P>&nbsp;&nbsp;&nbsp; if (sched_setaffinity( gettid(), sizeof( cpu_set_t ), 
+&amp;set ))<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; perror( "sched_setaffinity" 
+);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 
+NULL;<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P><BR>&nbsp;&nbsp;&nbsp; begin = rdtsc();<BR>&nbsp;&nbsp;&nbsp; 
+gettimeofday(&amp;tv_begin,NULL);</P>
+<P>&nbsp;&nbsp;&nbsp; for(i = 0;i&lt;INC_TO;i++)<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+pthread_mutex_lock(&amp;count_lock);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+global_int++;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+pthread_mutex_unlock(&amp;count_lock);<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; gettimeofday(&amp;tv_end,NULL);<BR>&nbsp;&nbsp;&nbsp; end 
+= rdtsc();</P>
+<P><BR>&nbsp;&nbsp;&nbsp; timeinterval =(tv_end.tv_sec - 
+tv_begin.tv_sec)*1000000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
++(tv_end.tv_usec - tv_begin.tv_usec);<BR>&nbsp;&nbsp;&nbsp; 
+fprintf(stderr,"proc_num :%d,pthread lock cost %llu 
+CPU&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+cycle,cost %llu 
+us\n",proc_num,end-begin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+,timeinterval);</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp; return NULL;<BR>}<BR>int main()<BR>{<BR>&nbsp;&nbsp;&nbsp; 
+int procs = 0;<BR>&nbsp;&nbsp;&nbsp; int i;<BR>&nbsp;&nbsp;&nbsp; pthread_t 
+*thrs;</P>
+<P>&nbsp;&nbsp;&nbsp; // Getting number of CPUs<BR>&nbsp;&nbsp;&nbsp; procs = 
+(int)sysconf( _SC_NPROCESSORS_ONLN );<BR>&nbsp;&nbsp;&nbsp; if (procs &lt; 
+0)<BR>&nbsp;&nbsp;&nbsp; {<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; perror( 
+"sysconf" );<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 
+-1;<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; thrs = malloc( sizeof( pthread_t ) * procs 
+);<BR>&nbsp;&nbsp;&nbsp; if (thrs == NULL)<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; perror( "malloc" 
+);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 
+-1;<BR>&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; printf( "Starting %d threads...\n", procs );</P>
+<P>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; procs; i++)<BR>&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (pthread_create( 
+&amp;thrs[i], NULL, 
+thread_routine,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(void *)(long)i ))<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; perror( 
+"pthread_create" 
+);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; procs = 
+i;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<BR>&nbsp;&nbsp;&nbsp; 
+}</P>
+<P>&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; procs; 
+i++)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pthread_join( thrs[i], NULL 
+);</P>
+<P>&nbsp;&nbsp;&nbsp; free( thrs );</P>
+<P>&nbsp;&nbsp;&nbsp; printf( "After doing all the math, global_int value 
+is:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+%d\n", global_int );<BR>&nbsp;&nbsp;&nbsp; printf( "Expected value is: %d\n", 
+INC_TO * procs );</P>
+<P>&nbsp;&nbsp;&nbsp; return 0;<BR>}<BR>&nbsp;&nbsp;&nbsp;&nbsp; 通过我的测试发现：</P>
+<P>Starting 4 threads...<BR>proc_num :2,no locker cost 27049544 CPU cycle,cost 
+12712 us<BR>proc_num :0,no locker cost 27506750 CPU cycle,cost 12120 
+us<BR>proc_num :1,no locker cost 28499000 CPU cycle,cost 13365 us<BR>proc_num 
+:3,no locker cost 27193093 CPU cycle,cost 12780 us<BR>After doing all the math, 
+global_int value is: 1169911<BR>Expected value is: 4000000<BR>Starting 4 
+threads...<BR>proc_num :2,__sync_fetch_and_add cost 156602056 CPU cycle,cost 
+73603 us<BR>proc_num :1,__sync_fetch_and_add cost 158414764 CPU cycle,cost 74456 
+us<BR>proc_num :3,__sync_fetch_and_add cost 159065888 CPU cycle,cost 74763 
+us<BR>proc_num :0,__sync_fetch_and_add cost 162621399 CPU cycle,cost 76426 
+us<BR>After doing all the math, global_int value is: 4000000<BR>Expected value 
+is: 4000000</P>
+<P>Starting 4 threads...<BR>proc_num :1,pthread lock cost 992586450 CPU 
+cycle,cost 466518 us<BR>proc_num :3,pthread lock cost 1008482114 CPU cycle,cost 
+473998 us<BR>proc_num :0,pthread lock cost 1018798886 CPU cycle,cost 478840 
+us<BR>proc_num :2,pthread lock cost 1019083986 CPU cycle,cost 478980 us<BR>After 
+doing all the math, global_int value is: 4000000<BR>Expected value is: 
+4000000<BR>1 不加锁的情况下，不能返回正确的结果<BR>&nbsp; 测试程序结果显示，正确结果为400万，实际为1169911.</P>
+<P>2 线程锁和原子性自加都能返回正确的结果。</P>
+<P>3 性能上__sync_fetch_and_add,完爆线程锁。<BR>&nbsp; 从测试结果上看， 
+__sync_fetch_and_add,速度是线程锁的6～7倍</P></DIV></DIV>
+<DIV class=nbw-blog-end></DIV>
+<DIV></DIV>
+<DIV></DIV>
+<DIV>
+<DIV>
+<SCRIPT id=wumiiRelatedItems type=text/javascript></SCRIPT>
+</DIV></DIV>
+<DIV class="ptc phide ztag"><SPAN class=ptcp><SPAN 
+class="iblock bcmimg">&nbsp;</SPAN> <SPAN 
+class="nbc-0 nbc-0-40 ptcmt ptcmt-2">评论这张</SPAN> </SPAN></DIV>
+<DIV class="ptc phide ztag" style="DISPLAY: none"><SPAN class=ptcp><SPAN 
+class="nbc-0 nbc-0-40 ptcmi"><IMG 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/microblog.png"> 
+</SPAN><SPAN class="nbc-0 nbc-0-40 ptcmt">转发至微博</SPAN> </SPAN></DIV>
+<DIV class="ptc phide"><A id=publishtolofter title=发布到LOFTER class=toLofter 
+hideFocus target=_blank></A> </DIV>
+<DIV class="ptc phide ztag" style="DISPLAY: none"><SPAN class=ptcp><SPAN 
+class="nbc-0 nbc-0-40 ptcmi"><IMG 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/microblog.png"> 
+</SPAN><SPAN class="nbc-0 nbc-0-40 ptcmt">转发至微博</SPAN> </SPAN></DIV>
+<DIV class="nbw-act tbar fc03 clearfix">
+<DIV style="HEIGHT: 40px; LINE-HEIGHT: 40px">
+<DIV class=pleft>
+<DIV class="pleft leftoperatebar"><SPAN class=fc07>阅读(<SPAN 
+id=$_spaniReadCount>3202</SPAN>)</SPAN><SPAN class="sep fc07">|</SPAN> <SPAN 
+class=fc07>评论(<SPAN id=$_spaniCommentCount>1</SPAN>)</SPAN> </DIV></DIV>
+<DIV class="pleft rdif"><SPAN class="pleft sep sep-last fc07">|</SPAN> <SPAN 
+id=$_shareToSites class="fc07 pleft nas-tofix" 
+style="DISPLAY: none">分享到：</SPAN><SPAN class="nas-wrap pleft"><SPAN 
+id=$_shareBtn_163weibo title=分享到网易微博 class="nas-itm nas-itm0">&nbsp;</SPAN><SPAN 
+id=$_shareBtn_sinaweibo title=分享到新浪微博 
+class="nas-itm nas-itm6">&nbsp;</SPAN><SPAN id=$_shareBtn_qqweibo title=分享到腾讯微博 
+class="nas-itm nas-itm9">&nbsp;</SPAN><SPAN id=$_shareBtn_msn title=分享到MSN 
+class="nas-itm nas-itm7" style="DISPLAY: none">&nbsp;</SPAN><SPAN 
+id=$_shareBtn_qq title=分享到QQ空间 class="nas-itm nas-itm3">&nbsp;</SPAN><SPAN 
+id=$_shareBtn_renren title=分享到人人网 class="nas-itm nas-itm1" 
+style="DISPLAY: none">&nbsp;</SPAN><SPAN id=$_shareBtn_kaixin title=分享到开心网 
+class="nas-itm nas-itm2" style="DISPLAY: none">&nbsp;</SPAN><SPAN 
+id=$_shareBtn_douban title=分享到豆瓣 
+class="nas-itm nas-itm4">&nbsp;</SPAN></SPAN></SPAN> </DIV>
+<DIV class="pright rightoperatebar"><SPAN id=$_spanLike 
+class="f-myLikeIcons likebtn pnt pright">喜欢</SPAN> <SPAN id=$_spanRecommend 
+class="f-myLikeIcons recommendbtn pnt pright">推荐</SPAN> <SPAN 
+id=$_spanShowRecommend class="pleft rdct  phide" style="DISPLAY: none"><SPAN 
+class="pleft ul fc03"><SPAN id=$_spanRecommendCount>0</SPAN>人</SPAN><SPAN 
+class="pleft iblock icn0 icn0-722 nbw-tgl1 nas-icn0fix">&nbsp;</SPAN><SPAN 
+class="pleft iblock icn0 icn0-621 nbw-tgl0 nas-icn0fix">&nbsp;</SPAN><SPAN 
+class=fc07></SPAN>|&nbsp; </SPAN><SPAN id=$_spanCite 
+class="f-myLikeIcons reblogbtn pnt pright">转载</SPAN> </DIV></DIV></DIV></DIV>
+<DIV class=snl>
+<DIV id=$_divRecommendContent class="phide bdwb bds2 bdc0 rdcnt" 
+style="DISPLAY: none"></DIV>
+<DIV id=yodaoad class="bdwb bds2 bdc0" 
+style="DISPLAY: none; _zoom: 1">&nbsp;</DIV>
+<DIV id=$_newOldBlogLinkBottomDiv class="top fc03 clearfix"></DIV>
+<DIV class="relateblog phide">
+<H4 class="bdwb bds2 bdc0 fc07 fs0">历史上的今天</H4>
+<DIV class="cnt ztag clearfix"></DIV></DIV>
+<DIV class=author>
+<H4 class="bdwb bds2 bdc0 fc07 fs0">最近读者</H4>
+<DIV class="cnt ztag clearfix"></DIV></DIV>
+<DIV id=hotarea class="hotarea author ">
+<H4 class="bdwb bds2 bdc0 fc07 fs0">热度</H4>
+<DIV id=hotlist class="cnt clearfix"></DIV></DIV>
+<DIV id=yodaoad_1 class=phide style="_zoom: 1"></DIV>
+<DIV id=loftertextlinkad 
+style="PADDING-BOTTOM: 0px; PADDING-TOP: 0px; PADDING-LEFT: 5px; DISPLAY: none; PADDING-RIGHT: 6px">
+<DIV 
+style="BORDER-TOP: #d5d5d5 1px solid; HEIGHT: 40px; BORDER-RIGHT: #d5d5d5 1px solid; BACKGROUND: #ffffe1; BORDER-BOTTOM: #d5d5d5 1px solid; TEXT-ALIGN: left; MARGIN: 15px 0px; BORDER-LEFT: #d5d5d5 1px solid; LINE-HEIGHT: 40px"><SPAN 
+style="CURSOR: pointer; HEIGHT: 20px; FLOAT: right; COLOR: #d7854e; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; PADDING-LEFT: 0px; LINE-HEIGHT: 20px; PADDING-RIGHT: 16px">关闭</SPAN> 
+
+<DIV 
+style="COLOR: #000; PADDING-LEFT: 24px">玩LOFTER，免费冲印20张照片，人人有奖！&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A 
+style="COLOR: #d7854e; TEXT-DECORATION: none" href="http://www.lofter.com/" 
+target=_blank>我要抢&gt;</A></DIV></DIV></DIV>
+<DIV class=comment>
+<H4 class="bdwb bds2 bdc0 fc07 fs0">评论</H4><A id=blogComment 
+name=blogComment></A>
+<DIV class=ztag></DIV></DIV>
+<DIV id=yodaoad_3 class=phide style="_zoom: 1"></DIV></DIV>
+<DIV class="cite ztag fc03"></DIV></DIV></DIV></DIV></DIV>
+<DIV class="phide nb-init"><TEXTAREA name=js>    this.p={  m:2,
+              b:2,
+              id:'fks_087066083084080075092086086069072087083069085084095066081085',
+              blogTitle:'线程下变量-原子操作 __sync_fetch_and_add等等',
+              blogAbstract:'&lt;div id=\"article_content\"  \&gt;  &lt;p\&gt;转：http://blog.csdn.net/i_am_jojo/article/details/7591743&lt;br\&gt;&lt;/p\&gt;&lt;p\&gt;最近编码需要实现多线程环境下的计数器操作，统计相关事件的次数。下面是一些学习心得和体会。不敢妄称原创，基本是学习笔记。遇到相关的引用，我会致谢。&lt;br\&gt; &nbsp;&nbsp;&nbsp; 当然我们知道，count++这种操作不是原子的。一个自加操作，本质是分成三步的：&lt;br\&gt; &nbsp;&nbsp;&nbsp;&nbsp; 1 从缓存取到寄存器&lt;br\&gt; &nbsp;&nbsp;&nbsp;&nbsp; 2 在寄存器加1&lt;br\&gt; &nbsp;&nbsp;&nbsp;&nbsp; 3 存入缓存。&lt;br\&gt; &nbsp;&nbsp;&nbsp; 由于时序的因素，多个线程操作同一个全局变量，会出现问题。这也是并发编程的难点。在目前多核条件下，这种困境会越来越彰显出来。&lt;/p\&gt;&lt;/div\&gt;',
+              blogTag:'',
+              blogUrl:'blog/static/126129153201272221631397',
+              isPublished:1,
+              istop:false,
+              type:0,
+              modifyTime:1345616441126,
+              publishTime:1345616191397,
+              permalink:'blog/static/126129153201272221631397',
+              commentCount:1,
+              mainCommentCount:1,
+              recommendCount:0,
+              bsrk:-100,
+              publisherId:0,
+              recomBlogHome:false,
+              currentRecomBlog:false,
+              attachmentsFileIds:[],
+              vote:{},
+              groupInfo:{},
+              friendstatus:'none',
+              followstatus:'unFollow',
+              pubSucc:'',
+              visitorProvince:'',
+              visitorCity:'',
+              visitorNewUser:false,
+              postAddInfo:{},
+              mset:'000',
+              mcon:'',
+              srk:-100,
+              remindgoodnightblog:false,
+              isBlackVisitor:false,
+              isShowYodaoAd:false,
+              hostIntro:'',
+              hmcon:'1',
+              selfRecomBlogCount:'0',
+              lofter_single:'&lt;a hidefocus="true" target="_blank" href="http://www.lofter.com/regurs?flag=actreg&amp;act=wangyiboke_20140529"&gt;&lt;img onload="var nimg = new Image(); nimg.src=\'http://blog.163.com/newpage/images/analyse.png?lofter_single&amp;t=\'+new Date().getTime()" border="0" src="http://imgcdn.ph.126.net/jngpCT66Tei9V405fx4-eg==/6608776266957018211.png"/&gt;&lt;/a&gt;'
+            }
+  </TEXTAREA> <TEXTAREA id=m-3-jst-1 name=jst>    {list a as x}
+    {if !!x}
+    &lt;div class="iblock nbw-fce nbw-f40"&gt;
+      &lt;a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.visitorName}/"&gt;
+      {if x.visitorName==visitor.userName}
+      &lt;img alt="${x.visitorNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.visitorName)}&amp;r=${visitor.imageUpdateTime}"/&gt;
+      {else}
+      &lt;img alt="${x.visitorNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.visitorName)}"/&gt;
+      {/if}
+      &lt;/a&gt;
+      &lt;div class="cwd vname thide"&gt;
+        {if x.moveFrom=='wap'}
+          &lt;a class="noul pnt" target="_blank" href="http://blog.163.com/services/wapblog.html?frompersonalbloghome"&gt;&lt;span title="来自网易手机博客" class="iblock wapIcon"&gt;&nbsp;&lt;/span&gt;&lt;/a&gt;
+        {elseif x.moveFrom=='iphone'}
+          &lt;a class="noul pnt" target="_blank"&gt;&lt;span title="来自iPhone客户端" class="iblock iphoneIcon"&gt;&nbsp;&lt;/span&gt;&lt;/a&gt;
+        {elseif x.moveFrom=='android'}
+          &lt;a class="noul pnt" target="_blank"&gt;&lt;span title="来自Android客户端" class="iblock androidIcon"&gt;&nbsp;&lt;/span&gt;&lt;/a&gt;
+        {elseif x.moveFrom=='mobile'}
+          &lt;a class="noul pnt" target="_blank" href="http://blog.163.com/services/emsblog.html?frompersonalbloghome"&gt;&lt;span title="来自网易短信写博" class="iblock wapIcon"&gt;&nbsp;&lt;/span&gt;&lt;/a&gt;
+        {/if}
+        &lt;a class="fc03 m2a"  target="_blank" hidefocus="true" href="http://blog.163.com/${x.visitorName}/"&gt;
+          ${fn(x.visitorNickname,8)|escape}
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> <TEXTAREA id=m-3-jst-2 name=jst>    {if !!a}
+    &lt;a target="_blank" href="http://blog.163.com/${a.userName}/"&gt;&lt;img class="bdwa bdc0 pnt" onerror="this.src=location.f60" src="${fn1(a.userName)}"/&gt;&lt;/a&gt;
+    &lt;a target="_blank" class="fc03 m2a" href="http://blog.163.com/${a.userName}/"&gt;${fn(a.nickname,8)|escape}&lt;/a&gt;
+    &lt;div class="intro fc05"&gt;${a.selfIntro|escape}{if great260}${suplement}{/if}&lt;/div&gt;
+	    &lt;div class="acts ztag"&gt;&lt;/div&gt;
+	  &lt;div class="mbga phide xtag"&gt;
+        &lt;div class="mbgai"&gt;&nbsp;&lt;/div&gt;
+        &lt;a class="fc03 xtag m2a" href="#" target="_blank"&gt;&lt;/a&gt;
+      &lt;/div&gt;
+    {/if}
+  </TEXTAREA> &lt;#--最新日志，群博日志--&gt; <TEXTAREA id=m-3-jst-3 name=jst>    {list a as x}
+    {if !!x}
+    &lt;li class="thide"&gt;&lt;a target="_blank" class="fc03 m2a" href="${furl()}${x.permalink}/?latestBlog"&gt;${fn(x.title,26)|escape}&lt;/a&gt;&lt;/li&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--推荐日志--&gt; <TEXTAREA id=m-3-jst-4 name=jst>    &lt;p class="fc06"&gt;推荐过这篇日志的人：&lt;/p&gt;
+    &lt;div&gt;
+      {list a as x}
+      {if !!x}
+      &lt;div class="iblock nbw-fce nbw-f40"&gt;
+        &lt;a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.recommenderName}/"&gt;
+        &lt;img alt="${x.recommenderNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.recommenderName)}"/&gt;
+        &lt;/a&gt;
+        &lt;div class="cwd thide"&gt;
+          &lt;a class="fc03 m2a" target="_blank" hidefocus="true" href="http://blog.163.com/${x.recommenderName}/"&gt;
+            ${fn(x.recommenderNickname,6)|escape}
+          &lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      {/if}
+      {/list}
+    &lt;/div&gt;
+    {if !!b&amp;&amp;b.length&gt;0}
+    &lt;p  class="fc06"&gt;他们还推荐了：&lt;/p&gt;
+    &lt;ul&gt;
+    {list b as y}
+      {if !!y}
+        &lt;li class="rrb"&gt;&lt;span class="iblock"&gt;·&lt;/span&gt;&lt;a class="fc03 m2a" target="_blank" href="http://blog.163.com/${y.recommendBlogPermalink}/?from=blog/static/126129153201272221631397"&gt;${y.recommendBlogTitle|escape}&lt;/a&gt;&lt;/li&gt;
+      {/if}
+    {/list}
+    &lt;/ul&gt;
+    {/if}
+  </TEXTAREA> &lt;#--引用记录--&gt; <TEXTAREA id=m-3-jst-5 name=jst>    &lt;span class="pleft fc07"&gt;转载记录：&lt;/span&gt;
+    &lt;ul class="tbac"&gt;
+    {list d as x}
+      &lt;li class="clearfix"&gt;
+        &lt;span class="pleft iblock"&gt;·&lt;/span&gt;
+        &lt;div class="tbl thide pleft"&gt;&lt;span&gt;&lt;a target="_blank" class="fc07 m2a" href="${x.referBlogUrl}"&gt;${x.referBlogTitle|escape}&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+        &lt;div class="tbr pleft"&gt;&lt;span&gt;&lt;a target="_blank" class="fc07 m2a" href="${x.referHomePage}"&gt;${x.referUserName|escape}&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;/li&gt;
+    {/list}
+    &lt;/ul&gt;
+  </TEXTAREA> &lt;#--博主推荐--&gt; <TEXTAREA id=m-3-jst-6 name=jst>    {list a as x}
+    {if !!x}
+    &lt;li class="thide"&gt;&lt;a target="_blank" class="fc03 m2a" href="http://blog.163.com/${x.userName}/${x.permalink}/?recommendBlog" title="${x.title|default:""|escape}"&gt;${x.title|default:""|escape}&lt;/a&gt;&lt;/li&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--随机阅读--&gt; <TEXTAREA id=m-3-jst-7 name=jst>    {list a as x}
+    {if !!x}
+    &lt;li class="thide"&gt;&lt;a target="_blank" class="fc03 m2a" href="http://blog.163.com/${x.userName}/${x.permalink}/?personalRecomBlog" title="${x.title|default:""|escape}"&gt;${x.title|default:""|escape}&lt;/a&gt;&lt;/li&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--首页推荐--&gt; <TEXTAREA id=m-3-jst-8 name=jst>    {list a as x}
+    {if !!x}
+    &lt;li class="thide"&gt;&lt;a target="_blank" class="fc03 m2a" target="_blank" href="${x.blogUrl|default:""|escape}?recommendReader" title="${x.blogTile|default:""|escape}"&gt;${x.blogTile|default:""|escape}&lt;/a&gt;&lt;/li&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--历史上的今天--&gt; <TEXTAREA id=m-3-jst-10 name=jst>    &lt;ul&gt;
+      {list a as x}
+      {if x_index&gt;4}{break}{/if}
+      {if !!x}
+        &lt;li class="thide fc03"&gt;
+          &lt;a class="m2a" target="_blank"  href="http://blog.163.com/${x.userName}/${x.permalink|default:""}"  title="${x.title|default:""|escape}"&gt;${fn1(x.title,60)|escape}&lt;/a&gt;&lt;span class="fc07"&gt;${fn2(x.publishTime,'yyyy-MM-dd HH:mm:ss')}&lt;/span&gt;
+        &lt;/li&gt;
+      {/if}
+      {/list}
+    &lt;/ul&gt;
+  </TEXTAREA> &lt;#--被推荐日志--&gt; <TEXTAREA id=m-3-jst-11 name=jst>    {list a as x}
+    {if !!x}
+    &lt;li class="thide"&gt;&lt;a target="_blank" class="fc03 m2a" href="${furl()}${x.permalink}/"&gt;${fn(x.title,26)|escape}&lt;/a&gt;&lt;/li&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--上一篇，下一篇--&gt; <TEXTAREA id=m-3-jst-12 name=jst>     {if !!(blogDetail.preBlogPermalink)}
+       &lt;span class="ilft iblock icn0 icn0-620"&gt;&nbsp;&lt;/span&gt;
+       &lt;div class="pleft thide"&gt;&lt;a class="m2a"  href="http://blog.163.com/hbu_lijian/${blogDetail.preBlogPermalink}/"&gt;${blogDetail.preBlogTitle|escape}&lt;/a&gt;&lt;/div&gt;
+     {/if}
+     {if !!(blogDetail.nextBlogPermalink)}
+       &lt;span class="irgt iblock icn0 icn0-619"&gt;&nbsp;&lt;/span&gt;
+       &lt;div class="pright thide"&gt;&lt;a class="m2a" href="http://blog.163.com/hbu_lijian/${blogDetail.nextBlogPermalink}/"&gt;${blogDetail.nextBlogTitle|escape}&lt;/a&gt;&lt;/div&gt;
+     {/if}
+  </TEXTAREA> &lt;#-- 热度 --&gt; <TEXTAREA id=m-3-jst-13 name=jst>    {list a as x}
+    {if !!x}
+    &lt;div class="hotItem iblock nbw-fce nbw-f40"&gt;
+      &lt;a class="fc03 noul" target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/"&gt;
+      {if x.publisherUsername==visitor.userName}
+      &lt;img alt="${x.publisherNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.publisherUsername)}&amp;r=${visitor.imageUpdateTime}"/&gt;
+      {else}
+      &lt;img alt="${x.publisherNickname|escape}" onerror="this.src=location.f40" class="cwd bdwa bdc0" src="${fn1(x.publisherUsername)}"/&gt;
+      {/if}
+      &lt;/a&gt;
+      &lt;div class="cwd vname thide"&gt;
+        &lt;a class="fc03 m2a"  target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/"&gt;
+          ${fn(x.publisherNickname,8)|escape}
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;a class="f-myLikeIcons hottype {if x.type==1} js-liketype{elseif x.type==2} js-reblogtype{elseif x.type==3} js-sharetype{else}{/if}" target="_blank" hidefocus="true" href="http://blog.163.com/${x.publisherUsername}/"&gt;&nbsp;&lt;/a&gt;
+    &lt;/div&gt;
+    {/if}
+    {/list}
+  </TEXTAREA> &lt;#--右边模块结构--&gt; <TEXTAREA id=m-3-txt-0 name=txt>    &lt;div class="uinfo ztag"&gt;&lt;/div&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;被推荐日志&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;最新日志&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;该作者的其他文章&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;博主推荐&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;随机阅读&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;h4 class="fc07 fs0 ltt phide ztag"&gt;首页推荐&lt;/h4&gt;
+    &lt;ul class="ztag blst"&gt;&lt;/ul&gt;
+    &lt;div class="more"&gt;&lt;a target="_blank" class="fc03 m2a" href="http://blog.163.com"&gt;更多&gt;&gt;&lt;/a&gt;&lt;/div&gt;
+    &lt;br/&gt;&lt;br/&gt;
+    &lt;div id="yodaoad_r" style="display:none;_zoom:1;"&gt;&lt;/div&gt;
+    &lt;div id="lofter_single"&gt;&lt;/div&gt;
+    &lt;div id="blogPublicAccount"&gt;&lt;/div&gt;
+  </TEXTAREA> &lt;#--评论模块结构--&gt; <TEXTAREA id=m-3-txt-1 name=txt>    &lt;div class="publish ztag"&gt;&lt;/div&gt;
+    &lt;div class="bdwt bds2 bdc0 phide" id="yodaoad_2" style="_zoom:1;"&gt;&lt;/div&gt;
+    &lt;div class="ztag bdwt bds2 bdc0"&gt;
+      &lt;div class="case"&gt;&lt;/div&gt;
+      &lt;div class="clearfix"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  </TEXTAREA> &lt;#--引用模块结构--&gt; <TEXTAREA id=m-3-txt-2 name=jst>     &lt;div class="close"&gt;
+       &lt;span class="ztag iblock icn0 icn0-57"&gt;&nbsp;&lt;/span&gt;
+     &lt;/div&gt;
+	 &lt;div class="ztag phide"&gt;&lt;/div&gt;
+  </TEXTAREA> &lt;#--博主发起的投票--&gt; <TEXTAREA id=m-3-txt-3 name=jst>    {list a as x}
+    {if !!x}
+      &lt;li&gt;
+      &lt;a href="http://blog.163.com/${x.userName}/" target="_blank" class="m2a fc03"&gt;${x.nickName|escape}&lt;/a&gt;&nbsp;&nbsp;投票给
+        {var first_option = true;}
+        {list x.voteDetailList as voteToOption}
+            {if voteToOption==1}
+              {if first_option==false},{/if}&nbsp;&nbsp;“${b[voteToOption_index]}”&nbsp;&nbsp;
+            {/if}
+        {/list}
+        {if (x.role!="-1") },“我是${c[x.role]}”&nbsp;&nbsp;{/if}
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;span class="fc07"&gt;&nbsp;&nbsp;&nbsp;&nbsp;${fn1(x.voteTime)}&lt;/span&gt;
+        {if x.userName==''}{/if}
+    {/if}
+    {/list}
+  </TEXTAREA> </DIV>
+<SCRIPT type=text/javascript>
+var wumiiPermaLink = "http://blog.163.com/hbu_lijian/blog/static/126129153201272221631397/"; //文章的永久链接，作为文章的唯一标识
+var wumiiTags = ""; //文章标签，以英文逗号分隔，如："标签1,标签2"
+var wumiiSitePrefix = "http://blog.163.com/hbu_lijian/"; //博客的主页地址，作为博客的唯一标识
+var wumiiParams = "&num=5&mode=3&pf=blog163"; //num为默认显示的相关文章数目，mode为默认的显示模式（1为文字，2为图片，3为自动）
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/relatedItemsWidget.js"></SCRIPT>
+</DIV>
+<DIV class="l cl h100"></DIV>
+<DIV class="r cr h100"></DIV></DIV>
+<DIV class="nb-mb lcr bh space">
+<DIV class="l bl bh"></DIV>
+<DIV class="r br bh"></DIV>
+<DIV class="c bc bh lcr"></DIV></DIV></DIV></DIV>
+<DIV class="l wl g lg h100"></DIV>
+<DIV class="l wl t lt"></DIV>
+<DIV class="l wl b lb"></DIV>
+<DIV class="r wr g rg h100"></DIV>
+<DIV class="r wr t rt"></DIV>
+<DIV class="r wr b rb"></DIV></DIV></DIV>
+<DIV class="nb-are nb-smb">
+<DIV class="wkg h space">
+<DIV class="l h"></DIV>
+<DIV class="r h"></DIV>
+<DIV class="c h">&nbsp;</DIV></DIV></DIV>
+<DIV class="nb-are nb-fot">
+<DIV class="wkg h">
+<H2>页脚</H2>
+<DIV class=k><A class="m2a fc08" href="http://corp.163.com/index_gb.html" 
+rel=nofollow target=_blank>公司简介</A> <SPAN class="p fc10">-</SPAN> <A 
+class="m2a fc08" href="http://gb.corp.163.com/gb/contactus.html" rel=nofollow 
+target=_blank>联系方法</A> <SPAN class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://corp.163.com/gb/job/job.html" rel=nofollow target=_blank>招聘信息</A> 
+<SPAN class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://help.163.com/?b13abk1" rel=nofollow target=_blank>客户服务</A> <SPAN 
+class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://corp.163.com/gb/legal/legal.html" rel=nofollow 
+target=_blank>隐私政策</A> <SPAN class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://blog.163.com/public/theme/" rel=nofollow target=_blank>博客风格</A> 
+<SPAN class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://blog.163.com/services/wapblog.html" rel=nofollow 
+target=_blank>手机博客</A> <SPAN class="p fc10">-</SPAN> <A class="m2a fc08" 
+href="http://blog.163.com/vip.do" rel=nofollow target=_blank>VIP博客</A> <LINK 
+title=RSS rel=alternate type=application/rss+xml 
+href="http://blog.163.com/hbu_lijian/rss/"><SPAN class="p fc10">-</SPAN><SPAN 
+id=$_foot_subscribe class=fc08><SPAN 
+class="iblock m2a icn0 icn0-919">&nbsp;</SPAN><A 
+class="m2a fc08">订阅此博客</A></SPAN> </DIV>
+<P class=fc08>网易公司版权所有&nbsp;&copy;1997-2014</P></DIV></DIV></DIV><!--[if lte IE 6]></div><![endif]--><!--[if lte IE 6]></div><![endif]-->
+<DIV id=blog-163-com-layer class=nb-layer></DIV>
+<DIV id=blog-163-com-template class="nb-tpl nb-init phide" 
+style="DISPLAY: none"><TEXTAREA id=nb-jst-a1 rows=1 cols=1 name=jst>  &lt;a rel="nofollow" class="pr" target="_blank" href="http://help.163.com/special/007525FT/blog.html?b13aze1"&gt;帮助&lt;/a&gt;
+  &lt;span class="fr iblock space icn1 icn1-4"&gt;&nbsp;&lt;/span&gt;
+  &lt;a class="pr" target="_blank" href="http://blog.163.com/activation.do?host=activation&amp;&amp;username=${u}"&gt;${u}&lt;/a&gt;
+</TEXTAREA> <TEXTAREA id=nb-jst-d0 rows=1 cols=1 name=jst>      {list wl as x}
+        &lt;div class="grp"&gt;${x.g}&lt;/div&gt;
+        {list x.l as y}
+        &lt;a class="itm noul" href="#" hidefocus="true" name="{if typeof(y.v)=='string'}${y.v}{else}${y_index}{/if}"&gt;${y.n}&lt;/a&gt;
+        {/list}
+      {/list}
+</TEXTAREA> <TEXTAREA id=nb-jst-d1 rows=1 cols=1 name=jst>	{if defined('wl')}
+        {list wl as x}&lt;a class="itm noul" href="#" hidefocus="true" name="${x.v}"&gt;${x.n}&lt;/a&gt;{/list}
+    {/if}
+</TEXTAREA> </DIV>
+<SCRIPT type=text/javascript>
+  window.N = {tm:{'zbtn':'nbtn',
+                  'bdc0':'bdc0','bdc2':'bdc1',
+				  'bgc0':'bgc0','bgc1':'bgc1','bgc2':'bgc2','bgh0':'bgc9',
+				  'fc00':'fc03','fc01':'fc04','fc02':'fc05','fc03':'fc06','fc04':'fc07','fc05':'fc09'}};
+  Date.servTime = '08/06/2014 17:36:35';
+  location.api = 'http://api.blog.163.com/';
+  location.msg = 'http://api.blog.163.com/msg/dwr';
+  location.dwr = 'http://api.blog.163.com/hbu_lijian/dwr';
+  location.vcd = 'http://api.blog.163.com/cap/captcha.jpgx?parentId=126129153&r=';
+  location.mrt = 'http://b.bst.126.net/newpage/style/mbox/';
+  location.fce = 'http://os.blog.163.com/common/ava.s?host=';
+  location.fce2= 'http://os.blog.163.com/common/ava.s?host=';
+  location.passportfce = 'http://os.blog.163.com/common/ava.s?passport=';
+  location.fpr = 'http://b.bst.126.net/common/portrait/face/preview/';
+  location.f60 = 'http://b.bst.126.net/common/face60.png';
+  location.f140= 'http://b.bst.126.net/common/face140.png';
+  location.f40 = location.f140;
+  location.adf140= 'http://b.bst.126.net/common/admireface140.png';
+  location.ept = 'http://b.bst.126.net/common/empty.png';
+  location.guide_profile_add= 'http://b.bst.126.net/common/guide_profile_add.gif';
+  location.phtoto_dream = 'http://photo.dream.163.com/blog/writeBlogCallback.do';
+  window.CF = {
+    ca:false
+   ,cb:''
+   ,cc:false
+   ,cd:false
+   ,ce:'-3'
+   ,ck:0
+   ,ci:['api.blog.163.com'
+       ,'http://photo.163.com/photo/html/crossdomain.html?t=20100205'
+        
+        ,'ud.blog.163.com'
+        
+        
+        
+        ]
+   ,cj:[-3]
+   ,cl:''
+   ,cm:["","blog/","album/","music/","collection/","friends/","profile/","pprank/"]
+   ,cf:0
+   ,co:{pv:false
+       ,ti:99908482
+       ,tn:''
+       ,tc:0
+       ,tl:3
+       ,ut:0
+       ,un:''
+       ,um:''
+       ,ui:0
+       ,ud:true}
+   ,cp:{nr:0
+       ,cr:0
+       ,vr:-100
+       ,fr:0}
+   ,cs:0
+   ,ct:{'nav':['首页','日志','相册','音乐','收藏','博友','关于我'],'enabled':[0,1,6],'defaultnav':parseInt('1111111',2)}
+   ,cu:false
+   ,cv:false
+   ,cw:false
+  };
+  window.UD = {};
+  UD.host = {
+      userId:126129153
+     ,userName:'hbu_lijian'
+     ,nickName:'蓝色雪狐'
+     ,imageUpdateTime:1318237410990
+     ,baseUrl:'http://blog.163.com/hbu_lijian/'
+     ,gender:'他'
+     ,email:'hbu_lijian@163.com'
+     ,photo163Name:'hbu_lijian'
+     ,photo163HostName:'hbu_lijian'
+     ,TOKEN_HTMLMODULE:''
+     ,isMultiUserBlog:false
+     ,isWumiUser:true
+     ,sRank:-100
+  };
+</SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/pc.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/pm.js"></SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/ntes.js"></SCRIPT>
+
+<SCRIPT type=text/javascript>
+    _ntes_nacc='blog';neteaseTracker();
+    
+    new Image().src = 'http://blog.163.com/newpage/images/analyse.png?s=p&t='+new Date().getTime();
+  </SCRIPT>
+
+<SCRIPT type=text/javascript 
+src="线程下变量-原子操作%20__sync_fetch_and_add等等%20-%20蓝色雪狐的日志%20-%20网易博客_files/prettify.js"></SCRIPT>
+</BODY></HTML>

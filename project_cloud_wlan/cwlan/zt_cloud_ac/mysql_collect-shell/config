@@ -1,0 +1,10 @@
+collect_act_dir = /wbss/AcctLog/
+collect_table_dir = ./
+collect_shell_name = ./collect.sh
+collect_service = localhost
+collect_table_name = t_collect
+user_name = cloudac
+password = cloudac
+mysql_db = cloudac_release
+interval = 20
+debug_log = 1

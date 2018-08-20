@@ -1,0 +1,77 @@
+DELIMITER $$
+
+USE `cloudac_release`$$
+
+DROP PROCEDURE IF EXISTS `p_auth_reply`$$
+
+CREATE DEFINER=`cloudac`@`%` PROCEDURE `p_auth_reply`(IN username VARCHAR(64), IN psword VARCHAR(32), IN usermac VARCHAR(20))
+BEGIN
+    	DECLARE v_sql VARCHAR(512);
+
+	DECLARE logingname VARCHAR(64);
+	DECLARE usertype VARCHAR(10);
+	DECLARE companyid VARCHAR(20);
+	DECLARE auth_user_time INT;
+	DECLARE auth_user_tot_time INT;
+	DECLARE auth_number_db INT;
+	DECLARE auth_number INT;
+	DECLARE usergroupid INT;
+	DECLARE cur_data VARCHAR(64);
+
+	SET auth_number = 0;
+	SET @temp2 = 0;
+
+
+	SELECT f_sqlit(username, '|', 1), f_sqlit(username, '|', 2), f_sqlit(username, '|', 3) INTO logingname, usertype, companyid;
+
+	/*获取用户今天已经使用总时间长（秒）*/
+
+	SET v_sql = CONCAT('select sum(acct_session_time) from t_collect', cur_data);
+	SET v_sql = CONCAT(v_sql, " where user_name='",logingname,"' AND acct_status_type='Stop' AND user_type=", usertype," and company_id =", companyid, ' and DATE_FORMAT(action_request_time, "%Y%m%d") = DATE_FORMAT(NOW(), "%Y%m%d")');
+	SET v_sql = CONCAT("select (",v_sql, ") into @temp2;");
+	SET @v_sql = v_sql;
+	PREPARE stmt2 FROM @v_sql;
+	EXECUTE stmt2;
+	DEALLOCATE PREPARE stmt2;
+	SET auth_user_time = @temp2;
+	
+	/*获取用户类型的当天可上线次数和总时长*/
+	SET auth_user_tot_time = 0;
+	IF (usertype = 2) THEN
+	/*注册用户*/
+		SELECT (SELECT VALUE FROM t_client_user_attr WHERE client_user_login_name=logingname AND company_id = companyid AND attr_template_id = 38) INTO auth_user_tot_time;
+
+		IF (auth_user_tot_time = 0) THEN
+			SELECT (SELECT user_group FROM t_client_user WHERE login_name = loginname AND company_id = companyid) INTO usergroupid ;
+			SELECT (SELECT VALUE FROM t_client_user_group_attr WHERE client_user_group_id=usergroupid AND company_id = companyid AND attr_template_id = 38) INTO auth_user_tot_time;
+
+		END IF;
+		IF (auth_user_tot_time = 0) THEN
+			SELECT (SELECT VALUE FROM t_company_attr WHERE company_id = companyid AND attr_template_id = 38) INTO auth_user_tot_time;
+		END IF;
+		SELECT 1, login_name AS CODE, 'Session-Timeout', (auth_user_tot_time*60*60 - auth_user_time) AS can_use_time,':=' FROM t_client_user WHERE login_name = logingname AND company_id = companyid;
+	
+	ELSEIF (usertype = 3) THEN
+		SELECT 1, CODE, 'Session-Timeout', TIMESTAMPDIFF(SECOND,  NOW(), last_use_expired_time),':=' 
+				FROM t_access_code WHERE CODE = BINARY username AND last_use_expired_time IS NOT NULL AND last_use_expired_time > NOW() 
+				UNION SELECT 1, CODE, 'Session-Timeout', use_time_len*60 ,  ':=' FROM t_access_code 
+				WHERE CODE = BINARY username AND last_use_expired_time IS NULL AND NOW()< first_expired_time;
+	ELSEIF (usertype = 1 || usertype = 4 || usertype = 5) THEN
+		IF (usertype = 1)THEN
+	/*手机用户*/
+			SELECT (SELECT VALUE FROM t_company_attr WHERE company_id = companyid AND attr_template_id = 32) INTO auth_user_tot_time;
+		ELSE
+	/*社交用户*/
+			SELECT (SELECT VALUE FROM t_company_attr WHERE company_id = companyid AND attr_template_id = 35)INTO auth_user_tot_time;
+		END IF;
+		
+		SELECT 1, uid AS CODE, 'Session-Timeout', (auth_user_tot_time*60*60 - auth_user_time) AS can_use_time,':=' FROM t_client_user WHERE uid = logingname AND company_id = companyid;
+
+	ELSE
+		SELECT 1, CODE, 'Session-Timeout', TIMESTAMPDIFF(SECOND,  NOW(), last_use_expired_time),':=' FROM t_access_code WHERE 0;
+	END IF;
+	/**********************************************/	
+
+    END$$
+
+DELIMITER ;

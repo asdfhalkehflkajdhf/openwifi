@@ -1,0 +1,132 @@
+.pln {
+	COLOR: #000
+}
+
+@media Screen    
+{
+.str {
+	COLOR: #080
+}
+.kwd {
+	COLOR: #008
+}
+.com {
+	COLOR: #800
+}
+.typ {
+	COLOR: #606
+}
+.lit {
+	COLOR: #066
+}
+.pun {
+	COLOR: #660
+}
+.opn {
+	COLOR: #660
+}
+.clo {
+	COLOR: #660
+}
+.tag {
+	COLOR: #008
+}
+.atn {
+	COLOR: #606
+}
+.atv {
+	COLOR: #080
+}
+.dec {
+	COLOR: #606
+}
+.var {
+	COLOR: #606
+}
+.fun {
+	COLOR: red
+}
+
+}
+
+@media Print, Projection    
+{
+.str {
+	COLOR: #060
+}
+.kwd {
+	FONT-WEIGHT: bold; COLOR: #006
+}
+.com {
+	COLOR: #600; FONT-STYLE: italic
+}
+.typ {
+	FONT-WEIGHT: bold; COLOR: #404
+}
+.lit {
+	COLOR: #044
+}
+.pun {
+	COLOR: #440
+}
+.opn {
+	COLOR: #440
+}
+.clo {
+	COLOR: #440
+}
+.tag {
+	FONT-WEIGHT: bold; COLOR: #006
+}
+.atn {
+	COLOR: #404
+}
+.atv {
+	COLOR: #060
+}
+    }
+PRE.prettyprint {
+	BORDER-TOP: #888 1px solid; BORDER-RIGHT: #888 1px solid; BORDER-BOTTOM: #888 1px solid; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; PADDING-LEFT: 2px; BORDER-LEFT: #888 1px solid; PADDING-RIGHT: 2px
+}
+OL.linenums {
+	MARGIN-BOTTOM: 0px; MARGIN-TOP: 0px
+}
+LI.L0 {
+	LIST-STYLE-TYPE: none
+}
+LI.L1 {
+	LIST-STYLE-TYPE: none
+}
+LI.L2 {
+	LIST-STYLE-TYPE: none
+}
+LI.L3 {
+	LIST-STYLE-TYPE: none
+}
+LI.L5 {
+	LIST-STYLE-TYPE: none
+}
+LI.L6 {
+	LIST-STYLE-TYPE: none
+}
+LI.L7 {
+	LIST-STYLE-TYPE: none
+}
+LI.L8 {
+	LIST-STYLE-TYPE: none
+}
+LI.L1 {
+	BACKGROUND: #eee
+}
+LI.L3 {
+	BACKGROUND: #eee
+}
+LI.L5 {
+	BACKGROUND: #eee
+}
+LI.L7 {
+	BACKGROUND: #eee
+}
+LI.L9 {
+	BACKGROUND: #eee
+}
